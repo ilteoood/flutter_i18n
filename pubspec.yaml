@@ -1,8 +1,8 @@
 name: flutter_i18n
 description: i18n made easy for Flutter
 version: 0.0.1
-author:
-homepage:
+author: Matteo Pietro Dazzi <matteopietro.dazzi@gmail.com>
+homepage: https://github.com/ilteoood/flutter_i18n
 
 dependencies:
   flutter:
@@ -13,3 +13,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+environment:
+  sdk: ">=1.19.0 <2.0.0"
