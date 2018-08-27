@@ -18,7 +18,7 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
 
   @override
   Future<FlutterI18n> load(final Locale locale) async {
-    final FlutterI18n flutterI18n = new FlutterI18n(useCountryCode);
+    final FlutterI18n flutterI18n = FlutterI18n(useCountryCode);
     await flutterI18n.load();
     return flutterI18n;
   }

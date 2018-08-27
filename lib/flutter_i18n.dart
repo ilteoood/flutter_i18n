@@ -18,20 +18,21 @@ class FlutterI18n {
 
   Future<bool> load() async {
     try {
-      await _findCurrentLocale();
+      this.locale = await _findCurrentLocale();
       var localeString = await rootBundle
           .loadString('$TRANSLATIONS_BASE_PATH/${_composeFileName()}.json');
       decodedMap = json.decode(localeString);
     } catch (e) {
-      decodedMap = new Map();
+      decodedMap = Map();
     }
     return true;
   }
 
-  void _findCurrentLocale() async {
+  Future<Locale> _findCurrentLocale() async {
     final String systemLocale = await findSystemLocale();
     final List<String> systemLocaleSplitted = systemLocale.split("_");
-    this.locale = new Locale(systemLocaleSplitted[0], systemLocaleSplitted[1]);
+    return Future(
+        () => Locale(systemLocaleSplitted[0], systemLocaleSplitted[1]));
   }
 
   static String translate(final BuildContext context, final String key) {
@@ -56,6 +57,7 @@ class FlutterI18n {
       else
         decodedStrings = currentDecodedString;
     }
+    return null;
   }
 
   String _composeFileName() {
