@@ -1,0 +1,19 @@
+name: example
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_i18n:
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/flutter_i18n/
+
+environment:
+  sdk: '>=1.19.0 <3.0.0'
