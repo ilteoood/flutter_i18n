@@ -8,24 +8,41 @@ import 'package:intl/intl_standalone.dart';
 
 class FlutterI18n {
   static const String TRANSLATIONS_BASE_PATH = "assets/flutter_i18n";
-  bool useCountryCode;
+  final bool _useCountryCode;
+  final String _fallbackFile;
 
   Locale locale;
 
   Map<String, dynamic> decodedMap;
 
-  FlutterI18n(this.useCountryCode);
+  FlutterI18n(this._useCountryCode, [this._fallbackFile]);
 
   Future<bool> load() async {
     try {
-      this.locale = await _findCurrentLocale();
-      var localeString = await rootBundle
-          .loadString('$TRANSLATIONS_BASE_PATH/${_composeFileName()}.json');
-      decodedMap = json.decode(localeString);
+      await _loadCurrentTranslation();
+    } catch (e) {
+      await _loadFallback();
+    }
+    return true;
+  }
+
+  Future _loadCurrentTranslation() async {
+    this.locale = await _findCurrentLocale();
+    await _loadFile(_composeFileName());
+  }
+
+  Future _loadFallback() async {
+    try {
+      await _loadFile(_fallbackFile);
     } catch (e) {
       decodedMap = Map();
     }
-    return true;
+  }
+
+  Future _loadFile(final String fileName) async {
+    var localeString =
+        await rootBundle.loadString('$TRANSLATIONS_BASE_PATH/$fileName.json');
+    decodedMap = json.decode(localeString);
   }
 
   Future<Locale> _findCurrentLocale() async {
@@ -66,7 +83,7 @@ class FlutterI18n {
 
   String _composeCountryCode() {
     String countryCode = "";
-    if (useCountryCode && locale.countryCode != null) {
+    if (_useCountryCode && locale.countryCode != null) {
       countryCode = "_${locale.countryCode}";
     }
     return countryCode;

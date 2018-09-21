@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       ),
       home: new MyHomePage(),
       localizationsDelegates: [
-        FlutterI18nDelegate(false),
+        FlutterI18nDelegate(false, 'en'),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
