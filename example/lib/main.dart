@@ -34,7 +34,7 @@ class MyHomePage extends StatelessWidget {
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              new Text(FlutterI18n.translate(context, "label.main")),
+              new Text(FlutterI18n.translate(context, "label.main",  Map.fromIterables(["user"], ["Flutter lover"]))),
               new FlatButton(
                   onPressed: () {
                     Scaffold.of(context).showSnackBar(new SnackBar(

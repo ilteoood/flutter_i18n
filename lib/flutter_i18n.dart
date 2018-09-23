@@ -52,7 +52,25 @@ class FlutterI18n {
         () => Locale(systemLocaleSplitted[0], systemLocaleSplitted[1]));
   }
 
-  static String translate(final BuildContext context, final String key) {
+  static String translate(final BuildContext context, final String key,
+      [final Map<String, String> translationParams]) {
+    String translation = _translateWithKeyFallback(context, key);
+    if (translationParams != null) {
+      translation = _replaceParams(translation, translationParams);
+    }
+    return translation;
+  }
+
+  static String _replaceParams(
+      String translation, final Map<String, String> translationParams) {
+    for (final String paramKey in translationParams.keys) {
+      translation = translation.replaceAll(
+          new RegExp('{$paramKey}'), translationParams[paramKey]);
+    }
+    return translation;
+  }
+
+  static String _translateWithKeyFallback(BuildContext context, String key) {
     final Map<String, dynamic> decodedStrings =
         Localizations.of<FlutterI18n>(context, FlutterI18n).decodedMap;
     final List<String> splittedKey = key.split(".");

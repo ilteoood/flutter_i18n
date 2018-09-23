@@ -40,7 +40,7 @@ The next step consist in the configuration of the *localizationsDelegates*; to u
 
 ```sh
 localizationsDelegates: [
-        FlutterI18nDelegate(useCountryCode),
+        FlutterI18nDelegate(useCountryCode, [fallbackFile]),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
 ],
@@ -50,6 +50,9 @@ The ***useCountryCode*** parameter depends on the *json* configuration:
 - if you used the pattern {languageCode}_{countryCode}, ***useCountryCode*** must be **true**
 - if you used the pattern {languageCode}, ***useCountryCode*** must be **false**
 
+The ***fallbackFile*** parameter was entroduces with the version **0.1.0** and provide a default language, used when the translation for the current running system is not provided. This should contain the name of a valid *json* file in *assets* folder.
+
+If there isn't any translation available for the required key, the same key is returned.
 
 ## flutter_i18n in action
 
@@ -62,3 +65,8 @@ FlutterI18n.translate(buildContext, "your.key")
 Where:
 - *buildContext* is the *BuildContext* instance of the widget
 - *your.key* is the key to translate
+
+From version ***0.2.0*** *flutter_i18n* manage strings that contain parameters; an example can be: "Hello, ***{user}***!"
+For a correct translation, you must use the third parameter of the *translate* method, a *Map<String, String>* where:
+- the keys are the placeholders used in the *.json* file (i.e. user)
+- the values are what you want to display
