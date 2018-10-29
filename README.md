@@ -70,3 +70,10 @@ From version ***0.2.0*** *flutter_i18n* manage strings that contain parameters; 
 For a correct translation, you must use the third parameter of the *translate* method, a *Map<String, String>* where:
 - the keys are the placeholders used in the *.json* file (i.e. user)
 - the values are what you want to display
+
+From version ***0.3.0*** *flutter_i18n* supports language change at runtime. To use it, you ***must*** invoke the method
+```sh
+await FlutterI18n.refresh(buildContext, languageCode, {countryCode});
+```
+
+***NOTE***: *countryCode* is optional.

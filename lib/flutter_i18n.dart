@@ -26,8 +26,8 @@ class FlutterI18n {
     return true;
   }
 
-  Future _loadCurrentTranslation() async {
-    this.locale = await _findCurrentLocale();
+  Future _loadCurrentTranslation([final Locale locale]) async {
+    this.locale = locale != null ? locale : await _findCurrentLocale();
     await _loadFile(_composeFileName());
   }
 
@@ -52,6 +52,13 @@ class FlutterI18n {
         () => Locale(systemLocaleSplitted[0], systemLocaleSplitted[1]));
   }
 
+  static Future refresh(final BuildContext context, final String languageCode,
+      {final String countryCode}) async {
+    final Locale forcedLocale = new Locale(languageCode, countryCode);
+    final FlutterI18n currentInstance = retrieveCurrentInstance(context);
+    await currentInstance._loadCurrentTranslation(forcedLocale);
+  }
+
   static String translate(final BuildContext context, final String key,
       [final Map<String, String> translationParams]) {
     String translation = _translateWithKeyFallback(context, key);
@@ -72,13 +79,17 @@ class FlutterI18n {
 
   static String _translateWithKeyFallback(BuildContext context, String key) {
     final Map<String, dynamic> decodedStrings =
-        Localizations.of<FlutterI18n>(context, FlutterI18n).decodedMap;
+        retrieveCurrentInstance(context).decodedMap;
     final List<String> splittedKey = key.split(".");
     String translation = _decodeFromMap(decodedStrings, splittedKey);
     if (translation == null) {
       translation = key;
     }
     return translation;
+  }
+
+  static FlutterI18n retrieveCurrentInstance(BuildContext context) {
+    return Localizations.of<FlutterI18n>(context, FlutterI18n);
   }
 
   static String _decodeFromMap(

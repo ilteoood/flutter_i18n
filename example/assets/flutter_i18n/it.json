@@ -1,0 +1,10 @@
+{
+  "title": "App di test",
+  "label":{
+    "main": "Ciao {user}!"
+  },
+  "button":{
+    "clickMe": "Premi qui"
+  },
+  "toastMessage": "Hai premuto un bottone!"
+}

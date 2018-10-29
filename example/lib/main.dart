@@ -23,7 +23,20 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  MyHomeState createState() => new MyHomeState();
+}
+
+class MyHomeState extends State<MyHomePage> {
+  String currentLang = 'en';
+
+  switchLang() {
+    setState(() {
+      currentLang = currentLang == 'en' ? 'it' : 'en';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -34,13 +47,16 @@ class MyHomePage extends StatelessWidget {
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              new Text(FlutterI18n.translate(context, "label.main",  Map.fromIterables(["user"], ["Flutter lover"]))),
+              new Text(FlutterI18n.translate(context, "label.main",
+                  Map.fromIterables(["user"], ["Flutter lover"]))),
               new FlatButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    switchLang();
+                    await FlutterI18n.refresh(context, currentLang);
                     Scaffold.of(context).showSnackBar(new SnackBar(
-                          content: new Text(
-                              FlutterI18n.translate(context, "toastMessage")),
-                        ));
+                      content: new Text(
+                          FlutterI18n.translate(context, "toastMessage")),
+                    ));
                   },
                   child: new Text(
                       FlutterI18n.translate(context, "button.clickMe")))
