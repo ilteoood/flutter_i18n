@@ -1,10 +1,15 @@
 {
   "title": "App di test",
-  "label":{
+  "label": {
     "main": "Ciao {user}!"
   },
-  "button":{
+  "button": {
     "clickMe": "Premi qui"
   },
-  "toastMessage": "Hai premuto un bottone!"
+  "toastMessage": "Hai premuto un bottone!",
+  "clicked": {
+    "times-0": "Hai premuto {times} volte!",
+    "times-1": "Hai premuto {time} volta!",
+    "times-2": "Hai premuto {times} volte!"
+  }
 }

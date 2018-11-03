@@ -30,10 +30,17 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomeState extends State<MyHomePage> {
   String currentLang = 'en';
+  int clicked = 0;
 
-  switchLang() {
+  changeLanguage() {
     setState(() {
       currentLang = currentLang == 'en' ? 'it' : 'en';
+    });
+  }
+
+  incrementCounter() {
+    setState(() {
+      clicked++;
     });
   }
 
@@ -49,9 +56,16 @@ class MyHomeState extends State<MyHomePage> {
             children: <Widget>[
               new Text(FlutterI18n.translate(context, "label.main",
                   Map.fromIterables(["user"], ["Flutter lover"]))),
+              new Text(FlutterI18n.plural(context, "clicked.times", clicked)),
               new FlatButton(
                   onPressed: () async {
-                    switchLang();
+                    incrementCounter();
+                  },
+                  child: new Text(
+                      FlutterI18n.translate(context, "button.clickMe"))),
+              new FlatButton(
+                  onPressed: () async {
+                    changeLanguage();
                     await FlutterI18n.refresh(context, currentLang);
                     Scaffold.of(context).showSnackBar(new SnackBar(
                       content: new Text(

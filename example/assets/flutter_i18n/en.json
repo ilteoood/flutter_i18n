@@ -1,10 +1,15 @@
 {
   "title": "Test app",
-  "label":{
+  "label": {
     "main": "Hello {user}!"
   },
-  "button":{
+  "button": {
     "clickMe": "Click me"
   },
-  "toastMessage": "You clicked on button!"
+  "toastMessage": "You clicked on button!",
+  "clicked": {
+    "times-0": "You clicked {times} times!",
+    "times-1": "You clicked {time} time!",
+    "times-2": "You clicked {times} times!"
+  }
 }
