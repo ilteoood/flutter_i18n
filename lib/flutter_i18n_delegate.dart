@@ -10,7 +10,6 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
   final bool _useCountryCode;
   final String _fallbackFile;
   final String _path;
-  static String basePath;
 
   FlutterI18nDelegate(this._useCountryCode,
       [this._fallbackFile, this._path = "assets/flutter_i18n"]);
@@ -22,9 +21,8 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
 
   @override
   Future<FlutterI18n> load(final Locale locale) async {
-    FlutterI18nDelegate.basePath = this._path;
     final FlutterI18n flutterI18n =
-        FlutterI18n(_useCountryCode, _fallbackFile);
+        FlutterI18n(_useCountryCode, _fallbackFile, _path);
     await flutterI18n.load();
     return flutterI18n;
   }

@@ -6,18 +6,17 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl_standalone.dart';
 
-import 'package:flutter_i18n/flutter_i18n_delegate.dart';
-
 class FlutterI18n {
   static RegExp parameterRegexp = new RegExp("{(.+)}");
   final bool _useCountryCode;
   final String _fallbackFile;
+  final String basePath;
 
   Locale locale;
 
   Map<String, dynamic> decodedMap;
 
-  FlutterI18n(this._useCountryCode, [this._fallbackFile]);
+  FlutterI18n(this._useCountryCode, [this._fallbackFile, this.basePath]);
 
   Future<bool> load() async {
     try {
@@ -43,7 +42,7 @@ class FlutterI18n {
 
   Future _loadFile(final String fileName) async {
     var localeString =
-        await rootBundle.loadString('${FlutterI18nDelegate.basePath}/$fileName.json');
+        await rootBundle.loadString('$basePath/$fileName.json');
     decodedMap = json.decode(localeString);
   }
 
