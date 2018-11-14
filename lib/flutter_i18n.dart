@@ -10,13 +10,13 @@ class FlutterI18n {
   static RegExp parameterRegexp = new RegExp("{(.+)}");
   final bool _useCountryCode;
   final String _fallbackFile;
-  final String basePath;
+  final String _basePath;
 
   Locale locale;
 
   Map<String, dynamic> decodedMap;
 
-  FlutterI18n(this._useCountryCode, [this._fallbackFile, this.basePath]);
+  FlutterI18n(this._useCountryCode, [this._fallbackFile, this._basePath]);
 
   Future<bool> load() async {
     try {
@@ -42,7 +42,7 @@ class FlutterI18n {
 
   Future _loadFile(final String fileName) async {
     var localeString =
-        await rootBundle.loadString('$basePath/$fileName.json');
+        await rootBundle.loadString('$_basePath/$fileName.json');
     decodedMap = json.decode(localeString);
   }
 

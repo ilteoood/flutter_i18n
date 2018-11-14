@@ -1,6 +1,6 @@
 ## [0.2.0]
 
-*flutter_i18n* now manage strings that contain parameters; an example can be: "Hello, ***{user}***!"
+*flutter_i18n* now manage strings that contain parameters; an example can be: "Hello, {user}!"
 For a correct translation, you must use the third parameter of the *translate* method, a *Map<String, String>* where:
 - the keys are the placeholders used in the *.json* file (i.e. user)
 - the values are what you want to display
@@ -40,3 +40,10 @@ FlutterI18n.plural(buildContext, "clicked.times", pluralValue);
 ```
 
 FlutterI18n will choose the right key using the value of pluralValue: it will match the last key with a value <= of pluralValue.
+
+
+## [0.5.0]
+
+*flutter_i18n* now supports the `basePath` configuration.
+The default one is: `/assets/flutter_i18n`.
+To configure it, use the third optional parameter of `FlutterI18nDelegate`.

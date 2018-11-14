@@ -14,9 +14,9 @@ I would like to recreate the same experience that you have with the Angular i18n
 
 ## Configuration
 
-To use this library, you must create a folder in your project's root, the `basePath`. Some examples:
+To use this library, you must create a folder in your project's root: the `basePath`. Some examples:
 
-> /assets/flutter_i18n
+> /assets/flutter_i18n (the default one)
 >
 > /assets/i18n
 >
