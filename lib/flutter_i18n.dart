@@ -6,8 +6,9 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl_standalone.dart';
 
+import 'package:flutter_i18n/flutter_i18n_delegate.dart';
+
 class FlutterI18n {
-  static const String TRANSLATIONS_BASE_PATH = "assets/flutter_i18n";
   static RegExp parameterRegexp = new RegExp("{(.+)}");
   final bool _useCountryCode;
   final String _fallbackFile;
@@ -42,7 +43,7 @@ class FlutterI18n {
 
   Future _loadFile(final String fileName) async {
     var localeString =
-        await rootBundle.loadString('$TRANSLATIONS_BASE_PATH/$fileName.json');
+        await rootBundle.loadString('${FlutterI18nDelegate.basePath}/$fileName.json');
     decodedMap = json.decode(localeString);
   }
 
