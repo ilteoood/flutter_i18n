@@ -14,7 +14,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/flutter_i18n/
+    - assets/i18n/
 
 environment:
   sdk: '>=1.19.0 <3.0.0'
