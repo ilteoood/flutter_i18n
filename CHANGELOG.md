@@ -47,3 +47,7 @@ FlutterI18n will choose the right key using the value of pluralValue: it will ma
 *flutter_i18n* now supports the `basePath` configuration.
 The default one is: `assets/flutter_i18n`.
 To configure it, use the third optional parameter of `FlutterI18nDelegate`.
+
+## [0.5.1]
+
+Print in log when a key is not found.
