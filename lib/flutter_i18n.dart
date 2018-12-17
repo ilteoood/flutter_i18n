@@ -135,6 +135,7 @@ class FlutterI18n {
         _retrieveCurrentInstance(context).decodedMap;
     String translation = _decodeFromMap(decodedStrings, key);
     if (translation == null) {
+      print("**$key** not found");
       translation = key;
     }
     return translation;
