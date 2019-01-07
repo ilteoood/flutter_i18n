@@ -29,6 +29,6 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
 
   @override
   bool shouldReload(final LocalizationsDelegate old) {
-    return true;
+    return false;
   }
 }
