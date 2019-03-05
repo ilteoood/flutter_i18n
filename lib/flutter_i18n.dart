@@ -41,8 +41,7 @@ class FlutterI18n {
   }
 
   Future _loadFile(final String fileName) async {
-    var localeString =
-        await rootBundle.loadString('$_basePath/$fileName.json');
+    var localeString = await rootBundle.loadString('$_basePath/$fileName.json');
     decodedMap = json.decode(localeString);
   }
 
@@ -104,9 +103,8 @@ class FlutterI18n {
     return parameterName;
   }
 
-  static Future refresh(final BuildContext context, final String languageCode,
-      {final String countryCode}) async {
-    final Locale forcedLocale = new Locale(languageCode, countryCode);
+  static Future refresh(
+      final BuildContext context, final Locale forcedLocale) async {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
     await currentInstance._loadCurrentTranslation(forcedLocale);
   }
@@ -118,6 +116,10 @@ class FlutterI18n {
       translation = _replaceParams(translation, translationParams);
     }
     return translation;
+  }
+
+  static Locale currentLocale(final BuildContext context) {
+    return _retrieveCurrentInstance(context).locale;
   }
 
   static String _replaceParams(

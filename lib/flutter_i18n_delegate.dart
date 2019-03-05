@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 import 'flutter_i18n.dart';
 
 class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
-  final bool _useCountryCode;
-  final String _fallbackFile;
-  final String _path;
+  final bool useCountryCode;
+  final String fallbackFile;
+  final String path;
 
-  FlutterI18nDelegate(this._useCountryCode,
-      [this._fallbackFile, this._path = "assets/flutter_i18n"]);
+  FlutterI18nDelegate(
+      {this.useCountryCode = false,
+      this.fallbackFile,
+      this.path = "assets/flutter_i18n"});
 
   @override
   bool isSupported(final Locale locale) {
@@ -22,7 +24,7 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
   @override
   Future<FlutterI18n> load(final Locale locale) async {
     final FlutterI18n flutterI18n =
-        FlutterI18n(_useCountryCode, _fallbackFile, _path);
+        FlutterI18n(useCountryCode, fallbackFile, path);
     await flutterI18n.load();
     return flutterI18n;
   }
