@@ -3,9 +3,15 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() => runApp(new MyApp());
+Future main() async {
+  FlutterI18n flutterI18n=FlutterI18n(false,"",'assets/i18n');
+   await flutterI18n.load();
+  runApp(new MyApp(flutterI18n: flutterI18n,));
+}
 
 class MyApp extends StatelessWidget {
+  final FlutterI18n flutterI18n;
+  MyApp({this.flutterI18n});
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -15,7 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       home: new MyHomePage(),
       localizationsDelegates: [
-        FlutterI18nDelegate(path: 'assets/i18n'),
+        FlutterI18nDelegate(flutterI18n: flutterI18n),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
