@@ -10,6 +10,7 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
   final bool useCountryCode;
   final String fallbackFile;
   final String path;
+  FlutterI18n _currentTranslationObject;
 
   FlutterI18nDelegate(
       {this.useCountryCode = false,
@@ -23,14 +24,13 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
 
   @override
   Future<FlutterI18n> load(final Locale locale) async {
-    final FlutterI18n flutterI18n =
-        FlutterI18n(useCountryCode, fallbackFile, path);
-    await flutterI18n.load();
-    return flutterI18n;
+    _currentTranslationObject = FlutterI18n(useCountryCode, fallbackFile, path);
+    await _currentTranslationObject.load();
+    return _currentTranslationObject;
   }
 
   @override
   bool shouldReload(final LocalizationsDelegate old) {
-    return false;
+    return !_currentTranslationObject.forcedLocale;
   }
 }

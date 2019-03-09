@@ -7,10 +7,11 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl_standalone.dart';
 
 class FlutterI18n {
-  static RegExp parameterRegexp = new RegExp("{(.+)}");
+  static RegExp _parameterRegexp = new RegExp("{(.+)}");
   final bool _useCountryCode;
   final String _fallbackFile;
   final String _basePath;
+  bool forcedLocale = false;
 
   Locale locale;
 
@@ -96,8 +97,8 @@ class FlutterI18n {
 
   static String _findParameterName(final String translation) {
     String parameterName = "";
-    if (translation != null && parameterRegexp.hasMatch(translation)) {
-      final Match match = parameterRegexp.firstMatch(translation);
+    if (translation != null && _parameterRegexp.hasMatch(translation)) {
+      final Match match = _parameterRegexp.firstMatch(translation);
       parameterName = match.groupCount > 0 ? match.group(1) : "";
     }
     return parameterName;
@@ -106,6 +107,7 @@ class FlutterI18n {
   static Future refresh(
       final BuildContext context, final Locale forcedLocale) async {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
+    currentInstance.forcedLocale = true;
     await currentInstance._loadCurrentTranslation(forcedLocale);
   }
 
