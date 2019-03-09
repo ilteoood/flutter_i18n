@@ -44,7 +44,7 @@ The next step consist in the configuration of the *localizationsDelegates*; to u
 
 ```sh
 localizationsDelegates: [
-        FlutterI18nDelegate(useCountryCode, [fallbackFile, basePath]),
+        FlutterI18nDelegate({useCountryCode = false, fallbackFile, basePath = "assets/flutter_i18n"}),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
 ],

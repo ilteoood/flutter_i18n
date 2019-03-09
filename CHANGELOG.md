@@ -58,11 +58,15 @@ Fix for bug #10.
 
 ## [0.6.0]
 
-Exposed new method that return the locale used by the library:
+Exposed new method that return the locale used by the library, as requested in #16:
 
 ```sh
 FlutterI18n.currentLocale();
 ```
 
-
 ***NOTE***: the ***refresh*** method now accept a *Locale* as second parameter, instead of two strings.
+***NOTE***: the constructor of *FlutterI18nDelegate* now accept only named parameter.
+
+## [0.6.1]
+
+Fix for bug #22
