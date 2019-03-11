@@ -31,6 +31,7 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
 
   @override
   bool shouldReload(final LocalizationsDelegate old) {
-    return !_currentTranslationObject.forcedLocale;
+    return _currentTranslationObject == null ||
+        !_currentTranslationObject.forcedLocale;
   }
 }

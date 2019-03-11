@@ -70,3 +70,7 @@ FlutterI18n.currentLocale();
 ## [0.6.1]
 
 Fix for bug #22
+
+## [0.6.2]
+
+Fix for the delegate
