@@ -4,7 +4,7 @@
     "main": "Hello {user}!"
   },
   "button": {
-    "clickMe": "Click me"
+    "clickMe": "Click here"
   },
   "toastMessage": "You clicked on button!",
   "clicked": {

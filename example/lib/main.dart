@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
       ),
       home: new MyHomePage(),
       localizationsDelegates: [
-        FlutterI18nDelegate(path: 'assets/i18n'),
+        FlutterI18nDelegate(
+            useCountryCode: false, fallbackFile: 'en', path: 'assets/i18n'),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
@@ -32,10 +33,22 @@ class MyHomeState extends State<MyHomePage> {
   Locale currentLang;
   int clicked = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    new Future.delayed(Duration.zero, () async {
+      await FlutterI18n.refresh(context, new Locale('es'));
+      setState(() {
+        currentLang = FlutterI18n.currentLocale(context);
+      });
+    });
+  }
+
   changeLanguage() {
     setState(() {
-      currentLang =
-          currentLang.languageCode == 'en' ? new Locale('it') : new Locale('en');
+      currentLang = currentLang.languageCode == 'en'
+          ? new Locale('it')
+          : new Locale('en');
     });
   }
 
@@ -47,7 +60,6 @@ class MyHomeState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    currentLang = FlutterI18n.currentLocale(context);
     return new Scaffold(
       appBar:
           new AppBar(title: new Text(FlutterI18n.translate(context, "title"))),
