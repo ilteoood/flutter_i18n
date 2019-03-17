@@ -74,3 +74,7 @@ Fix for bug #22
 ## [0.6.2]
 
 Fix for the delegate
+
+## [0.6.3]
+
+Fix for #17

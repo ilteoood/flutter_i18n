@@ -24,8 +24,12 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
 
   @override
   Future<FlutterI18n> load(final Locale locale) async {
-    _currentTranslationObject = FlutterI18n(useCountryCode, fallbackFile, path);
-    await _currentTranslationObject.load();
+    if (_currentTranslationObject == null ||
+        _currentTranslationObject.locale != locale) {
+      _currentTranslationObject =
+          FlutterI18n(useCountryCode, fallbackFile, path);
+      await _currentTranslationObject.load();
+    }
     return _currentTranslationObject;
   }
 
