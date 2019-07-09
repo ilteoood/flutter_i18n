@@ -19,9 +19,12 @@ class FlutterI18n {
 
   FlutterI18n(this._useCountryCode, [this._fallbackFile, this._basePath]);
 
-  Future<bool> load() async {
+  Future<bool> load([final Locale locale]) async {
     try {
-      await _loadCurrentTranslation();
+      if (locale != null) {
+        this.forcedLocale = true;
+      }
+      await _loadCurrentTranslation(locale);
     } catch (e) {
       await _loadFallback();
     }
