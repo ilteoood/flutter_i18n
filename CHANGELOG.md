@@ -78,3 +78,7 @@ Fix for the delegate
 ## [0.6.3]
 
 Fix for #17
+
+## [0.6.4]
+
+Fix for #41
