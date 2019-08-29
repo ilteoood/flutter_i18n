@@ -28,7 +28,7 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
         FlutterI18nDelegate._currentTranslationObject.locale != locale) {
       FlutterI18nDelegate._currentTranslationObject =
           FlutterI18n(useCountryCode, fallbackFile, path);
-      await FlutterI18nDelegate._currentTranslationObject.load();
+      await FlutterI18nDelegate._currentTranslationObject.load(locale);
     }
     return FlutterI18nDelegate._currentTranslationObject;
   }
