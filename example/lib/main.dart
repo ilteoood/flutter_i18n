@@ -1,11 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() => runApp(new MyApp());
+Future main() async {
+  final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
+      useCountryCode: false, fallbackFile: 'en', path: 'assets/i18n');
+  await flutterI18nDelegate.load(null);
+  runApp(new MyApp(flutterI18nDelegate));
+}
 
 class MyApp extends StatelessWidget {
+  FlutterI18nDelegate flutterI18nDelegate;
+
+  MyApp(this.flutterI18nDelegate);
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -15,8 +26,7 @@ class MyApp extends StatelessWidget {
       ),
       home: new MyHomePage(),
       localizationsDelegates: [
-        FlutterI18nDelegate(
-            useCountryCode: false, fallbackFile: 'en', path: 'assets/i18n'),
+        flutterI18nDelegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
