@@ -58,6 +58,8 @@ The ***fallbackFile*** parameter was entroduces with the version **0.1.0** and p
 
 The ***basePath*** parameter is optionally used to set the base path for translations. If this option is not set, the default path will be `assets/flutter_i18n`. This path must be the same path as the one defined in your ***pubspec.yaml***.
 
+The ***forcedLocale*** parameter is optionally used to force a locale instead finding the system one.
+
 If there isn't any translation available for the required key, the same key is returned.
 
 ## flutter_i18n in action

@@ -82,3 +82,8 @@ Fix for #17
 ## [0.6.4]
 
 Fix for #41
+
+## [0.7.0]
+
+Fix for #48 and implemented feature for #49.
+From this version of *FlutterI18n*, you can use as 4th parameter the ***forcedLanguage*** parameter, in order to avoid to call the *refresh* method on application startup.
