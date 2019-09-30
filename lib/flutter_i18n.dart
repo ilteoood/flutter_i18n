@@ -11,24 +11,25 @@ class FlutterI18n {
   final bool _useCountryCode;
   final String _fallbackFile;
   final String _basePath;
-  bool forcedLocale = false;
+  Locale forcedLocale;
 
   Locale locale;
 
   Map<String, dynamic> decodedMap;
 
-  FlutterI18n(this._useCountryCode, [this._fallbackFile, this._basePath]);
+  FlutterI18n(this._useCountryCode,
+      [this._fallbackFile, this._basePath, this.forcedLocale]);
 
   Future<bool> load() async {
     try {
-      await _loadCurrentTranslation();
+      await _loadCurrentTranslation(this.forcedLocale);
     } catch (e) {
       await _loadFallback();
     }
     return true;
   }
 
-  Future _loadCurrentTranslation([final Locale locale]) async {
+  Future _loadCurrentTranslation(final Locale locale) async {
     this.locale = locale != null ? locale : await _findCurrentLocale();
     await _loadFile(_composeFileName());
   }
@@ -108,7 +109,7 @@ class FlutterI18n {
   static Future refresh(
       final BuildContext context, final Locale forcedLocale) async {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
-    currentInstance.forcedLocale = true;
+    currentInstance.forcedLocale = forcedLocale;
     await currentInstance._loadCurrentTranslation(forcedLocale);
   }
 

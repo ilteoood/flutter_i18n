@@ -10,12 +10,14 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
   final bool useCountryCode;
   final String fallbackFile;
   final String path;
+  final Locale forcedLocale;
   static FlutterI18n _currentTranslationObject;
 
   FlutterI18nDelegate(
       {this.useCountryCode = false,
       this.fallbackFile,
-      this.path = "assets/flutter_i18n"});
+      this.path = "assets/flutter_i18n",
+      this.forcedLocale});
 
   @override
   bool isSupported(final Locale locale) {
@@ -27,7 +29,7 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
     if (FlutterI18nDelegate._currentTranslationObject == null ||
         FlutterI18nDelegate._currentTranslationObject.locale != locale) {
       FlutterI18nDelegate._currentTranslationObject =
-          FlutterI18n(useCountryCode, fallbackFile, path);
+          FlutterI18n(useCountryCode, fallbackFile, path, this.forcedLocale);
       await FlutterI18nDelegate._currentTranslationObject.load();
     }
     return FlutterI18nDelegate._currentTranslationObject;
@@ -36,6 +38,6 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
   @override
   bool shouldReload(final LocalizationsDelegate old) {
     return _currentTranslationObject == null ||
-        !_currentTranslationObject.forcedLocale;
+        _currentTranslationObject.forcedLocale == null;
   }
 }

@@ -7,7 +7,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future main() async {
   final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
-      useCountryCode: false, fallbackFile: 'en', path: 'assets/i18n');
+      useCountryCode: false,
+      fallbackFile: 'en',
+      path: 'assets/i18n',
+      forcedLocale: new Locale('es'));
   await flutterI18nDelegate.load(null);
   runApp(new MyApp(flutterI18nDelegate));
 }
@@ -47,7 +50,6 @@ class MyHomeState extends State<MyHomePage> {
   void initState() {
     super.initState();
     new Future.delayed(Duration.zero, () async {
-      await FlutterI18n.refresh(context, new Locale('es'));
       setState(() {
         currentLang = FlutterI18n.currentLocale(context);
       });
@@ -72,7 +74,7 @@ class MyHomeState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar:
-          new AppBar(title: new Text(FlutterI18n.translate(context, "title"))),
+      new AppBar(title: new Text(FlutterI18n.translate(context, "title"))),
       body: new Builder(builder: (BuildContext context) {
         return new Center(
           child: new Column(
