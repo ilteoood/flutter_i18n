@@ -49,8 +49,9 @@ class FlutterI18n {
   Future<Locale> _findCurrentLocale() async {
     final String systemLocale = await findSystemLocale();
     final List<String> systemLocaleSplitted = systemLocale.split("_");
-    return Future(
-        () => Locale(systemLocaleSplitted[0], systemLocaleSplitted[1]));
+    final int countryCodeIndex = systemLocaleSplitted.length == 3 ? 2 : 1;
+    return Future(() => Locale(
+        systemLocaleSplitted[0], systemLocaleSplitted[countryCodeIndex]));
   }
 
   static String plural(final BuildContext context, final String translationKey,
