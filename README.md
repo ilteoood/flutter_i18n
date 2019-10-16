@@ -22,7 +22,7 @@ To use this library, you must create a folder in your project's root: the `baseP
 >
 > /assets/locales
 
-Inside this folder, you'll put the *json* files containing the translated keys. You have two options:
+Inside this folder, you'll put the *json* or *yaml* files containing the translated keys. You have two options:
 
 - If you want to specify the country code
 
@@ -31,6 +31,8 @@ Inside this folder, you'll put the *json* files containing the translated keys. 
 - otherwise
 
     > `basePath`/{languageCode}.json
+
+If the *json* file is not available, we will look for a *yaml* file with the same name. In case both exist, the *json* file will be used.
 
 Of course, you must declare the subtree in your ***pubspec.yaml*** as assets:
 
