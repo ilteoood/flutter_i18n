@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl_standalone.dart';
+import 'package:yaml/yaml.dart';
 
 class FlutterI18n {
   static RegExp _parameterRegexp = new RegExp("{(.+)}");
@@ -23,6 +24,7 @@ class FlutterI18n {
     try {
       await _loadCurrentTranslation();
     } catch (e) {
+      print('Error loading translation $e');
       await _loadFallback();
     }
     return true;
@@ -37,13 +39,32 @@ class FlutterI18n {
     try {
       await _loadFile(_fallbackFile);
     } catch (e) {
+      print('Error loading translation fallback $e');
       decodedMap = Map();
     }
   }
 
-  Future _loadFile(final String fileName) async {
-    var localeString = await rootBundle.loadString('$_basePath/$fileName.json');
-    decodedMap = json.decode(localeString);
+  dynamic _convertYaml(final YamlNode node) {
+    if (node is YamlMap) {
+      return Map.fromEntries(node.entries.map((e) => MapEntry(e.key.toString(),
+          e.value is YamlNode ? _convertYaml(e.value) : e.value.toString())));
+    } else if (node is YamlScalar) {
+      return node.toString();
+    }
+    return Map.identity();
+  }
+
+  Future<void> _loadFile(final String fileName) async {
+    try {
+      decodedMap = await rootBundle
+          .loadString('$_basePath/$fileName.json')
+          .then((jsonString) => json.decode(jsonString));
+    } on FlutterError catch (_) {
+      var yamlNode = await rootBundle
+          .loadString('$_basePath/$fileName.yaml')
+          .then((yamlString) => loadYamlNode(yamlString));
+      decodedMap = _convertYaml(yamlNode);
+    }
   }
 
   Future<Locale> _findCurrentLocale() async {
