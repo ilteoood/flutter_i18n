@@ -4,9 +4,12 @@
     "main": "Ciao {user}!"
   },
   "button": {
-    "clickMe": "Premi qui"
+    "label": {
+      "clickMe": "Premi qui",
+      "language": "Cambia lingua"
+    },
+    "toastMessage": "Hai premuto un bottone!"
   },
-  "toastMessage": "Hai premuto un bottone!",
   "clicked": {
     "times-0": "Hai premuto {times} volte!",
     "times-1": "Hai premuto {time} volta!",

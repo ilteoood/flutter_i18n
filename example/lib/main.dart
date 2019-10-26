@@ -88,18 +88,18 @@ class MyHomeState extends State<MyHomePage> {
                     incrementCounter();
                   },
                   child: new Text(
-                      FlutterI18n.translate(context, "button.clickMe"))),
+                      FlutterI18n.translate(context, "button.label.clickMe"))),
               new FlatButton(
                   onPressed: () async {
                     changeLanguage();
                     await FlutterI18n.refresh(context, currentLang);
                     Scaffold.of(context).showSnackBar(new SnackBar(
-                      content: new Text(
-                          FlutterI18n.translate(context, "toastMessage")),
+                      content: new Text(FlutterI18n.translate(
+                          context, "button.toastMessage")),
                     ));
                   },
                   child: new Text(
-                      FlutterI18n.translate(context, "button.clickMe")))
+                      FlutterI18n.translate(context, "button.label.language")))
             ],
           ),
         );
