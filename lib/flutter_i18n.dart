@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -56,13 +57,17 @@ class FlutterI18n {
   }
 
   Future<void> _loadFile(final String fileName) async {
-    try {
+    final jsonPath = '$_basePath/$fileName.json';
+    final yamlPath = '$_basePath/$fileName.yaml';
+
+    final jsonExists = await File(jsonPath).exists();
+    if (jsonExists) {
       decodedMap = await rootBundle
-          .loadString('$_basePath/$fileName.json')
+          .loadString(jsonPath)
           .then((jsonString) => json.decode(jsonString));
-    } on FlutterError catch (_) {
+    } else {
       var yamlNode = await rootBundle
-          .loadString('$_basePath/$fileName.yaml')
+          .loadString(yamlPath)
           .then((yamlString) => loadYamlNode(yamlString));
       decodedMap = _convertYaml(yamlNode);
     }
