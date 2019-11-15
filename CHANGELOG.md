@@ -91,3 +91,7 @@ From this version of *FlutterI18n*, you can use as 4th parameter the ***forcedLa
 ## [0.8.0]
 
 Support for *yml* language files
+
+## [0.8.1]
+
+Improved *json* and *yml* loading
