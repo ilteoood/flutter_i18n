@@ -95,3 +95,7 @@ Support for *yml* language files
 ## [0.8.1]
 
 Improved *json* and *yml* loading
+
+## [0.8.2]
+
+Bugfix and code improvement
