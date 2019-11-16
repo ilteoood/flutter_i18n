@@ -11,6 +11,7 @@ Future main() async {
       fallbackFile: 'en',
       path: 'assets/i18n',
       forcedLocale: new Locale('es'));
+  WidgetsFlutterBinding.ensureInitialized();
   await flutterI18nDelegate.load(null);
   runApp(new MyApp(flutterI18nDelegate));
 }

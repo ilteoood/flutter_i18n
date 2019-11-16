@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -17,7 +16,7 @@ class FlutterI18n {
 
   Locale locale;
 
-  Map<String, dynamic> decodedMap;
+  Map<dynamic, dynamic> decodedMap;
 
   FlutterI18n(this._useCountryCode,
       [this._fallbackFile, this._basePath, this.forcedLocale]);
@@ -46,31 +45,19 @@ class FlutterI18n {
     }
   }
 
-  dynamic _convertYaml(final YamlNode node) {
-    if (node is YamlMap) {
-      return Map.fromEntries(node.entries.map((e) => MapEntry(e.key.toString(),
-          e.value is YamlNode ? _convertYaml(e.value) : e.value.toString())));
-    } else if (node is YamlScalar) {
-      return node.toString();
+  Future<void> _loadFile(final String fileName) async {
+    try {
+      await _decodeFile(fileName, 'json', json.decode);
+    } on Error catch (_) {
+      await _decodeFile(fileName, 'yaml', loadYaml);
     }
-    return Map.identity();
   }
 
-  Future<void> _loadFile(final String fileName) async {
-    final jsonPath = '$_basePath/$fileName.json';
-    final yamlPath = '$_basePath/$fileName.yaml';
-
-    final jsonExists = await File(jsonPath).exists();
-    if (jsonExists) {
-      decodedMap = await rootBundle
-          .loadString(jsonPath)
-          .then((jsonString) => json.decode(jsonString));
-    } else {
-      var yamlNode = await rootBundle
-          .loadString(yamlPath)
-          .then((yamlString) => loadYamlNode(yamlString));
-      decodedMap = _convertYaml(yamlNode);
-    }
+  Future<void> _decodeFile(final String fileName, final String extension,
+      final Function decodeFunction) async {
+    decodedMap = await rootBundle
+        .loadString('$_basePath/$fileName.$extension')
+        .then((fileContent) => decodeFunction(fileContent));
   }
 
   Future<Locale> _findCurrentLocale() async {
@@ -84,7 +71,7 @@ class FlutterI18n {
   static String plural(final BuildContext context, final String translationKey,
       final int pluralValue) {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
-    final Map<String, dynamic> decodedSubMap =
+    final Map<dynamic, dynamic> decodedSubMap =
         _calculateSubmap(currentInstance.decodedMap, translationKey);
     final String correctKey =
         _findCorrectKey(decodedSubMap, translationKey, pluralValue);
@@ -94,7 +81,7 @@ class FlutterI18n {
         Map.fromIterables([parameterName], [pluralValue.toString()]));
   }
 
-  static String _findCorrectKey(Map<String, dynamic> decodedSubMap,
+  static String _findCorrectKey(Map<dynamic, dynamic> decodedSubMap,
       String translationKey, final int pluralValue) {
     final List<String> splittedKey = translationKey.split(".");
     translationKey = splittedKey.removeLast();
@@ -112,8 +99,8 @@ class FlutterI18n {
     return splittedKey.join(".");
   }
 
-  static Map<String, dynamic> _calculateSubmap(
-      Map<String, dynamic> decodedMap, final String translationKey) {
+  static Map<dynamic, dynamic> _calculateSubmap(
+      Map<dynamic, dynamic> decodedMap, final String translationKey) {
     final List<String> translationKeySplitted = translationKey.split(".");
     translationKeySplitted.removeLast();
     translationKeySplitted.forEach((listKey) => decodedMap =
@@ -163,7 +150,7 @@ class FlutterI18n {
 
   static String _translateWithKeyFallback(
       final BuildContext context, final String key) {
-    final Map<String, dynamic> decodedStrings =
+    final Map<dynamic, dynamic> decodedStrings =
         _retrieveCurrentInstance(context).decodedMap;
     String translation = _decodeFromMap(decodedStrings, key);
     if (translation == null) {
@@ -178,8 +165,8 @@ class FlutterI18n {
   }
 
   static String _decodeFromMap(
-      Map<String, dynamic> decodedStrings, final String key) {
-    final Map<String, dynamic> subMap = _calculateSubmap(decodedStrings, key);
+      Map<dynamic, dynamic> decodedStrings, final String key) {
+    final Map<dynamic, dynamic> subMap = _calculateSubmap(decodedStrings, key);
     final String lastKeyPart = key.split(".").last;
     return subMap[lastKeyPart];
   }
