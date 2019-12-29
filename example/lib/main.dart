@@ -17,7 +17,7 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
-  FlutterI18nDelegate flutterI18nDelegate;
+  final FlutterI18nDelegate flutterI18nDelegate;
 
   MyApp(this.flutterI18nDelegate);
 
