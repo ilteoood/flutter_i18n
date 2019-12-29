@@ -46,11 +46,13 @@ The next step consist in the configuration of the *localizationsDelegates*; to u
 
 ```sh
 localizationsDelegates: [
-        FlutterI18nDelegate({useCountryCode = false, fallbackFile, basePath = "assets/flutter_i18n"}),
+        FlutterI18nDelegate(...parameters...),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
 ],
 ```
+
+Below you can find the name and description of the accepted parameters.
 
 The ***useCountryCode*** parameter depends on the *json* configuration:
 - if you used the pattern {languageCode}_{countryCode}, ***useCountryCode*** must be **true**
@@ -58,7 +60,7 @@ The ***useCountryCode*** parameter depends on the *json* configuration:
 
 The ***fallbackFile*** parameter was entroduces with the version **0.1.0** and provide a default language, used when the translation for the current running system is not provided. This should contain the name of a valid *json* file in *assets* folder.
 
-The ***basePath*** parameter is optionally used to set the base path for translations. If this option is not set, the default path will be `assets/flutter_i18n`. This path must be the same path as the one defined in your ***pubspec.yaml***.
+The ***path*** parameter is optionally used to set the base path for translations. If this option is not set, the default path will be `assets/flutter_i18n`. This path must be the same path as the one defined in your ***pubspec.yaml***.
 
 The ***forcedLocale*** parameter is optionally used to force a locale instead finding the system one.
 
@@ -78,14 +80,19 @@ Where:
 
 Other examples of use:
 
+Force a language to be loaded at run-time:
 ```sh
 await FlutterI18n.refresh(buildContext, languageCode, {countryCode});
 ```
 
-
+Plural translations:
 ```sh
 FlutterI18n.plural(buildContext, "your.key", pluralValue);
 ```
 
 
-For more informations, read the CHANGELOG.md.
+For more informations and details, read the [CHANGELOG.md](CHANGELOG.md).
+
+Known problems:
+    
+- In iOS simulator, is always used the *en_US* locale: see [here](https://github.com/ilteoood/flutter_i18n/issues/58).
