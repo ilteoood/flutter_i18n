@@ -99,3 +99,7 @@ Improved *json* and *yml* loading
 ## [0.8.2]
 
 Bugfix and code improvement
+
+## [0.8.3]
+
+Library will print debug messages only in development mode
