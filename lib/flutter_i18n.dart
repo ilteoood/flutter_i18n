@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:yaml/yaml.dart';
+
+import 'message_printer.dart';
 
 class FlutterI18n {
   static RegExp _parameterRegexp = new RegExp("{(.+)}");
@@ -26,7 +27,7 @@ class FlutterI18n {
     try {
       await _loadCurrentTranslation(this.forcedLocale);
     } catch (e) {
-      _printDebugMessage('Error loading translation $e');
+      MessagePrinter.debug('Error loading translation $e');
       await _loadFallback();
     }
     return true;
@@ -34,7 +35,7 @@ class FlutterI18n {
 
   Future _loadCurrentTranslation(final Locale locale) async {
     this.locale = locale != null ? locale : await _findCurrentLocale();
-    _printDebugMessage("The current locale is ${this.locale}");
+    MessagePrinter.info("The current locale is ${this.locale}");
     await _loadFile(_composeFileName());
   }
 
@@ -42,7 +43,7 @@ class FlutterI18n {
     try {
       await _loadFile(_fallbackFile);
     } catch (e) {
-      _printDebugMessage('Error loading translation fallback $e');
+      MessagePrinter.debug('Error loading translation fallback $e');
       decodedMap = Map();
     }
   }
@@ -50,9 +51,9 @@ class FlutterI18n {
   Future<void> _loadFile(final String fileName) async {
     try {
       await _decodeFile(fileName, 'json', json.decode);
-      _printDebugMessage("JSON file loaded for $fileName");
+      MessagePrinter.info("JSON file loaded for $fileName");
     } on Error catch (_) {
-      _printDebugMessage("Unable to load JSON file for $fileName, I'm trying with YAML");
+      MessagePrinter.debug("Unable to load JSON file for $fileName, I'm trying with YAML");
       await _decodeFile(fileName, 'yaml', loadYaml);
     }
   }
@@ -66,7 +67,7 @@ class FlutterI18n {
 
   Future<Locale> _findCurrentLocale() async {
     final String systemLocale = await findSystemLocale();
-    _printDebugMessage("The system locale is $systemLocale");
+    MessagePrinter.info("The system locale is $systemLocale");
     final List<String> systemLocaleSplitted = systemLocale.split("_");
     final int countryCodeIndex = systemLocaleSplitted.length == 3 ? 2 : 1;
     return Future(() => Locale(
@@ -159,7 +160,7 @@ class FlutterI18n {
         _retrieveCurrentInstance(context).decodedMap;
     String translation = _decodeFromMap(decodedStrings, key);
     if (translation == null) {
-      _printDebugMessage("**$key** not found");
+      MessagePrinter.debug("**$key** not found");
       translation = key;
     }
     return translation;
@@ -186,11 +187,5 @@ class FlutterI18n {
       countryCode = "_${locale.countryCode}";
     }
     return countryCode;
-  }
-
-  static void _printDebugMessage(final String message) {
-    if(!Foundation.kReleaseMode) {
-      print(message);
-    }
   }
 }
