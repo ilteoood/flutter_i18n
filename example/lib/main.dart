@@ -10,10 +10,10 @@ Future main() async {
       useCountryCode: false,
       fallbackFile: 'en',
       path: 'assets/i18n',
-      forcedLocale: new Locale('es'));
+      forcedLocale: Locale('es'));
   WidgetsFlutterBinding.ensureInitialized();
   await flutterI18nDelegate.load(null);
-  runApp(new MyApp(flutterI18nDelegate));
+  runApp(MyApp(flutterI18nDelegate));
 }
 
 class MyApp extends StatelessWidget {
@@ -23,12 +23,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
-      theme: new ThemeData(
+      theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(),
+      home: MyHomePage(),
       localizationsDelegates: [
         flutterI18nDelegate,
         GlobalMaterialLocalizations.delegate,
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   @override
-  MyHomeState createState() => new MyHomeState();
+  MyHomeState createState() => MyHomeState();
 }
 
 class MyHomeState extends State<MyHomePage> {
@@ -50,7 +50,7 @@ class MyHomeState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    new Future.delayed(Duration.zero, () async {
+    Future.delayed(Duration.zero, () async {
       setState(() {
         currentLang = FlutterI18n.currentLocale(context);
       });
@@ -60,8 +60,8 @@ class MyHomeState extends State<MyHomePage> {
   changeLanguage() {
     setState(() {
       currentLang = currentLang.languageCode == 'en'
-          ? new Locale('it')
-          : new Locale('en');
+          ? Locale('it')
+          : Locale('en');
     });
   }
 
@@ -73,33 +73,33 @@ class MyHomeState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       appBar:
-      new AppBar(title: new Text(FlutterI18n.translate(context, "title"))),
-      body: new Builder(builder: (BuildContext context) {
-        return new Center(
-          child: new Column(
+      AppBar(title: Text(FlutterI18n.translate(context, "title"))),
+      body: Builder(builder: (BuildContext context) {
+        return Center(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              new Text(FlutterI18n.translate(context, "label.main",
+              Text(FlutterI18n.translate(context, "label.main",
                   Map.fromIterables(["user"], ["Flutter lover"]))),
-              new Text(FlutterI18n.plural(context, "clicked.times", clicked)),
-              new FlatButton(
+              Text(FlutterI18n.plural(context, "clicked.times", clicked)),
+              FlatButton(
                   onPressed: () async {
                     incrementCounter();
                   },
-                  child: new Text(
+                  child: Text(
                       FlutterI18n.translate(context, "button.label.clickMe"))),
-              new FlatButton(
+              FlatButton(
                   onPressed: () async {
                     changeLanguage();
                     await FlutterI18n.refresh(context, currentLang);
-                    Scaffold.of(context).showSnackBar(new SnackBar(
-                      content: new Text(FlutterI18n.translate(
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(FlutterI18n.translate(
                           context, "button.toastMessage")),
                     ));
                   },
-                  child: new Text(
+                  child: Text(
                       FlutterI18n.translate(context, "button.label.language")))
             ],
           ),
