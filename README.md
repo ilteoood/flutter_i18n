@@ -36,7 +36,7 @@ If the *json* file is not available, we will look for a *yaml* file with the sam
 
 Of course, you must declare the subtree in your ***pubspec.yaml*** as assets:
 
-```sh
+```yaml
 flutter:
   assets:
     - {basePath}
@@ -44,7 +44,7 @@ flutter:
 
 The next step consist in the configuration of the *localizationsDelegates*; to use *flutter_i18n*, you should configure as follows:
 
-```sh
+```dart
 localizationsDelegates: [
         FlutterI18nDelegate(...parameters...),
         GlobalMaterialLocalizations.delegate,
@@ -70,7 +70,7 @@ If there isn't any translation available for the required key, the same key is r
 
 After the configuration steps, the only thing to do is invoke the following method:
 
-```sh
+```dart
 FlutterI18n.translate(buildContext, "your.key")
 ```
 
@@ -81,13 +81,20 @@ Where:
 Other examples of use:
 
 Force a language to be loaded at run-time:
-```sh
+```dart
 await FlutterI18n.refresh(buildContext, languageCode, {countryCode});
 ```
 
 Plural translations:
-```sh
+```dart
 FlutterI18n.plural(buildContext, "your.key", pluralValue);
+```
+
+Text widget shorthand:
+```dart
+I18nText("your.key")
+I18nText("your.key", params: {"param": "value"})
+I18nText("your.key", plural: 42)
 ```
 
 
