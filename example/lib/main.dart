@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
+import 'package:flutter_i18n/i18n_text.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future main() async {
@@ -59,9 +60,8 @@ class MyHomeState extends State<MyHomePage> {
 
   changeLanguage() {
     setState(() {
-      currentLang = currentLang.languageCode == 'en'
-          ? Locale('it')
-          : Locale('en');
+      currentLang =
+          currentLang.languageCode == 'en' ? Locale('it') : Locale('en');
     });
   }
 
@@ -74,33 +74,33 @@ class MyHomeState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-      AppBar(title: Text(FlutterI18n.translate(context, "title"))),
+      appBar: AppBar(title: Text(FlutterI18n.translate(context, "title"))),
       body: Builder(builder: (BuildContext context) {
         return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(FlutterI18n.translate(context, "label.main",
-                  Map.fromIterables(["user"], ["Flutter lover"]))),
-              Text(FlutterI18n.plural(context, "clicked.times", clicked)),
+              I18nText(
+                "label.main",
+                params: Map.fromIterables(["user"], ["Flutter lover"]),
+              ),
+              I18nText("clicked.times", plural: clicked),
               FlatButton(
-                  onPressed: () async {
-                    incrementCounter();
-                  },
-                  child: Text(
-                      FlutterI18n.translate(context, "button.label.clickMe"))),
+                onPressed: () async {
+                  incrementCounter();
+                },
+                child: I18nText("button.label.clickMe"),
+              ),
               FlatButton(
-                  onPressed: () async {
-                    changeLanguage();
-                    await FlutterI18n.refresh(context, currentLang);
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(FlutterI18n.translate(
-                          context, "button.toastMessage")),
-                    ));
-                  },
-                  child: Text(
-                      FlutterI18n.translate(context, "button.label.language")))
+                onPressed: () async {
+                  changeLanguage();
+                  await FlutterI18n.refresh(context, currentLang);
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: I18nText("button.toastMessage"),
+                  ));
+                },
+                child: I18nText("button.label.language"),
+              )
             ],
           ),
         );
