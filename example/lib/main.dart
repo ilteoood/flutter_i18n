@@ -74,7 +74,7 @@ class MyHomeState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(FlutterI18n.translate(context, "title"))),
+      appBar: AppBar(title: I18nText("title")),
       body: Builder(builder: (BuildContext context) {
         return Center(
           child: Column(
