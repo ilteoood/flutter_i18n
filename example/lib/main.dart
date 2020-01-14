@@ -82,7 +82,7 @@ class MyHomeState extends State<MyHomePage> {
             children: <Widget>[
               I18nText(
                 "label.main",
-                params: Map.fromIterables(["user"], ["Flutter lover"]),
+                params: {"user": "Flutter lover"},
               ),
               I18nText("clicked.times", plural: clicked),
               FlatButton(
