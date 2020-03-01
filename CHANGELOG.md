@@ -103,3 +103,8 @@ Bugfix and code improvement
 ## [0.8.3]
 
 Library will print debug messages only in development mode
+
+## [0.9.0]
+
+Added a new optional parameter to the translate method: *fallbackKey*.
+You can use it when the translation *key* is not found.
