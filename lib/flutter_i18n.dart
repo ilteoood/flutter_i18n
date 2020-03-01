@@ -53,7 +53,8 @@ class FlutterI18n {
       await _decodeFile(fileName, 'json', json.decode);
       MessagePrinter.info("JSON file loaded for $fileName");
     } on Error catch (_) {
-      MessagePrinter.debug("Unable to load JSON file for $fileName, I'm trying with YAML");
+      MessagePrinter.debug(
+          "Unable to load JSON file for $fileName, I'm trying with YAML");
       await _decodeFile(fileName, 'yaml', loadYaml);
     }
   }
@@ -84,7 +85,8 @@ class FlutterI18n {
     final String parameterName =
         _findParameterName(decodedSubMap[correctKey.split(".").last]);
     return translate(context, correctKey,
-        Map.fromIterables([parameterName], [pluralValue.toString()]));
+        translationParams:
+            Map.fromIterables([parameterName], [pluralValue.toString()]));
   }
 
   static String _findCorrectKey(Map<dynamic, dynamic> decodedSubMap,
@@ -133,8 +135,8 @@ class FlutterI18n {
   }
 
   static String translate(final BuildContext context, final String key,
-      [final Map<String, String> translationParams]) {
-    String translation = _translateWithKeyFallback(context, key);
+      {final String fallbackKey, final Map<String, String> translationParams}) {
+    String translation = _translateWithKeyFallback(context, key, fallbackKey);
     if (translationParams != null) {
       translation = _replaceParams(translation, translationParams);
     }
@@ -155,15 +157,15 @@ class FlutterI18n {
   }
 
   static String _translateWithKeyFallback(
-      final BuildContext context, final String key) {
+      final BuildContext context, final String key, final String fallbackKey) {
     final Map<dynamic, dynamic> decodedStrings =
         _retrieveCurrentInstance(context).decodedMap;
-    String translation = _decodeFromMap(decodedStrings, key);
-    if (translation == null) {
-      MessagePrinter.debug("**$key** not found");
-      translation = key;
-    }
-    return translation;
+    return [
+      _decodeFromMap(decodedStrings, key),
+      _decodeFromMap(decodedStrings, fallbackKey ?? ""),
+      fallbackKey,
+      key
+    ].firstWhere((translation) => translation != null);
   }
 
   static FlutterI18n _retrieveCurrentInstance(BuildContext context) {

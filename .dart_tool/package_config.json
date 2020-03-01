@@ -185,10 +185,10 @@
       "name": "flutter_i18n",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "1.19"
+      "languageVersion": "2.3"
     }
   ],
-  "generated": "2019-12-29T15:51:46.418695Z",
+  "generated": "2020-03-01T17:24:01.404579Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }

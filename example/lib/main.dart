@@ -75,21 +75,22 @@ class MyHomeState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar:
-      new AppBar(title: new Text(FlutterI18n.translate(context, "title"))),
+          new AppBar(title: new Text(FlutterI18n.translate(context, "title"))),
       body: new Builder(builder: (BuildContext context) {
         return new Center(
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Text(FlutterI18n.translate(context, "label.main",
-                  Map.fromIterables(["user"], ["Flutter lover"]))),
+                  translationParams: {"user": "Flutter lover"})),
               new Text(FlutterI18n.plural(context, "clicked.times", clicked)),
               new FlatButton(
                   onPressed: () async {
                     incrementCounter();
                   },
-                  child: new Text(
-                      FlutterI18n.translate(context, "button.label.clickMe"))),
+                  child: new Text(FlutterI18n.translate(
+                      context, "button.label.clickMea",
+                      fallbackKey: "button.label.clickMe"))),
               new FlatButton(
                   onPressed: () async {
                     changeLanguage();
