@@ -108,3 +108,12 @@ Library will print debug messages only in development mode
 
 Added a new optional parameter to the translate method: *fallbackKey*.
 You can use it when the translation *key* is not found.
+
+## [0.10.0]
+
+Added stateless widgets in order to avoid to deal with BuildContext.
+```dart
+I18nText("your.key", Text(""))
+I18nText("your.key", Text(""), translationParams: {"user": "Flutter lover"})
+I18nPlural("clicked.times", 2, Text(""))
+```
