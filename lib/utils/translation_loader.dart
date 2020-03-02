@@ -13,7 +13,8 @@ class TranslationLoader {
   final String _basePath;
   final bool _useCountryCode;
   final Locale _forcedLocale;
-  Locale _locale;
+
+  Locale locale;
   Map<dynamic, dynamic> _decodedMap;
 
   TranslationLoader(
@@ -33,8 +34,8 @@ class TranslationLoader {
   }
 
   Future _loadCurrentTranslation(final Locale locale) async {
-    this._locale = locale != null ? locale : await _findCurrentLocale();
-    MessagePrinter.info("The current locale is ${this._locale}");
+    this.locale = locale != null ? locale : await _findCurrentLocale();
+    MessagePrinter.info("The current locale is ${this.locale}");
     await _loadFile(_composeFileName());
   }
 
@@ -75,13 +76,13 @@ class TranslationLoader {
   }
 
   String _composeFileName() {
-    return "${_locale.languageCode}${_composeCountryCode()}";
+    return "${locale.languageCode}${_composeCountryCode()}";
   }
 
   String _composeCountryCode() {
     String countryCode = "";
-    if (_useCountryCode && _locale.countryCode != null) {
-      countryCode = "_${_locale.countryCode}";
+    if (_useCountryCode && locale.countryCode != null) {
+      countryCode = "_${locale.countryCode}";
     }
     return countryCode;
   }
