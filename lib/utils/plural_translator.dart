@@ -2,7 +2,7 @@ import 'package:flutter_i18n/utils/simple_translator.dart';
 
 class PluralTranslator extends SimpleTranslator {
   static const String PLURAL_SEPARATOR = "-";
-  static final RegExp _parameterRegexp = new RegExp("{(.+)}");
+  static final RegExp _parameterRegexp = RegExp("{(.+)}");
 
   final int pluralValue;
 

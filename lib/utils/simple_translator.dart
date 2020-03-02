@@ -21,7 +21,7 @@ class SimpleTranslator {
   String _replaceParams(String translation) {
     for (final String paramKey in translationParams.keys) {
       translation = translation.replaceAll(
-          new RegExp('{$paramKey}'), translationParams[paramKey]);
+          RegExp('{$paramKey}'), translationParams[paramKey]);
     }
     return translation;
   }
@@ -49,7 +49,7 @@ class SimpleTranslator {
     translationKeySplitted.forEach((listKey) => decodedSubMap =
         decodedSubMap != null && decodedSubMap[listKey] != null
             ? decodedSubMap[listKey]
-            : new Map());
+            : Map());
     return decodedSubMap;
   }
 }
