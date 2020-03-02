@@ -90,6 +90,12 @@ Plural translations:
 FlutterI18n.plural(buildContext, "your.key", pluralValue);
 ```
 
+Text widget shorthand:
+```dart
+I18nText("your.key", Text(""))
+I18nText("your.key", Text(""), translationParams: {"user": "Flutter lover"})
+I18nPlural("clicked.times", 2, Text(""))
+```
 
 For more informations and details, read the [CHANGELOG.md](CHANGELOG.md).
 
