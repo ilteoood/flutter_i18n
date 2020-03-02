@@ -3,7 +3,7 @@ library flutter_i18n;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/message_printer.dart';
+import 'package:flutter_i18n/utils/message_printer.dart';
 
 import 'flutter_i18n.dart';
 

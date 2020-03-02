@@ -1,13 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:flutter/services.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl_standalone.dart';
-import 'package:yaml/yaml.dart';
-
-import 'message_printer.dart';
+import 'package:flutter_i18n/utils/translation_loader.dart';
 
 class FlutterI18n {
   static RegExp _parameterRegexp = new RegExp("{(.+)}");
@@ -24,55 +18,13 @@ class FlutterI18n {
       [this._fallbackFile, this._basePath, this.forcedLocale]);
 
   Future<bool> load() async {
-    try {
-      await _loadCurrentTranslation(this.forcedLocale);
-    } catch (e) {
-      MessagePrinter.debug('Error loading translation $e');
-      await _loadFallback();
-    }
+    final TranslationLoader translationLoader = TranslationLoader(
+        this._fallbackFile,
+        this._basePath,
+        this._useCountryCode,
+        this.forcedLocale);
+    decodedMap = await translationLoader.load();
     return true;
-  }
-
-  Future _loadCurrentTranslation(final Locale locale) async {
-    this.locale = locale != null ? locale : await _findCurrentLocale();
-    MessagePrinter.info("The current locale is ${this.locale}");
-    await _loadFile(_composeFileName());
-  }
-
-  Future _loadFallback() async {
-    try {
-      await _loadFile(_fallbackFile);
-    } catch (e) {
-      MessagePrinter.debug('Error loading translation fallback $e');
-      decodedMap = Map();
-    }
-  }
-
-  Future<void> _loadFile(final String fileName) async {
-    try {
-      await _decodeFile(fileName, 'json', json.decode);
-      MessagePrinter.info("JSON file loaded for $fileName");
-    } on Error catch (_) {
-      MessagePrinter.debug(
-          "Unable to load JSON file for $fileName, I'm trying with YAML");
-      await _decodeFile(fileName, 'yaml', loadYaml);
-    }
-  }
-
-  Future<void> _decodeFile(final String fileName, final String extension,
-      final Function decodeFunction) async {
-    decodedMap = await rootBundle
-        .loadString('$_basePath/$fileName.$extension')
-        .then((fileContent) => decodeFunction(fileContent));
-  }
-
-  Future<Locale> _findCurrentLocale() async {
-    final String systemLocale = await findSystemLocale();
-    MessagePrinter.info("The system locale is $systemLocale");
-    final List<String> systemLocaleSplitted = systemLocale.split("_");
-    final int countryCodeIndex = systemLocaleSplitted.length == 3 ? 2 : 1;
-    return Future(() => Locale(
-        systemLocaleSplitted[0], systemLocaleSplitted[countryCodeIndex]));
   }
 
   static String plural(final BuildContext context, final String translationKey,
@@ -131,7 +83,7 @@ class FlutterI18n {
       final BuildContext context, final Locale forcedLocale) async {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
     currentInstance.forcedLocale = forcedLocale;
-    await currentInstance._loadCurrentTranslation(forcedLocale);
+    await currentInstance.load();
   }
 
   static String translate(final BuildContext context, final String key,
@@ -177,17 +129,5 @@ class FlutterI18n {
     final Map<dynamic, dynamic> subMap = _calculateSubmap(decodedStrings, key);
     final String lastKeyPart = key.split(".").last;
     return subMap[lastKeyPart];
-  }
-
-  String _composeFileName() {
-    return "${locale.languageCode}${_composeCountryCode()}";
-  }
-
-  String _composeCountryCode() {
-    String countryCode = "";
-    if (_useCountryCode && locale.countryCode != null) {
-      countryCode = "_${locale.countryCode}";
-    }
-    return countryCode;
   }
 }
