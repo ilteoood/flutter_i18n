@@ -3,16 +3,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
+import 'package:flutter_i18n/loaders/file_translation_loader.dart';
 import 'package:flutter_i18n/widgets/I18nPlural.dart';
 import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future main() async {
   final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
-      useCountryCode: false,
-      fallbackFile: 'en',
-      path: 'assets/i18n',
-      forcedLocale: Locale('es'));
+    translationLoader: FileTranslationLoader(
+        useCountryCode: false,
+        fallbackFile: 'en',
+        basePath: 'assets/i18n',
+        forcedLocale: Locale('es')),
+  );
   WidgetsFlutterBinding.ensureInitialized();
   await flutterI18nDelegate.load(null);
   runApp(MyApp(flutterI18nDelegate));
@@ -59,11 +62,11 @@ class MyHomeState extends State<MyHomePage> {
     });
   }
 
-  changeLanguage() {
-    setState(() {
-      currentLang =
-          currentLang.languageCode == 'en' ? Locale('it') : Locale('en');
-    });
+  changeLanguage() async {
+    currentLang =
+        currentLang.languageCode == 'en' ? Locale('it') : Locale('en');
+    await FlutterI18n.refresh(context, currentLang);
+    setState(() {});
   }
 
   incrementCounter() {
@@ -93,8 +96,7 @@ class MyHomeState extends State<MyHomePage> {
                       fallbackKey: "button.label.clickMe"))),
               FlatButton(
                   onPressed: () async {
-                    changeLanguage();
-                    await FlutterI18n.refresh(context, currentLang);
+                    await changeLanguage();
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(FlutterI18n.translate(
                           context, "button.toastMessage")),

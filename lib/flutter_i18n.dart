@@ -1,33 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_i18n/loaders/file_translation_loader.dart';
+import 'package:flutter_i18n/loaders/translation_loader.dart';
 import 'package:flutter_i18n/utils/plural_translator.dart';
 import 'package:flutter_i18n/utils/simple_translator.dart';
-import 'package:flutter_i18n/utils/translation_loader.dart';
 
 class FlutterI18n {
-  final bool _useCountryCode;
-  final String _fallbackFile;
-  final String _basePath;
-  Locale forcedLocale;
-
-  Locale locale;
+  TranslationLoader translationLoader;
 
   Map<dynamic, dynamic> decodedMap;
 
-  FlutterI18n(this._useCountryCode,
-      [this._fallbackFile, this._basePath, this.forcedLocale]);
+  FlutterI18n(TranslationLoader translationLoader) {
+    this.translationLoader = translationLoader ?? FileTranslationLoader();
+  }
 
   Future<bool> load() async {
-    final TranslationLoader translationLoader = TranslationLoader(
-        this._fallbackFile,
-        this._basePath,
-        this._useCountryCode,
-        this.forcedLocale);
     decodedMap = await translationLoader.load();
-    locale = translationLoader.locale;
     return true;
   }
+
+  get locale => this.translationLoader.locale;
 
   static String plural(final BuildContext context, final String translationKey,
       final int pluralValue) {
@@ -40,7 +33,7 @@ class FlutterI18n {
   static Future refresh(
       final BuildContext context, final Locale forcedLocale) async {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
-    currentInstance.forcedLocale = forcedLocale;
+    currentInstance.translationLoader.locale = forcedLocale;
     await currentInstance.load();
   }
 
@@ -54,7 +47,7 @@ class FlutterI18n {
   }
 
   static Locale currentLocale(final BuildContext context) {
-    return _retrieveCurrentInstance(context).locale;
+    return _retrieveCurrentInstance(context).translationLoader.locale;
   }
 
   static FlutterI18n _retrieveCurrentInstance(BuildContext context) {
