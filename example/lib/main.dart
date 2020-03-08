@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:flutter_i18n/flutter_i18n_delegate.dart';
-import 'package:flutter_i18n/loaders/file_translation_loader.dart';
 import 'package:flutter_i18n/widgets/I18nPlural.dart';
 import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
