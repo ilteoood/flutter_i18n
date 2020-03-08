@@ -39,6 +39,10 @@ class FileTranslationLoader extends TranslationLoader {
     return _decodedMap;
   }
 
+  Future<String> loadString(final String fileName, final String extension) {
+    return rootBundle.loadString('$basePath/$fileName.$extension');
+  }
+
   Future _loadCurrentTranslation() async {
     this.locale = locale ?? await _findCurrentLocale();
     MessagePrinter.info("The current locale is ${this.locale}");
@@ -68,8 +72,7 @@ class FileTranslationLoader extends TranslationLoader {
 
   Future<void> _decodeFile(final String fileName, final String extension,
       final Function decodeFunction) async {
-    _decodedMap = await rootBundle
-        .loadString('$basePath/$fileName.$extension')
+    _decodedMap = await loadString(fileName, extension)
         .then((fileContent) => decodeFunction(fileContent));
   }
 
