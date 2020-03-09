@@ -7,6 +7,7 @@ import 'package:flutter_i18n/utils/plural_translator.dart';
 import 'package:flutter_i18n/utils/simple_translator.dart';
 
 export 'flutter_i18n_delegate.dart';
+export 'loaders/e2e_file_translation_loader.dart';
 export 'loaders/file_translation_loader.dart';
 export 'loaders/translation_loader.dart';
 export 'widgets/I18nPlural.dart';
