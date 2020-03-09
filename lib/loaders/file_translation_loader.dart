@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/loaders/translation_loader.dart';
-import 'package:intl/intl_standalone.dart';
 import 'package:yaml/yaml.dart';
 
 import '../utils/message_printer.dart';
@@ -44,7 +43,7 @@ class FileTranslationLoader extends TranslationLoader {
   }
 
   Future _loadCurrentTranslation() async {
-    this.locale = locale ?? await _findCurrentLocale();
+    this.locale = locale ?? await findCurrentLocale();
     MessagePrinter.info("The current locale is ${this.locale}");
     await _loadFile(_composeFileName());
   }
@@ -74,15 +73,6 @@ class FileTranslationLoader extends TranslationLoader {
       final Function decodeFunction) async {
     _decodedMap = await loadString(fileName, extension)
         .then((fileContent) => decodeFunction(fileContent));
-  }
-
-  Future<Locale> _findCurrentLocale() async {
-    final String systemLocale = await findSystemLocale();
-    MessagePrinter.info("The system locale is $systemLocale");
-    final List<String> systemLocaleSplitted = systemLocale.split("_");
-    final int countryCodeIndex = systemLocaleSplitted.length == 3 ? 2 : 1;
-    return Future(() => Locale(
-        systemLocaleSplitted[0], systemLocaleSplitted[countryCodeIndex]));
   }
 
   String _composeFileName() {
