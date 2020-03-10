@@ -17,10 +17,16 @@ class _CustomAssetBundle extends PlatformAssetBundle {
 }
 
 class E2EFileTranslationLoader extends FileTranslationLoader {
+  final bool useE2E;
+
   _CustomAssetBundle customAssetBundle = _CustomAssetBundle();
 
   E2EFileTranslationLoader(
-      {fallbackFile, basePath, useCountryCode, forcedLocale})
+      {fallbackFile,
+      basePath,
+      useCountryCode,
+      forcedLocale,
+      this.useE2E = true})
       : super(
           fallbackFile: fallbackFile,
           basePath: basePath,
@@ -29,6 +35,8 @@ class E2EFileTranslationLoader extends FileTranslationLoader {
         );
 
   Future<String> loadString(final String fileName, final String extension) {
-    return customAssetBundle.loadString('$basePath/$fileName.$extension');
+    return useE2E
+        ? customAssetBundle.loadString('$basePath/$fileName.$extension')
+        : super.loadString(fileName, extension);
   }
 }
