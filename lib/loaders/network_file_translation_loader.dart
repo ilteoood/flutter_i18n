@@ -23,6 +23,6 @@ class NetworkFileTranslationLoader extends FileTranslationLoader {
   }
 
   Future<String> loadString(final String fileName, final String extension) {
-    return networkAssetBundle.loadString('$basePath/$fileName.$extension');
+    return networkAssetBundle.loadString('$fileName.$extension');
   }
 }
