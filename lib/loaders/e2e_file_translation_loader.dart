@@ -22,10 +22,10 @@ class E2EFileTranslationLoader extends FileTranslationLoader {
   _CustomAssetBundle customAssetBundle = _CustomAssetBundle();
 
   E2EFileTranslationLoader(
-      {fallbackFile,
-      basePath,
-      useCountryCode,
-      forcedLocale,
+      {forcedLocale,
+      fallbackFile = "en",
+      basePath = "assets/flutter_i18n",
+      useCountryCode = false,
       this.useE2E = true})
       : super(
           fallbackFile: fallbackFile,
