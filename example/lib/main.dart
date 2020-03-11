@@ -1,111 +1,45 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:flutter_i18n/flutter_i18n_delegate.dart';
-import 'package:flutter_i18n/widgets/I18nPlural.dart';
-import 'package:flutter_i18n/widgets/I18nText.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'basic_example.dart' as basicExample;
+import 'network_example.dart' as networkExample;
 
 Future main() async {
-  final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
-      useCountryCode: false,
-      fallbackFile: 'en',
-      path: 'assets/i18n',
-      forcedLocale: Locale('es'));
   WidgetsFlutterBinding.ensureInitialized();
-  await flutterI18nDelegate.load(null);
-  runApp(MyApp(flutterI18nDelegate));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final FlutterI18nDelegate flutterI18nDelegate;
-
-  MyApp(this.flutterI18nDelegate);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
-      localizationsDelegates: [
-        flutterI18nDelegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate
-      ],
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  MyHomeState createState() => MyHomeState();
-}
-
-class MyHomeState extends State<MyHomePage> {
-  Locale currentLang;
-  int clicked = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () async {
-      setState(() {
-        currentLang = FlutterI18n.currentLocale(context);
-      });
-    });
-  }
-
-  changeLanguage() {
-    setState(() {
-      currentLang =
-          currentLang.languageCode == 'en' ? Locale('it') : Locale('en');
-    });
-  }
-
-  incrementCounter() {
-    setState(() {
-      clicked++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(FlutterI18n.translate(context, "title"))),
-      body: Builder(builder: (BuildContext context) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              I18nText("label.main", Text(""),
-                  translationParams: {"user": "Flutter lover"}),
-              I18nPlural("clicked.times", clicked, Text("")),
-              FlatButton(
-                  onPressed: () async {
-                    incrementCounter();
-                  },
-                  child: Text(FlutterI18n.translate(
-                      context, "button.label.clickMea",
-                      fallbackKey: "button.label.clickMe"))),
-              FlatButton(
-                  onPressed: () async {
-                    changeLanguage();
-                    await FlutterI18n.refresh(context, currentLang);
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(FlutterI18n.translate(
-                          context, "button.toastMessage")),
-                    ));
-                  },
-                  child: Text(
-                      FlutterI18n.translate(context, "button.label.language")))
-            ],
-          ),
-        );
-      }),
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        home: Scaffold(
+            appBar: AppBar(title: Text("Flutter i18n")),
+            body: Builder(builder: (BuildContext context) {
+              return Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    onPressed: () {
+                      basicExample.main();
+                    },
+                    child: Text("Run `basic` example"),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      networkExample.main();
+                    },
+                    child: Text("Run `network` example"),
+                  ),
+                ],
+              ));
+            })));
   }
 }
