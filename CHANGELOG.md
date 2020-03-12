@@ -125,3 +125,7 @@ New translation mechanism, with different and customizable loaders provided:
 * FileTranslationLoader
 * NetworkFileTranslationLoader
 * E2EFileTranslationLoader
+
+## [0.11.1]
+
+Plural translator improvements
