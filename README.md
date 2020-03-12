@@ -18,11 +18,11 @@ You can easy override loader and create your own.
 
 Available loaders:
 
-| **Class name** | **Purpose** |  
-|----------|:-------------:|
-| FileTranslationLoader |  Loads translation files from JSON or YAML format | 
-| NetworkFileTranslationLoader | Loads translations from the remote resource | 
-| E2EFileTranslation loader | Special loader for solving isolates problem with flutter drive  |
+| Class name | Purpose |  
+| - | - |
+| `FileTranslationLoader` |  Loads translation files from JSON or YAML format | 
+| `NetworkFileTranslationLoader` | Loads translations from the remote resource | 
+| `E2EFileTranslation loader` | Special loader for solving isolates problem with flutter drive  |
 
 ### `FileTranslationLoader` configuration
 
