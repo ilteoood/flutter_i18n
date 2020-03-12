@@ -80,12 +80,12 @@ packages:
     source: hosted
     version: "2.1.4"
   intl:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.0"
+    version: "0.16.1"
   matcher:
     dependency: transitive
     description:

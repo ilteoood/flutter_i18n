@@ -117,3 +117,11 @@ I18nText("your.key", Text(""))
 I18nText("your.key", Text(""), translationParams: {"user": "Flutter lover"})
 I18nPlural("clicked.times", 2, Text(""))
 ```
+
+## [0.11.0]
+
+New translation mechanism, with different and customizable loaders provided:
+
+* FileTranslationLoader
+* NetworkFileTranslationLoader
+* E2EFileTranslationLoader
