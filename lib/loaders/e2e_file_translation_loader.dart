@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'file_translation_loader.dart';
@@ -19,7 +19,7 @@ class _CustomAssetBundle extends PlatformAssetBundle {
 class E2EFileTranslationLoader extends FileTranslationLoader {
   final bool useE2E;
 
-  _CustomAssetBundle customAssetBundle = _CustomAssetBundle();
+  AssetBundle customAssetBundle = _CustomAssetBundle();
 
   E2EFileTranslationLoader(
       {forcedLocale,
