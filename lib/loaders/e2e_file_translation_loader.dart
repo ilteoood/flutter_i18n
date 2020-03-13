@@ -2,18 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'file_translation_loader.dart';
 
 class _CustomAssetBundle extends PlatformAssetBundle {
   Future<String> loadString(String key, {bool cache = true}) async {
-    try {
-      final ByteData data = await load(key);
-      return utf8.decode(data.buffer.asUint8List());
-    } catch (e) {
-      return "{}";
-    }
+    final ByteData data = await load(key);
+    if (data == null) throw FlutterError('Unable to load asset: $key');
+
+    return utf8.decode(data.buffer.asUint8List());
   }
 }
 
