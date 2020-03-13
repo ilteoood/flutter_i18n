@@ -75,3 +75,5 @@ fabric.properties
 build/
 
 .flutter-plugins
+
+coverage
