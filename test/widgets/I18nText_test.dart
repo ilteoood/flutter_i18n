@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../test_widget.dart';
@@ -13,5 +14,12 @@ void main() {
 
     expect(valueFinder, findsOneWidget);
     expect(keyFinder, findsNothing);
+  });
+
+  testWidgets('TestWidget should reload language', (WidgetTester tester) async {
+    await tester.pumpWidget(TestWidget());
+    await tester.pump();
+
+    await tester.tap(find.byType(RaisedButton));
   });
 }

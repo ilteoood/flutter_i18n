@@ -22,20 +22,38 @@ class TestWidget extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text("Test"),
-            ),
-            body: Builder(builder: (context) {
-              return Center(
-                child: Column(
-                  children: <Widget>[
-                    I18nText("keySingle", Text("")),
-                    I18nPlural("keyPlural", 1, Text("")),
-                    I18nPlural("keyPlural", 2, Text("")),
-                  ],
+        home: TestWidgetPage());
+  }
+}
+
+class TestWidgetPage extends StatefulWidget {
+  @override
+  createState() => TestWidgetPageState();
+}
+
+class TestWidgetPageState extends State<TestWidgetPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Test"),
+        ),
+        body: Builder(builder: (context) {
+          return Center(
+            child: Column(
+              children: <Widget>[
+                I18nText("keySingle", Text("")),
+                I18nPlural("keyPlural", 1, Text("")),
+                I18nPlural("keyPlural", 2, Text("")),
+                RaisedButton(
+                  onPressed: () async {
+                    var locale = FlutterI18n.currentLocale(context);
+                    await FlutterI18n.refresh(context, locale);
+                  },
                 ),
-              );
-            })));
+              ],
+            ),
+          );
+        }));
   }
 }
