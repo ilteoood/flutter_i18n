@@ -13,6 +13,7 @@ class FileTranslationLoader extends TranslationLoader {
   final String basePath;
   final bool useCountryCode;
   final Locale forcedLocale;
+  AssetBundle assetBundle;
 
   Locale _locale;
 
@@ -26,7 +27,9 @@ class FileTranslationLoader extends TranslationLoader {
       {this.fallbackFile = "en",
       this.basePath = "assets/flutter_i18n",
       this.useCountryCode = false,
-      this.forcedLocale});
+      this.forcedLocale}) {
+    assetBundle = rootBundle;
+  }
 
   Future<Map> load() async {
     try {
@@ -39,7 +42,7 @@ class FileTranslationLoader extends TranslationLoader {
   }
 
   Future<String> loadString(final String fileName, final String extension) {
-    return rootBundle.loadString('$basePath/$fileName.$extension');
+    return assetBundle.loadString('$basePath/$fileName.$extension');
   }
 
   Future _loadCurrentTranslation() async {

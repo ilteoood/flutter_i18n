@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'file_translation_loader.dart';
 
 class NetworkFileTranslationLoader extends FileTranslationLoader {
-  NetworkAssetBundle networkAssetBundle;
+  AssetBundle networkAssetBundle;
   final Uri baseUri;
 
   NetworkFileTranslationLoader({

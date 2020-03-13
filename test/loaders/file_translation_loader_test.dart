@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../test_asset_bundle.dart';
 import '../test_loader.dart';
 
 void main() {
@@ -10,6 +12,16 @@ void main() {
     expect(instance.forcedLocale, isNull);
     expect(instance.basePath, isNotNull);
     expect(instance.useCountryCode, isFalse);
+  });
+
+  test('should load correct map', () async {
+    var instance = FileTranslationLoader();
+    instance.assetBundle = TestAssetBundle();
+
+    var result = await instance.load();
+
+    expect(result, isMap);
+    expect(result, isEmpty);
   });
 
   test('`loadString` should load correct string', () async {
