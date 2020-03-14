@@ -1,0 +1,17 @@
+name: Publish plugin
+
+on: push
+
+jobs:
+  publish:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Testing
+        uses: ilteoood/actions-flutter-pub-publisher@master
+        with:
+          credential: ${{ secrets.PUB_CREDENTIALS }}
+          dry_run: true
