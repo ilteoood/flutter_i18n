@@ -30,6 +30,9 @@ class NamespaceFileTranslationLoader extends TranslationLoader {
       this.useCountryCode = false,
       this.forcedLocale}) {
     assetBundle = rootBundle;
+
+    assert(namespaces != null);
+    assert(namespaces.length > 0);
   }
 
   Future<Map> load() async {
