@@ -38,7 +38,9 @@ class PluralTranslator extends SimpleTranslator {
         .where((mapKeyPluralValue) => mapKeyPluralValue <= pluralValue)
         .toList();
     possiblePluralValues.sort();
-    return possiblePluralValues.length > 0 ? possiblePluralValues.last : '';
+    return possiblePluralValues.length > 0
+        ? possiblePluralValues.last.toString()
+        : '';
   }
 
   String _findParameterName(final Map<dynamic, dynamic> decodedSubMap) {
