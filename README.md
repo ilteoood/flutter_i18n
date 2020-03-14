@@ -1,6 +1,10 @@
 # flutter_i18n
 I18n made easy, for Flutter!
 
+<!-- Badges -->
+[![Pub Package](https://img.shields.io/pub/v/flutter_i18n.svg)](https://pub.dev/packages/flutter_i18n)
+[![GitHub Actions](https://github.com/ilteoood/flutter_i18n/workflows/Publish%20plugin/badge.svg)](https://github.com/ilteoood/flutter_i18n/actions)
+
 ------------------------------------------------
 
 
