@@ -17,8 +17,10 @@ class FileTranslationLoader extends TranslationLoader {
 
   Locale _locale;
 
-  get locale => _locale ?? forcedLocale;
+  @override
+  Locale get locale => _locale ?? forcedLocale;
 
+  @override
   set locale(Locale locale) => _locale = locale;
 
   Map<dynamic, dynamic> _decodedMap;
