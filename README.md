@@ -19,10 +19,11 @@ You can easy override loader and create your own.
 Available loaders:
 
 | Class name | Purpose |  
-| - | - |
+| --- | --- |
 | `FileTranslationLoader` |  Loads translation files from JSON or YAML format | 
 | `NetworkFileTranslationLoader` | Loads translations from the remote resource | 
-| `E2EFileTranslation loader` | Special loader for solving isolates problem with flutter drive  |
+| `NamespaceFileTranslationLoader` | Loads translations from separate files |
+| `E2EFileTranslationLoader` | Special loader for solving isolates problem with flutter drive |
 
 ### `FileTranslationLoader` configuration
 
@@ -80,7 +81,7 @@ If there isn't any translation available for the required key, the same key is r
 
 ### `NetworkFileTranslationLoader` configuration
 
-Behaviour of this loader very similar as `FileTranslationLoader`. The main different that we load translations from `NetworkAssetBundle` instead of `CachingAssetBundle`.
+Behaviour of this loader very similar as `FileTranslationLoader`. The main difference that we load translations from `NetworkAssetBundle` instead of `CachingAssetBundle`.
 
 Below you can find the name and description of the accepted parameters.
 
@@ -105,6 +106,51 @@ localizationsDelegates: [
         GlobalWidgetsLocalizations.delegate
 ],
 ```
+
+### `NamespaceFileTranslationLoader` configuration
+
+Behaviour of this loader very similar as `FileTranslationLoader`. The main difference that we load translations from separate files per each language.
+
+For example `FileTranslationLoader` format:
+
+> /assets/flutter_i18n/en.json
+>
+> /assets/flutter_i18n/it.json
+
+`NamespaceFileTranslationLoader` format:
+
+> /assets/flutter_i18n/en/home_screen.json
+>
+> /assets/flutter_i18n/en/about_screen.json
+>
+> /assets/flutter_i18n/it/home_screen.json
+>
+> /assets/flutter_i18n/it/about_screen.json
+
+Example configuration:
+
+```dart
+localizationsDelegates: [
+        FlutterI18nDelegate(translationLoader: 
+          NamespaceFileTranslationLoader(namespaces: ["home_screen", "about_screen"]),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+],
+```
+
+Below you can find the name and description of the accepted parameters.
+
+The ***namespaces*** provide a list of filenames for the specific language directory.
+
+The ***useCountryCode*** parameter depends on the *json* configuration:
+- if you used the pattern {languageCode}_{countryCode}, ***useCountryCode*** must be **true**
+- if you used the pattern {languageCode}, ***useCountryCode*** must be **false**
+
+The ***fallbackDir*** provide a default language directory, used when the translation for the current running system is not provided.
+
+The ***basePath*** parameter is optionally used to set the base path for translations. If this option is not set, the default path will be `assets/flutter_i18n`. This path must be the same path as the one defined in your ***pubspec.yaml***.
+
+The ***forcedLocale*** parameter is optionally used to force a locale instead finding the system one.
 
 ### `E2EFileTranslationLoader` configuration
 
