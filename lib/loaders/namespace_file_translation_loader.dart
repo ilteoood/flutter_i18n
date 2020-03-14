@@ -4,15 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/loaders/translation_loader.dart';
+import 'package:flutter_i18n/utils/message_printer.dart';
 import 'package:yaml/yaml.dart';
 
-import '../utils/message_printer.dart';
-
 class NamespaceFileTranslationLoader extends TranslationLoader {
-  final String fallbackFile;
+  final String fallbackDir;
   final String basePath;
   final bool useCountryCode;
   final Locale forcedLocale;
+  final List<String> namespaces;
   AssetBundle assetBundle;
 
   Locale _locale;
@@ -21,10 +21,11 @@ class NamespaceFileTranslationLoader extends TranslationLoader {
 
   set locale(Locale locale) => _locale = locale;
 
-  Map<dynamic, dynamic> _decodedMap;
+  Map<dynamic, dynamic> _decodedMap = {};
 
   NamespaceFileTranslationLoader(
-      {this.fallbackFile = "en",
+      {@required this.namespaces,
+      this.fallbackDir = "en",
       this.basePath = "assets/flutter_i18n",
       this.useCountryCode = false,
       this.forcedLocale}) {
@@ -32,12 +33,7 @@ class NamespaceFileTranslationLoader extends TranslationLoader {
   }
 
   Future<Map> load() async {
-    try {
-      await _loadCurrentTranslation();
-    } catch (e) {
-      MessagePrinter.debug('Error loading translation $e');
-      await _loadFallback();
-    }
+    await _loadTranslation();
     return _decodedMap;
   }
 
@@ -45,40 +41,47 @@ class NamespaceFileTranslationLoader extends TranslationLoader {
     return assetBundle.loadString('$basePath/$fileName.$extension');
   }
 
-  Future _loadCurrentTranslation() async {
+  _loadTranslation() async {
     this.locale = locale ?? await findCurrentLocale();
     MessagePrinter.info("The current locale is ${this.locale}");
-    await _loadFile(_composeFileName());
-  }
 
-  Future _loadFallback() async {
-    try {
-      await _loadFile(fallbackFile);
-    } catch (e) {
-      MessagePrinter.debug('Error loading translation fallback $e');
-      _decodedMap = Map();
+    for (var namespace in namespaces) {
+      try {
+        _decodedMap[namespace] =
+            await _loadFile("${_composeDirName()}/$namespace");
+      } catch (e) {
+        MessagePrinter.debug('Error loading translation $e');
+        try {
+          _decodedMap[namespace] = await _loadFile("$fallbackDir/$namespace");
+        } catch (e) {
+          MessagePrinter.debug('Error loading translation fallback $e');
+          _decodedMap[namespace] = Map();
+        }
+      }
     }
   }
 
-  Future<void> _loadFile(final String fileName) async {
+  Future<Map> _loadFile(final String fileName) async {
     try {
-      await _decodeFile(fileName, 'json', json.decode);
+      var data = await _decodeFile(fileName, 'json', json.decode);
       MessagePrinter.info("JSON file loaded for $fileName");
+      return data;
     } on Error catch (_) {
       MessagePrinter.debug(
           "Unable to load JSON file for $fileName, I'm trying with YAML");
-      await _decodeFile(fileName, 'yaml', loadYaml);
+      var data = await _decodeFile(fileName, 'yaml', loadYaml);
       MessagePrinter.info("YAML file loaded for $fileName");
+      return data;
     }
   }
 
-  Future<void> _decodeFile(final String fileName, final String extension,
+  Future<Map> _decodeFile(final String fileName, final String extension,
       final Function decodeFunction) async {
-    _decodedMap = await loadString(fileName, extension)
+    return loadString(fileName, extension)
         .then((fileContent) => decodeFunction(fileContent));
   }
 
-  String _composeFileName() {
+  String _composeDirName() {
     return "${locale.languageCode}${_composeCountryCode()}";
   }
 
