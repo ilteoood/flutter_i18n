@@ -30,17 +30,14 @@ class PluralTranslator extends SimpleTranslator {
 
   String _findPluralSuffix(
       final Map<dynamic, dynamic> decodedSubMap, final String translationKey) {
-    final List<int> possiblePluralValues = decodedSubMap.keys
+    final int pluralSuffix = decodedSubMap.keys
         .where((mapKey) => mapKey.startsWith(translationKey))
         .where((mapKey) => mapKey.split(PLURAL_SEPARATOR).length == 2)
-        .map((mapKey) => int.tryParse(mapKey.split(PLURAL_SEPARATOR)[1]))
+        .map((mapKey) => int.tryParse(mapKey.split(PLURAL_SEPARATOR).last))
         .where((mapKeyPluralValue) => mapKeyPluralValue != null)
-        .where((mapKeyPluralValue) => mapKeyPluralValue <= pluralValue)
-        .toList();
-    possiblePluralValues.sort();
-    return possiblePluralValues.length > 0
-        ? possiblePluralValues.last.toString()
-        : '';
+        .lastWhere((mapKeyPluralValue) => mapKeyPluralValue <= pluralValue,
+            orElse: () => null);
+    return pluralSuffix?.toString() ?? '';
   }
 
   String _findParameterName(final Map<dynamic, dynamic> decodedSubMap) {
