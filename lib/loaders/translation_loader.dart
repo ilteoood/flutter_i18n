@@ -4,6 +4,8 @@ import 'package:intl/intl_standalone.dart';
 import '../utils/message_printer.dart';
 
 abstract class TranslationLoader {
+  static const String LOCALE_SEPARATOR = "_";
+
   Future<Map> load();
 
   Locale get locale;
@@ -13,9 +15,13 @@ abstract class TranslationLoader {
   Future<Locale> findCurrentLocale() async {
     final String systemLocale = await findSystemLocale();
     MessagePrinter.info("The system locale is $systemLocale");
-    final List<String> systemLocaleSplitted = systemLocale.split("_");
+    return _toLocale(systemLocale);
+  }
+
+  Locale _toLocale(final String locale) {
+    final List<String> systemLocaleSplitted = locale.split(LOCALE_SEPARATOR);
     final bool noCountryCode = systemLocaleSplitted.length == 1;
-    return Future(() => Locale(systemLocaleSplitted.first,
-        noCountryCode ? null : systemLocaleSplitted.last));
+    return Locale(systemLocaleSplitted.first,
+        noCountryCode ? null : systemLocaleSplitted.last);
   }
 }
