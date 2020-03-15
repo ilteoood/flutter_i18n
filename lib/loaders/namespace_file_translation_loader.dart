@@ -30,10 +30,8 @@ class NamespaceFileTranslationLoader extends FileTranslationLoader {
     this.locale = locale ?? await findCurrentLocale();
     MessagePrinter.info("The current locale is ${this.locale}");
 
-    List<Future<void>> waitList =
-        namespaces.map((namespace) => _loadTranslation(namespace)).toList();
-
-    await Future.wait(waitList);
+    await Future.wait(
+        namespaces.map((namespace) => _loadTranslation(namespace)));
 
     return _decodedMap;
   }
