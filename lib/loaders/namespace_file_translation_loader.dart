@@ -27,22 +27,26 @@ class NamespaceFileTranslationLoader extends FileTranslationLoader {
   }
 
   Future<Map> load() async {
-    await _loadTranslation();
-    return _decodedMap;
-  }
-
-  Future<void> _loadTranslation() async {
     this.locale = locale ?? await findCurrentLocale();
     MessagePrinter.info("The current locale is ${this.locale}");
 
-    for (var namespace in namespaces) {
-      try {
-        _decodedMap[namespace] =
-            await loadFile("${composeFileName()}/$namespace");
-      } catch (e) {
-        MessagePrinter.debug('Error loading translation $e');
-        await _loadTranslationFallback(namespace);
-      }
+    List<Future<void>> waitList =
+        namespaces.map((namespace) => _loadTranslation(namespace)).toList();
+
+    await Future.wait(waitList);
+
+    return _decodedMap;
+  }
+
+  Future<void> _loadTranslation(String namespace) async {
+    _decodedMap[namespace] = Map();
+
+    try {
+      _decodedMap[namespace] =
+          await loadFile("${composeFileName()}/$namespace");
+    } catch (e) {
+      MessagePrinter.debug('Error loading translation $e');
+      await _loadTranslationFallback(namespace);
     }
   }
 
@@ -51,7 +55,6 @@ class NamespaceFileTranslationLoader extends FileTranslationLoader {
       _decodedMap[namespace] = await loadFile("$fallbackDir/$namespace");
     } catch (e) {
       MessagePrinter.debug('Error loading translation fallback $e');
-      _decodedMap[namespace] = Map();
     }
   }
 }
