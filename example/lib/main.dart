@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'basic_example.dart' as basicExample;
+import 'namespace_example.dart' as namespaceExample;
 import 'network_example.dart' as networkExample;
 
 Future main() async {
@@ -37,6 +38,12 @@ class MyApp extends StatelessWidget {
                       networkExample.main();
                     },
                     child: Text("Run `network` example"),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      namespaceExample.main();
+                    },
+                    child: Text("Run `namespace` example"),
                   ),
                 ],
               ));

@@ -23,7 +23,7 @@ class FileTranslationLoader extends TranslationLoader {
   @override
   set locale(Locale locale) => _locale = locale;
 
-  Map<dynamic, dynamic> _decodedMap;
+  Map<dynamic, dynamic> _decodedMap = Map();
 
   FileTranslationLoader(
       {this.fallbackFile = "en",
@@ -50,41 +50,46 @@ class FileTranslationLoader extends TranslationLoader {
   Future _loadCurrentTranslation() async {
     this.locale = locale ?? await findCurrentLocale();
     MessagePrinter.info("The current locale is ${this.locale}");
-    await _loadFile(_composeFileName());
+    _decodedMap = await loadFile(composeFileName());
   }
 
   Future _loadFallback() async {
     try {
-      await _loadFile(fallbackFile);
+      _decodedMap = await loadFile(fallbackFile);
     } catch (e) {
       MessagePrinter.debug('Error loading translation fallback $e');
-      _decodedMap = Map();
     }
   }
 
-  Future<void> _loadFile(final String fileName) async {
+  Future<Map> loadFile(final String fileName) async {
+    Map<dynamic, dynamic> result;
+
     try {
-      await _decodeFile(fileName, 'json', json.decode);
+      result = await _decodeFile(fileName, 'json', json.decode);
       MessagePrinter.info("JSON file loaded for $fileName");
     } on Error catch (_) {
       MessagePrinter.debug(
           "Unable to load JSON file for $fileName, I'm trying with YAML");
-      await _decodeFile(fileName, 'yaml', loadYaml);
+      result = await _decodeFile(fileName, 'yaml', loadYaml);
       MessagePrinter.info("YAML file loaded for $fileName");
     }
+
+    return result;
   }
 
-  Future<void> _decodeFile(final String fileName, final String extension,
+  Future<Map> _decodeFile(final String fileName, final String extension,
       final Function decodeFunction) async {
-    _decodedMap = await loadString(fileName, extension)
+    return loadString(fileName, extension)
         .then((fileContent) => decodeFunction(fileContent));
   }
 
-  String _composeFileName() {
-    return "${locale.languageCode}${_composeCountryCode()}";
+  @protected
+  String composeFileName() {
+    return "${locale.languageCode}${composeCountryCode()}";
   }
 
-  String _composeCountryCode() {
+  @protected
+  String composeCountryCode() {
     String countryCode = "";
     if (useCountryCode && locale.countryCode != null) {
       countryCode = "_${locale.countryCode}";
