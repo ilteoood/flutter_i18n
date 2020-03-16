@@ -129,3 +129,7 @@ New translation mechanism, with different and customizable loaders provided:
 ## [0.11.1]
 
 Plural translator improvements
+
+## [0.12.0]
+
+New loader provided: ```NamespaceFileTranslationLoader```
