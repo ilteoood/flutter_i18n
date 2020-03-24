@@ -133,3 +133,8 @@ Plural translator improvements
 ## [0.12.0]
 
 New loader provided: ```NamespaceFileTranslationLoader```
+
+## [0.13.0]
+
+In the I18nText and I18nPlural widgets, the child parameter is now optional.
+The default value of the child parameter is now ```Text("")```
