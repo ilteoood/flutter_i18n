@@ -2,13 +2,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class I18nText extends StatelessWidget {
-  final String _key;
-  final Text _child;
-  final String fallbackKey;
-  final Map<String, String> translationParams;
+  String _key;
+  Text _child;
+  String fallbackKey;
+  Map<String, String> translationParams;
 
-  const I18nText(this._key, this._child,
-      {this.fallbackKey, this.translationParams});
+  I18nText(this._key, {child, this.fallbackKey, this.translationParams}) {
+    this._child = child ?? Text("");
+  }
 
   @override
   Widget build(BuildContext context) {

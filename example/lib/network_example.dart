@@ -60,7 +60,7 @@ class MyHomePage extends StatelessWidget {
             children: <Widget>[
               I18nText(
                 "args.content",
-                Text(""),
+                child: Text(""),
               ),
             ],
           ),

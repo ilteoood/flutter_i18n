@@ -42,9 +42,9 @@ class TestWidgetPageState extends State<TestWidgetPage> {
           return Center(
             child: Column(
               children: <Widget>[
-                I18nText("keySingle", Text("")),
-                I18nPlural("keyPlural", 1, Text("")),
-                I18nPlural("keyPlural", 2, Text("")),
+                I18nText("keySingle"),
+                I18nPlural("keyPlural", 1, child: Text("")),
+                I18nPlural("keyPlural", 2),
                 RaisedButton(
                   onPressed: () async {
                     var locale = FlutterI18n.currentLocale(context);

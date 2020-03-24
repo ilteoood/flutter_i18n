@@ -82,9 +82,9 @@ class MyHomeState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              I18nText("label.main", Text(""),
+              I18nText("label.main",
                   translationParams: {"user": "Flutter lover"}),
-              I18nPlural("clicked.times", clicked, Text("")),
+              I18nPlural("clicked.times", clicked),
               FlatButton(
                   onPressed: () async {
                     incrementCounter();

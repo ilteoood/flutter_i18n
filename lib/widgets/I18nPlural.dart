@@ -2,11 +2,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class I18nPlural extends StatelessWidget {
-  final String _key;
-  final Text _child;
-  final int _pluralValue;
+  String _key;
+  Text _child;
+  int _pluralValue;
 
-  const I18nPlural(this._key, this._pluralValue, this._child);
+  I18nPlural(this._key, this._pluralValue, {child}) {
+    this._child = child ?? Text("");
+  }
 
   @override
   Widget build(BuildContext context) {
