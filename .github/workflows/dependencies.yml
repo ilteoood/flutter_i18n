@@ -1,0 +1,26 @@
+name: Dependencies updater
+
+on:
+    schedule:
+        - cron: 0 2 * * *
+    push:
+
+jobs:
+    dependencies:
+        name: example Flutter package updater
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - uses: actions/setup-java@v1
+              with:
+                java-version: '12.x'
+            - uses: subosito/flutter-action@v1
+              with:
+                channel: 'stable'
+            - name: run flutter package updater
+              uses: ilteoood/update-flutter-packages@master
+              with:
+                flutter-project: './'
+                git-email: 'matteopietro.dazzi@gmail.com'
+                git-name: 'iLTeoooD'
+                token: ${{ secrets.GITHUB_CREDENTIALS }}

@@ -77,3 +77,4 @@ build/
 .flutter-plugins
 
 coverage
+example/ios/Flutter/flutter_export_environment.sh
