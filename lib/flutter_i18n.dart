@@ -12,7 +12,6 @@ export 'loaders/file_translation_loader.dart';
 export 'loaders/namespace_file_translation_loader.dart';
 export 'loaders/network_file_translation_loader.dart';
 export 'loaders/translation_loader.dart';
-export 'widgets/I18nPlural.dart';
 export 'widgets/I18nText.dart';
 
 class FlutterI18n {
