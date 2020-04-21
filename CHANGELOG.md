@@ -138,3 +138,53 @@ New loader provided: ```NamespaceFileTranslationLoader```
 
 In the I18nText and I18nPlural widgets, the child parameter is now optional.
 The default value of the child parameter is now ```Text("")```
+
+## [0.14.0]
+
+### Breaking changes
+
+* Removed `child` arguement from `I18nText` widget and replaced it with `Text` widget arguments:
+
+  Instead of doing:
+  ```dart
+  I18nText(
+    "my.translation.key",
+    child: Text(
+      "",
+      style: TextStyle(fontSize: 24, color: Colors.white),
+      textAlign: TextAlign.center,
+    ),
+  );
+  ```
+  You can flatten structure and remove redundant empty string argument:
+  ```dart
+  I18nText(
+    "my.translation.key",
+    style: TextStyle(fontSize: 24, color: Colors.white),
+    textAlign: TextAlign.center,
+  );
+  ```
+
+* Replaced `I18nPlural` widget with `I18nText.plural` widget constructor:
+  
+  Old way:
+  ```dart
+  I18nPlural(
+    "my.translation.key",
+    2,
+    child: Text(
+      "",
+      style: TextStyle(fontSize: 24, color: Colors.white),
+      textAlign: TextAlign.center,
+    ),
+  );
+  ```
+  Now:
+  ```dart
+  I18nText.plural(
+    "my.translation.key",
+    2,
+    style: TextStyle(fontSize: 24, color: Colors.white),
+    textAlign: TextAlign.center,
+  );
+  ```
