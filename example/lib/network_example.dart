@@ -58,10 +58,7 @@ class MyHomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              I18nText(
-                "args.content",
-                child: Text(""),
-              ),
+              I18nText("args.content"),
             ],
           ),
         );

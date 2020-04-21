@@ -64,7 +64,7 @@ class MyHomeState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              I18nText("home.label.main", child: Text("")),
+              I18nText("home.label.main"),
               RaisedButton(
                   onPressed: () async {
                     await changeLanguage();

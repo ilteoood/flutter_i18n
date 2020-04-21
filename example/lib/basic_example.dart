@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:flutter_i18n/widgets/I18nPlural.dart';
 import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -84,7 +83,7 @@ class MyHomeState extends State<MyHomePage> {
             children: <Widget>[
               I18nText("label.main",
                   translationParams: {"user": "Flutter lover"}),
-              I18nPlural("clicked.times", clicked),
+              I18nText.plural("clicked.times", clicked),
               FlatButton(
                   onPressed: () async {
                     incrementCounter();
