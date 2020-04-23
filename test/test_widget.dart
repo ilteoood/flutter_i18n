@@ -45,6 +45,9 @@ class TestWidgetPageState extends State<TestWidgetPage> {
                 I18nText("keySingle"),
                 I18nPlural("keyPlural", 1, child: Text("")),
                 I18nPlural("keyPlural", 2),
+                I18nText("object.key1"),
+                I18nText("object"),
+                I18nText("object", fallbackKey: "fileName"),
                 RaisedButton(
                   onPressed: () async {
                     var locale = FlutterI18n.currentLocale(context);
