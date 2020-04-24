@@ -1,5 +1,3 @@
-library flutter_i18n;
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
