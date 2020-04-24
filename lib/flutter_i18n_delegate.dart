@@ -26,6 +26,7 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
     MessagePrinter.info("New locale: $locale");
     if (FlutterI18nDelegate._currentTranslationObject == null ||
         FlutterI18nDelegate._currentTranslationObject.locale != locale) {
+      translationLoader.locale = locale;
       FlutterI18nDelegate._currentTranslationObject =
           FlutterI18n(translationLoader);
       await FlutterI18nDelegate._currentTranslationObject.load();
