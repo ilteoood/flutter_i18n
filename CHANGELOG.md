@@ -142,3 +142,7 @@ The default value of the child parameter is now ```Text("")```
 ## [0.13.1]
 
 Fix for #83.
+
+## [0.13.2]
+
+Fixed immutable warnings.
