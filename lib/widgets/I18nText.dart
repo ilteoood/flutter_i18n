@@ -2,31 +2,31 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class I18nText extends StatelessWidget {
-  String _key;
-  Text _child;
-  String fallbackKey;
-  Map<String, String> translationParams;
+  final String _key;
+  final Text child;
+  final String fallbackKey;
+  final Map<String, String> translationParams;
+  static const _default_text = Text("");
 
-  I18nText(this._key, {child, this.fallbackKey, this.translationParams}) {
-    this._child = child ?? Text("");
-  }
+  I18nText(this._key,
+      {this.child = _default_text, this.fallbackKey, this.translationParams});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       FlutterI18n.translate(context, _key,
           fallbackKey: fallbackKey, translationParams: translationParams),
-      key: _child.key,
-      style: _child.style,
-      strutStyle: _child.strutStyle,
-      textAlign: _child.textAlign,
-      textDirection: _child.textDirection,
-      softWrap: _child.softWrap,
-      overflow: _child.overflow,
-      textScaleFactor: _child.textScaleFactor,
-      maxLines: _child.maxLines,
-      semanticsLabel: _child.semanticsLabel,
-      textWidthBasis: _child.textWidthBasis,
+      key: child.key,
+      style: child.style,
+      strutStyle: child.strutStyle,
+      textAlign: child.textAlign,
+      textDirection: child.textDirection,
+      softWrap: child.softWrap,
+      overflow: child.overflow,
+      textScaleFactor: child.textScaleFactor,
+      maxLines: child.maxLines,
+      semanticsLabel: child.semanticsLabel,
+      textWidthBasis: child.textWidthBasis,
     );
   }
 }
