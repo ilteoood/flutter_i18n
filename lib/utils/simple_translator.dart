@@ -38,7 +38,7 @@ class SimpleTranslator {
   String _decodeFromMap(final String key) {
     final Map<dynamic, dynamic> subMap = calculateSubmap(key);
     final String lastKeyPart = key.split(KEY_SEPARATOR).last;
-    return subMap[lastKeyPart];
+    return subMap[lastKeyPart] is String ? subMap[lastKeyPart] : null;
   }
 
   Map<dynamic, dynamic> calculateSubmap(final String translationKey) {

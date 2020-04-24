@@ -138,3 +138,7 @@ New loader provided: ```NamespaceFileTranslationLoader```
 
 In the I18nText and I18nPlural widgets, the child parameter is now optional.
 The default value of the child parameter is now ```Text("")```
+
+## [0.13.1]
+
+Fix for #83.

@@ -18,7 +18,11 @@ Future<String> _loadString(String fileName, String extension) async {
         "keyPlural-1": "valuePlural-1",
         "keyPlural-2": "valuePlural-2",
         "fileName": "$fileName",
-        "extension": "$extension"
+        "extension": "$extension",
+        "object": {
+          "key1": "Key1Value",
+          "key2": "Key2Value"
+        }
       }
     ''';
 }
