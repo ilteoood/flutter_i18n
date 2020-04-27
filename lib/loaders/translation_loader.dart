@@ -8,6 +8,8 @@ abstract class TranslationLoader {
 
   Future<Map> load();
 
+  Future<String> loadString(final String fileName, final String extension);
+
   Locale get locale;
 
   set locale(Locale locale);
