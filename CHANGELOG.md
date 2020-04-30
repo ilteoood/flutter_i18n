@@ -146,3 +146,8 @@ Fix for #83.
 ## [0.13.2]
 
 Fixed immutable warnings.
+
+## [0.14.0]
+
+New feature: file translation decode strategies.
+New translation strategy provided, able to load XML file.

@@ -1,19 +1,22 @@
-import 'dart:convert';
-
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
+import 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
+import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
+import 'package:flutter_i18n/loaders/decoders/xml_decode_strategy.dart';
+import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
+import 'package:flutter_i18n/loaders/file_content.dart';
 import 'package:flutter_i18n/loaders/translation_loader.dart';
-import 'package:yaml/yaml.dart';
 
 import '../utils/message_printer.dart';
 
-class FileTranslationLoader extends TranslationLoader {
+class FileTranslationLoader extends TranslationLoader implements IFileContent {
   final String fallbackFile;
   final String basePath;
   final bool useCountryCode;
   final Locale forcedLocale;
   AssetBundle assetBundle;
+  List<BaseDecodeStrategy> decodeStrategies;
 
   Locale _locale;
 
@@ -29,8 +32,11 @@ class FileTranslationLoader extends TranslationLoader {
       {this.fallbackFile = "en",
       this.basePath = "assets/flutter_i18n",
       this.useCountryCode = false,
-      this.forcedLocale}) {
+      this.forcedLocale,
+      decodeStrategies}) {
     assetBundle = rootBundle;
+    this.decodeStrategies = decodeStrategies ??
+        [JsonDecodeStrategy(), YamlDecodeStrategy(), XmlDecodeStrategy()];
   }
 
   Future<Map> load() async {
@@ -43,6 +49,7 @@ class FileTranslationLoader extends TranslationLoader {
     return _decodedMap;
   }
 
+  @override
   Future<String> loadString(final String fileName, final String extension) {
     return assetBundle.loadString('$basePath/$fileName.$extension');
   }
@@ -61,26 +68,17 @@ class FileTranslationLoader extends TranslationLoader {
     }
   }
 
+  @protected
   Future<Map> loadFile(final String fileName) async {
-    Map<dynamic, dynamic> result;
-
-    try {
-      result = await _decodeFile(fileName, 'json', json.decode);
-      MessagePrinter.info("JSON file loaded for $fileName");
-    } on Error catch (_) {
-      MessagePrinter.debug(
-          "Unable to load JSON file for $fileName, I'm trying with YAML");
-      result = await _decodeFile(fileName, 'yaml', loadYaml);
-      MessagePrinter.info("YAML file loaded for $fileName");
-    }
-
-    return result;
+    final List<Future<Map>> strategiesFutures = _executeStrategies(fileName);
+    final Stream<Map> strategiesStream = Stream.fromFutures(strategiesFutures);
+    return strategiesStream.firstWhere((map) => map != null);
   }
 
-  Future<Map> _decodeFile(final String fileName, final String extension,
-      final Function decodeFunction) async {
-    return loadString(fileName, extension)
-        .then((fileContent) => decodeFunction(fileContent));
+  List<Future<Map>> _executeStrategies(final String fileName) {
+    return decodeStrategies
+        .map((decodeStrategy) => decodeStrategy.decode(fileName, this))
+        .toList();
   }
 
   @protected
