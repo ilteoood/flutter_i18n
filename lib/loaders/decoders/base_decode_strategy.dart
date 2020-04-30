@@ -15,7 +15,7 @@ abstract class BaseDecodeStrategy {
       final String content = await loadFileContent(fileName, fileContent);
       MessagePrinter.info(
           "${fileExtension.toUpperCase()} file loaded for $fileName");
-      returnValue = decodeFunction(content);
+      returnValue = decodeContent(content);
     } catch (e) {
       MessagePrinter.debug(
           "Unable to load ${fileExtension.toUpperCase()} file for $fileName");
@@ -26,5 +26,9 @@ abstract class BaseDecodeStrategy {
   Future<String> loadFileContent(
       final String fileName, final IFileContent fileContent) {
     return fileContent.loadString(fileName, fileExtension);
+  }
+
+  Map decodeContent(final String content) {
+    return decodeFunction(content);
   }
 }

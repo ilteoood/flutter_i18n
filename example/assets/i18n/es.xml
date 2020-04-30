@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+    <title>Test app</title>
+    <label>
+        <main>Hola {user}!</main>
+    </label>
+    <button>
+        <label>
+            <clickMe>Haga clic aquí</clickMe>
+            <language>cambiar idioma</language>
+        </label>
+        <toastMessage>Hiciste clic en el botón!</toastMessage>
+    </button>
+    <clicked>
+        <times-0>Hiciste clic {times} veces!</times-0>
+        <times-1>Hiciste clic {time} vez!</times-1>
+        <times-2>Hiciste clic {times} veces!</times-2>
+    </clicked>
+</root>
