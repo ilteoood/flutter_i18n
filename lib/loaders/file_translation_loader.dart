@@ -3,6 +3,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
+import 'package:flutter_i18n/loaders/decoders/xml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/file_content.dart';
 import 'package:flutter_i18n/loaders/translation_loader.dart';
@@ -35,7 +36,11 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
       decodeStrategies}) {
     assetBundle = rootBundle;
     this.decodeStrategies = decodeStrategies ??
-        [new JsonDecodeStrategy(), new YamlDecodeStrategy()];
+        [
+          new JsonDecodeStrategy(),
+          new YamlDecodeStrategy(),
+          new XmlDecodeStrategy()
+        ];
   }
 
   Future<Map> load() async {
