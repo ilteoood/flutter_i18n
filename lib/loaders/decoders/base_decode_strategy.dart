@@ -1,3 +1,5 @@
+import 'package:flutter_i18n/loaders/file_content.dart';
+
 import '../translation_loader.dart';
 import '../../utils/message_printer.dart';
 
@@ -7,14 +9,13 @@ abstract class BaseDecodeStrategy {
   get decodeFunction;
 
   Future<Map> decode(
-      final String fileName, final TranslationLoader translationLoader) async {
+      final String fileName, final IFileContent fileContent) async {
     Map returnValue;
     try {
-      final String fileContent =
-          await loadFileContent(fileName, translationLoader);
+      final String content = await loadFileContent(fileName, fileContent);
       MessagePrinter.info(
           "${fileExtension.toUpperCase()} file loaded for $fileName");
-      returnValue = decodeFunction(fileContent);
+      returnValue = decodeFunction(content);
     } catch (e) {
       MessagePrinter.debug(
           "Unable to load ${fileExtension.toUpperCase()} file for $fileName");
@@ -23,7 +24,7 @@ abstract class BaseDecodeStrategy {
   }
 
   Future<String> loadFileContent(
-      final String fileName, final TranslationLoader translationLoader) async {
-    return await translationLoader.loadString(fileName, fileExtension);
+      final String fileName, final IFileContent fileContent) {
+    return fileContent.loadString(fileName, fileExtension);
   }
 }

@@ -4,11 +4,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
+import 'package:flutter_i18n/loaders/file_content.dart';
 import 'package:flutter_i18n/loaders/translation_loader.dart';
 
 import '../utils/message_printer.dart';
 
-class FileTranslationLoader extends TranslationLoader {
+class FileTranslationLoader extends TranslationLoader implements IFileContent {
   final String fallbackFile;
   final String basePath;
   final bool useCountryCode;
