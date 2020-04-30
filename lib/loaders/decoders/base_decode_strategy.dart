@@ -1,6 +1,5 @@
 import 'package:flutter_i18n/loaders/file_content.dart';
 
-import '../translation_loader.dart';
 import '../../utils/message_printer.dart';
 
 abstract class BaseDecodeStrategy {

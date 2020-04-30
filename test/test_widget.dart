@@ -8,7 +8,7 @@ class TestWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
-      translationLoader: TestLoader(
+      translationLoader: TestJsonLoader(
           useCountryCode: false,
           fallbackFile: 'en',
           basePath: 'assets/i18n',

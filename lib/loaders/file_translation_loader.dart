@@ -36,11 +36,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
       decodeStrategies}) {
     assetBundle = rootBundle;
     this.decodeStrategies = decodeStrategies ??
-        [
-          new JsonDecodeStrategy(),
-          new YamlDecodeStrategy(),
-          new XmlDecodeStrategy()
-        ];
+        [JsonDecodeStrategy(), YamlDecodeStrategy(), XmlDecodeStrategy()];
   }
 
   Future<Map> load() async {
