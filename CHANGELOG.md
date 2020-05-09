@@ -151,3 +151,7 @@ Fixed immutable warnings.
 
 New feature: file translation decode strategies.
 New translation strategy provided, able to load XML file.
+
+## [0.15.0]
+
+New feature: missing key are now retrieved from the fallback file.
