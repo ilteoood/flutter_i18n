@@ -1,5 +1,4 @@
 {
-  "title": "App di test",
   "label": {
     "main": "Ciao {user}!"
   },
