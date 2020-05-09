@@ -83,7 +83,7 @@ The ***forcedLocale*** parameter is optionally used to force a locale instead fi
 
 The ***decodeStrategies*** parameters is optionally used to choose witch kind of file you want to load. By default JSON, YAML and XML are enabled. If you use only one format, you can speed-up the bootstrap process using only the one you need.
 
-If there isn't any translation available for the required key, the same key is returned.
+If there isn't any translation available for the required key, even in the fallback file, the same key is returned.
 
 ### `NetworkFileTranslationLoader` configuration
 
