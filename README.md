@@ -1,6 +1,6 @@
 # flutter_i18n
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 I18n made easy, for Flutter!
 
@@ -218,6 +218,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/defint"><img src="https://avatars2.githubusercontent.com/u/1523848?v=4" width="100px;" alt=""/><br /><sub><b>Anton</b></sub></a><br /><a href="#infra-defint" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/ilteoood/flutter_i18n/commits?author=defint" title="Tests">⚠️</a> <a href="https://github.com/ilteoood/flutter_i18n/commits?author=defint" title="Code">💻</a></td>
     <td align="center"><a href="https://lucasvienna.dev"><img src="https://avatars1.githubusercontent.com/u/1761244?v=4" width="100px;" alt=""/><br /><sub><b>Lucas Vienna</b></sub></a><br /><a href="https://github.com/ilteoood/flutter_i18n/commits?author=Avyiel" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/juumixx"><img src="https://avatars1.githubusercontent.com/u/5200179?v=4" width="100px;" alt=""/><br /><sub><b>Julian</b></sub></a><br /><a href="https://github.com/ilteoood/flutter_i18n/commits?author=juumixx" title="Code">💻</a> <a href="#ideas-juumixx" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
