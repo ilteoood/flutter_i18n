@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "defint",
+      "name": "Anton",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1523848?v=4",
+      "profile": "https://github.com/defint",
+      "contributions": [
+        "infra",
+        "test",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "flutter_i18n",
+  "projectOwner": "ilteoood",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
