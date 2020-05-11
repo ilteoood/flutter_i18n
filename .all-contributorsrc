@@ -24,6 +24,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "agordeev",
+      "name": "Andrey Gordeev",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2883524?v=4",
+      "profile": "https://andreygordeev.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
