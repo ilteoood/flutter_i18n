@@ -22,7 +22,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   Locale _locale;
 
   @override
-  Locale get locale => _locale ?? forcedLocale;
+  Locale get locale => forcedLocale ?? _locale;
 
   @override
   set locale(Locale locale) => _locale = locale;
@@ -54,7 +54,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
 
   Future _loadCurrentTranslation() async {
     try {
-      this.locale = locale ?? await findCurrentLocale();
+      this.locale = locale ?? await findDeviceLocale();
       MessagePrinter.info("The current locale is ${this.locale}");
       _decodedMap.addAll(await loadFile(composeFileName()));
     } catch (e) {

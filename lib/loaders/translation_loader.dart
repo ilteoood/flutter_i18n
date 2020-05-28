@@ -12,7 +12,7 @@ abstract class TranslationLoader {
 
   set locale(Locale locale);
 
-  Future<Locale> findCurrentLocale() async {
+  Future<Locale> findDeviceLocale() async {
     final String systemLocale = await findSystemLocale();
     MessagePrinter.info("The system locale is $systemLocale");
     return _toLocale(systemLocale);

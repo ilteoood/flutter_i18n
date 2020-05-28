@@ -7,12 +7,12 @@ import 'package:flutter_i18n/utils/message_printer.dart';
 import 'flutter_i18n.dart';
 
 class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
-  final TranslationLoader translationLoader;
-  static FlutterI18n _currentTranslationObject;
+  static FlutterI18n _translationObject;
+  Locale currentLocale;
 
-  FlutterI18nDelegate({
-    this.translationLoader,
-  });
+  FlutterI18nDelegate({translationLoader}) {
+    _translationObject = FlutterI18n(translationLoader);
+  }
 
   @override
   bool isSupported(final Locale locale) {
@@ -22,18 +22,18 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
   @override
   Future<FlutterI18n> load(final Locale locale) async {
     MessagePrinter.info("New locale: $locale");
-    if (FlutterI18nDelegate._currentTranslationObject == null ||
-        FlutterI18nDelegate._currentTranslationObject.locale != locale) {
-      FlutterI18nDelegate._currentTranslationObject =
-          FlutterI18n(translationLoader);
-      await FlutterI18nDelegate._currentTranslationObject.load();
+    final TranslationLoader translationLoader =
+        _translationObject.translationLoader;
+    if (translationLoader.locale != locale) {
+      translationLoader.locale = currentLocale = locale;
+      await _translationObject.load();
     }
-    return FlutterI18nDelegate._currentTranslationObject;
+    return _translationObject;
   }
 
   @override
-  bool shouldReload(final LocalizationsDelegate old) {
-    return _currentTranslationObject == null ||
-        _currentTranslationObject.locale == null;
+  bool shouldReload(final FlutterI18nDelegate old) {
+    return this.currentLocale == null ||
+        this.currentLocale == old.currentLocale;
   }
 }

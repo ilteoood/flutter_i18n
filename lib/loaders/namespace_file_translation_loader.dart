@@ -27,7 +27,7 @@ class NamespaceFileTranslationLoader extends FileTranslationLoader {
   }
 
   Future<Map> load() async {
-    this.locale = locale ?? await findCurrentLocale();
+    this.locale = locale ?? await findDeviceLocale();
     MessagePrinter.info("The current locale is ${this.locale}");
 
     await Future.wait(
