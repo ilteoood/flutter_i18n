@@ -42,7 +42,7 @@ class FlutterI18n {
   static Future refresh(
       final BuildContext context, final Locale forcedLocale) async {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
-    currentInstance.translationLoader.locale = forcedLocale;
+    currentInstance.translationLoader.forcedLocale = forcedLocale;
     await currentInstance.load();
   }
 
