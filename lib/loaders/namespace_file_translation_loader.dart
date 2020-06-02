@@ -8,7 +8,6 @@ class NamespaceFileTranslationLoader extends FileTranslationLoader {
   final String fallbackDir;
   final String basePath;
   final bool useCountryCode;
-  final Locale forcedLocale;
   final List<String> namespaces;
   AssetBundle assetBundle;
 
@@ -19,15 +18,15 @@ class NamespaceFileTranslationLoader extends FileTranslationLoader {
       this.fallbackDir = "en",
       this.basePath = "assets/flutter_i18n",
       this.useCountryCode = false,
-      this.forcedLocale}) {
+      forcedLocale}) {
     assert(namespaces != null);
     assert(namespaces.length > 0);
-
+    this.forcedLocale = forcedLocale;
     assetBundle = rootBundle;
   }
 
   Future<Map> load() async {
-    this.locale = locale ?? await findCurrentLocale();
+    this.locale = locale ?? await findDeviceLocale();
     MessagePrinter.info("The current locale is ${this.locale}");
 
     await Future.wait(

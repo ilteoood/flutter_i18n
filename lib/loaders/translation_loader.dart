@@ -8,11 +8,15 @@ abstract class TranslationLoader {
 
   Future<Map> load();
 
-  Locale get locale;
+  Locale _forcedLocale, _locale;
 
-  set locale(Locale locale);
+  set forcedLocale(Locale forcedLocale) => _forcedLocale = forcedLocale;
 
-  Future<Locale> findCurrentLocale() async {
+  Locale get locale => _forcedLocale ?? _locale;
+
+  set locale(Locale locale) => _locale = locale;
+
+  Future<Locale> findDeviceLocale() async {
     final String systemLocale = await findSystemLocale();
     MessagePrinter.info("The system locale is $systemLocale");
     return _toLocale(systemLocale);

@@ -15,17 +15,8 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   final String fallbackFile;
   final String basePath;
   final bool useCountryCode;
-  final Locale forcedLocale;
   AssetBundle assetBundle;
   List<BaseDecodeStrategy> decodeStrategies;
-
-  Locale _locale;
-
-  @override
-  Locale get locale => _locale ?? forcedLocale;
-
-  @override
-  set locale(Locale locale) => _locale = locale;
 
   Map<dynamic, dynamic> _decodedMap = Map();
 
@@ -33,8 +24,9 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
       {this.fallbackFile = "en",
       this.basePath = "assets/flutter_i18n",
       this.useCountryCode = false,
-      this.forcedLocale,
+      forcedLocale,
       decodeStrategies}) {
+    this.forcedLocale = forcedLocale;
     assetBundle = rootBundle;
     this.decodeStrategies = decodeStrategies ??
         [JsonDecodeStrategy(), YamlDecodeStrategy(), XmlDecodeStrategy()];
@@ -54,7 +46,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
 
   Future _loadCurrentTranslation() async {
     try {
-      this.locale = locale ?? await findCurrentLocale();
+      this.locale = locale ?? await findDeviceLocale();
       MessagePrinter.info("The current locale is ${this.locale}");
       _decodedMap.addAll(await loadFile(composeFileName()));
     } catch (e) {

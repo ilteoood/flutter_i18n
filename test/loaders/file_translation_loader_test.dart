@@ -9,7 +9,6 @@ void main() {
   test('should have initial values', () {
     var instance = TestJsonLoader();
     expect(instance.fallbackFile, "en");
-    expect(instance.forcedLocale, isNull);
     expect(instance.basePath, isNotNull);
     expect(instance.useCountryCode, isFalse);
   });

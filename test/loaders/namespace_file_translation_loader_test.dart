@@ -10,7 +10,6 @@ void main() {
     final List<String> namespaces = ["common"];
     var instance = TestNamespaceLoader(namespaces: namespaces);
     expect(instance.fallbackDir, "en");
-    expect(instance.forcedLocale, isNull);
     expect(instance.basePath, isNotNull);
     expect(instance.useCountryCode, isFalse);
   });
