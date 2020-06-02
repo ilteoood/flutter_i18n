@@ -86,6 +86,7 @@ class MyHomeState extends State<MyHomePage> {
                   translationParams: {"user": "Flutter lover"}),
               I18nPlural("clicked.times", clicked),
               FlatButton(
+                  key: Key('incrementCounter'),
                   onPressed: () async {
                     incrementCounter();
                   },

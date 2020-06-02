@@ -155,3 +155,7 @@ New translation strategy provided, able to load XML file.
 ## [0.15.0]
 
 New feature: missing key are now retrieved from the fallback file.
+
+## [0.16.0]
+
+Full support for supportedLocales
