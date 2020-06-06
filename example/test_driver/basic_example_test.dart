@@ -21,6 +21,7 @@ void main() {
 
     test('clicked 0 times', () async {
       await driver.waitFor(find.text("Hiciste clic 0 veces!"));
+      await driver.waitFor(find.text("Hola Flutter lover!"));
       await driver.waitForAbsent(find.text("Hai premuto 0 volte!"));
       await driver.waitForAbsent(find.text("You clicked 0 times!"));
     });
@@ -29,12 +30,15 @@ void main() {
       await driver.tap(incrementCounter);
       await driver.tap(incrementCounter);
       await driver.waitFor(find.text("Hiciste clic 2 veces!"));
+      await driver.waitFor(find.text("Hola Flutter lover!"));
       await driver.waitForAbsent(find.text("Hai premuto 2 volte!"));
       await driver.waitForAbsent(find.text("You clicked 2 times!"));
     });
 
     test('switch language to english', () async {
       await driver.tap(changeLanguage);
+      await driver.waitFor(find.text("Hello Flutter lover!"));
+      await driver.waitFor(find.text('You clicked on button!'));
       await driver.waitFor(find.text("You clicked 2 times!"));
       await driver.waitForAbsent(find.text("Hiciste clic 2 veces!"));
       await driver.waitForAbsent(find.text("Hai premuto 2 volte!"));
@@ -42,6 +46,8 @@ void main() {
 
     test('switch language to italian', () async {
       await driver.tap(changeLanguage);
+      await driver.waitFor(find.text("Ciao Flutter lover!"));
+      await driver.waitFor(find.text('Hai premuto un bottone!'));
       await driver.waitFor(find.text("Hai premuto 2 volte!"));
       await driver.waitForAbsent(find.text("You clicked 2 times!"));
       await driver.waitForAbsent(find.text("Hiciste clic 2 veces!"));
@@ -51,6 +57,7 @@ void main() {
       await driver.tap(incrementCounter);
       await driver.tap(incrementCounter);
       await driver.tap(incrementCounter);
+      await driver.waitFor(find.text("Ciao Flutter lover!"));
       await driver.waitFor(find.text("Hai premuto 5 volte!"));
       await driver.waitForAbsent(find.text("Hiciste clic 2 veces!"));
       await driver.waitForAbsent(find.text("You clicked 2 times!"));
@@ -58,10 +65,11 @@ void main() {
 
     test('switch back to english', () async {
       await driver.tap(changeLanguage);
+      await driver.waitFor(find.text("Hello Flutter lover!"));
+      await driver.waitFor(find.text('You clicked on button!'));
       await driver.waitFor(find.text("You clicked 5 times!"));
       await driver.waitForAbsent(find.text("Hiciste clic 5 veces!"));
       await driver.waitForAbsent(find.text("Hai premuto 5 volte!"));
     });
-
   });
 }
