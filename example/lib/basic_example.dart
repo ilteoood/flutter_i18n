@@ -94,6 +94,7 @@ class MyHomeState extends State<MyHomePage> {
                       context, "button.label.clickMea",
                       fallbackKey: "button.label.clickMe"))),
               FlatButton(
+                key: Key('changeLanguage'),
                   onPressed: () async {
                     await changeLanguage();
                     Scaffold.of(context).showSnackBar(SnackBar(
