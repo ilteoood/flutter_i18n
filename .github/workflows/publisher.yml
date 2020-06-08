@@ -1,4 +1,4 @@
-name: Publish plugin
+name: Publish workflow
 
 on:
   release:

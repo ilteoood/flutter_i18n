@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   RaisedButton(
+                    key: Key('basicExample'),
                     onPressed: () {
                       basicExample.main();
                     },
