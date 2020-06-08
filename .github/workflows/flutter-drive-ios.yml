@@ -1,4 +1,4 @@
-name: flutter drive iOS
+name: Flutter drive iOS
 on: push
 jobs:
   drive:
@@ -21,4 +21,4 @@ jobs:
         with:
           channel: 'stable'
       - name: Run Flutter Driver tests
-        run: flutter drive --target=example/test_driver/basic_example.dart
+        run: cd example && flutter drive -v --target=test_driver/basic_example.dart
