@@ -15,10 +15,14 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   final String fallbackFile;
   final String basePath;
   final bool useCountryCode;
-  AssetBundle assetBundle;
-  List<BaseDecodeStrategy> decodeStrategies;
+  AssetBundle assetBundle = rootBundle;
 
   Map<dynamic, dynamic> _decodedMap = Map();
+  List<BaseDecodeStrategy> _decodeStrategies;
+
+  set decodeStrategies(List<BaseDecodeStrategy> decodeStrategies) =>
+      _decodeStrategies = decodeStrategies ??
+          [JsonDecodeStrategy(), YamlDecodeStrategy(), XmlDecodeStrategy()];
 
   FileTranslationLoader(
       {this.fallbackFile = "en",
@@ -27,9 +31,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
       forcedLocale,
       decodeStrategies}) {
     this.forcedLocale = forcedLocale;
-    assetBundle = rootBundle;
-    this.decodeStrategies = decodeStrategies ??
-        [JsonDecodeStrategy(), YamlDecodeStrategy(), XmlDecodeStrategy()];
+    this.decodeStrategies = decodeStrategies;
   }
 
   Future<Map> load() async {
@@ -71,7 +73,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   }
 
   List<Future<Map>> _executeStrategies(final String fileName) {
-    return decodeStrategies
+    return _decodeStrategies
         .map((decodeStrategy) => decodeStrategy.decode(fileName, this))
         .toList();
   }

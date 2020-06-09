@@ -26,13 +26,14 @@ class E2EFileTranslationLoader extends FileTranslationLoader {
       fallbackFile = "en",
       basePath = "assets/flutter_i18n",
       useCountryCode = false,
-      this.useE2E = true})
+      this.useE2E = true,
+      decodeStrategies})
       : super(
-          fallbackFile: fallbackFile,
-          basePath: basePath,
-          useCountryCode: useCountryCode,
-          forcedLocale: forcedLocale,
-        );
+            fallbackFile: fallbackFile,
+            basePath: basePath,
+            useCountryCode: useCountryCode,
+            forcedLocale: forcedLocale,
+            decodeStrategies: decodeStrategies);
 
   Future<String> loadString(final String fileName, final String extension) {
     return useE2E

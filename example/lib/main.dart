@@ -35,12 +35,14 @@ class MyApp extends StatelessWidget {
                     child: Text("Run `basic` example"),
                   ),
                   RaisedButton(
+                    key: Key('networkExample'),
                     onPressed: () {
                       networkExample.main();
                     },
                     child: Text("Run `network` example"),
                   ),
                   RaisedButton(
+                    key: Key('nameSpaceExample'),
                     onPressed: () {
                       namespaceExample.main();
                     },
