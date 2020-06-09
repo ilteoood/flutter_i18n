@@ -9,7 +9,7 @@ class NamespaceFileTranslationLoader extends FileTranslationLoader {
   final String basePath;
   final bool useCountryCode;
   final List<String> namespaces;
-  AssetBundle assetBundle;
+  AssetBundle assetBundle = rootBundle;
 
   Map<dynamic, dynamic> _decodedMap = {};
 
@@ -18,11 +18,15 @@ class NamespaceFileTranslationLoader extends FileTranslationLoader {
       this.fallbackDir = "en",
       this.basePath = "assets/flutter_i18n",
       this.useCountryCode = false,
-      forcedLocale}) {
+      forcedLocale,
+      decodeStrategies})
+      : super(
+            basePath: basePath,
+            useCountryCode: useCountryCode,
+            forcedLocale: forcedLocale,
+            decodeStrategies: decodeStrategies) {
     assert(namespaces != null);
     assert(namespaces.length > 0);
-    this.forcedLocale = forcedLocale;
-    assetBundle = rootBundle;
   }
 
   Future<Map> load() async {
