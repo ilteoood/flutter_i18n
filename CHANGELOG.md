@@ -159,3 +159,7 @@ New feature: missing key are now retrieved from the fallback file.
 ## [0.16.0]
 
 Full support for supportedLocales
+
+## [0.16.1]
+
+Support for decode strategies on other loaders
