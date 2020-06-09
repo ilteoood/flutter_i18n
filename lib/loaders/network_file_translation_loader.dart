@@ -14,10 +14,12 @@ class NetworkFileTranslationLoader extends FileTranslationLoader {
     forcedLocale,
     fallbackFile = "en",
     useCountryCode = false,
+    decodeStrategies,
   }) : super(
           fallbackFile: fallbackFile,
           useCountryCode: useCountryCode,
           forcedLocale: forcedLocale,
+          decodeStrategies: decodeStrategies,
         ) {
     networkAssetBundle = NetworkAssetBundle(baseUri);
   }

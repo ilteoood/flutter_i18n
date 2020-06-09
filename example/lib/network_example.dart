@@ -2,11 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 class CustomNetworkFileTranslationLoader extends NetworkFileTranslationLoader {
-  CustomNetworkFileTranslationLoader({baseUri}) : super(baseUri: baseUri);
+  CustomNetworkFileTranslationLoader({baseUri, decodeStrategies})
+      : super(
+          baseUri: baseUri,
+          decodeStrategies: decodeStrategies,
+        );
 
   Future<String> loadString(final String fileName, final String extension) {
     return networkAssetBundle.loadString("");
@@ -16,8 +21,12 @@ class CustomNetworkFileTranslationLoader extends NetworkFileTranslationLoader {
 Future main() async {
   final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
     translationLoader: CustomNetworkFileTranslationLoader(
-      baseUri: Uri.https("postman-echo.com", "get",
-          {"title": "Basic network example", "content": "Translated content"}),
+      baseUri: Uri.https(
+        "postman-echo.com",
+        "get",
+        {"title": "Basic network example", "content": "Translated content"},
+      ),
+      decodeStrategies: [JsonDecodeStrategy()],
     ),
   );
 

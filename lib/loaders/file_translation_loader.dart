@@ -20,12 +20,13 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
 
   Map<dynamic, dynamic> _decodedMap = Map();
 
-  FileTranslationLoader(
-      {this.fallbackFile = "en",
-      this.basePath = "assets/flutter_i18n",
-      this.useCountryCode = false,
-      forcedLocale,
-      decodeStrategies}) {
+  FileTranslationLoader({
+    this.fallbackFile = "en",
+    this.basePath = "assets/flutter_i18n",
+    this.useCountryCode = false,
+    forcedLocale,
+    decodeStrategies,
+  }) {
     this.forcedLocale = forcedLocale;
     assetBundle = rootBundle;
     this.decodeStrategies = decodeStrategies ??
