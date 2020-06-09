@@ -31,6 +31,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
       forcedLocale,
       decodeStrategies}) {
     this.forcedLocale = forcedLocale;
+    this.decodeStrategies = decodeStrategies;
   }
 
   Future<Map> load() async {

@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
                     child: Text("Run `basic` example"),
                   ),
                   RaisedButton(
+                    key: Key('networkExample'),
                     onPressed: () {
                       networkExample.main();
                     },
