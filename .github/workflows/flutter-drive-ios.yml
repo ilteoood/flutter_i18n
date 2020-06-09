@@ -21,6 +21,4 @@ jobs:
         with:
           channel: 'stable'
       - name: Run Flutter Driver tests
-        run: cd example && \
-          flutter drive -v --target=test_driver/basic_example.dart && \
-          flutter drive -v --target=test_driver/network_example.dart
+        run: cd example && flutter drive -v --target=test_driver/basic_example.dart && flutter drive -v --target=test_driver/network_example.dart && flutter drive -v --target=test_driver/namespace_example.dart

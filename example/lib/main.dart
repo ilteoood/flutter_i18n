@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
                     child: Text("Run `network` example"),
                   ),
                   RaisedButton(
+                    key: Key('nameSpaceExample'),
                     onPressed: () {
                       namespaceExample.main();
                     },
