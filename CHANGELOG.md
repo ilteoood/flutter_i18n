@@ -163,3 +163,7 @@ Full support for supportedLocales
 ## [0.16.1]
 
 Support for decode strategies on other loaders
+
+## [0.16.2]
+
+Added missing translation handler

@@ -66,7 +66,12 @@ The next step consist in the configuration of the *localizationsDelegates*; to u
 
 ```dart
 localizationsDelegates: [
-        FlutterI18nDelegate(translationLoader: FileTranslationLoader(...parameters...)),
+        FlutterI18nDelegate(
+          translationLoader: FileTranslationLoader(...parameters...),
+          missingTranslationHandler: (key, locale) {
+            print("--- Missing Key: $key, languageCode: ${locale.languageCode}");
+          },
+        ),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
 ],
