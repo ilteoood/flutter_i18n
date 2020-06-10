@@ -6,7 +6,6 @@ jobs:
       matrix:
         device:
           - "iPhone 8"
-          - "iPhone 11 Pro Max"
       fail-fast: true
     runs-on: macOS-latest
     steps:
@@ -21,4 +20,4 @@ jobs:
         with:
           channel: 'stable'
       - name: Run Flutter Driver tests
-        run: cd example && flutter drive -v --target=test_driver/basic_example.dart && flutter drive -v --target=test_driver/network_example.dart && flutter drive -v --target=test_driver/namespace_example.dart
+        run: cd example && flutter drive -v --target=test_driver/main_app.dart --driver=test_driver/basic_example_test.dart && flutter drive -v --target=test_driver/main_app.dart --driver=test_driver/network_example_test.dart && flutter drive -v --target=test_driver/main_app.dart --driver=test_driver/namespace_example_test.dart
