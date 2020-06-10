@@ -8,11 +8,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 Future main() async {
   final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
     translationLoader: NamespaceFileTranslationLoader(
-        namespaces: ["common", "home"],
-        useCountryCode: false,
-        fallbackDir: 'en',
-        basePath: 'assets/i18n_namespace',
-        forcedLocale: Locale('it')),
+      namespaces: ["common", "home"],
+      useCountryCode: false,
+      fallbackDir: 'en',
+      basePath: 'assets/i18n_namespace',
+      forcedLocale: Locale('it'),
+    ),
+    missingTranslationHandler: (key, locale) {
+      print("--- Missing Key: $key, languageCode: ${locale.languageCode}");
+    },
   );
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp(flutterI18nDelegate));
@@ -65,6 +69,7 @@ class MyHomeState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               I18nText("home.label.main", child: Text("")),
+              I18nText("home.missing", child: Text("")),
               RaisedButton(
                   onPressed: () async {
                     await changeLanguage();

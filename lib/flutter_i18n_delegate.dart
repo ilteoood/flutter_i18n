@@ -10,8 +10,14 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
   static FlutterI18n _translationObject;
   Locale currentLocale;
 
-  FlutterI18nDelegate({translationLoader}) {
-    _translationObject = FlutterI18n(translationLoader);
+  FlutterI18nDelegate({
+    translationLoader,
+    MissingTranslationHandler missingTranslationHandler,
+  }) {
+    _translationObject = FlutterI18n(
+      translationLoader,
+      missingTranslationHandler: missingTranslationHandler,
+    );
   }
 
   @override

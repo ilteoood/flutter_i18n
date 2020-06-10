@@ -6,8 +6,16 @@ class PluralTranslator extends SimpleTranslator {
 
   final int pluralValue;
 
-  PluralTranslator(Map decodedMap, String key, this.pluralValue)
-      : super(decodedMap, key);
+  PluralTranslator(
+    Map decodedMap,
+    String key,
+    this.pluralValue, {
+    MissingKeyTranslationHandler missingKeyTranslationHandler,
+  }) : super(
+          decodedMap,
+          key,
+          missingKeyTranslationHandler: missingKeyTranslationHandler,
+        );
 
   String plural() {
     final Map<dynamic, dynamic> decodedSubMap = calculateSubmap(key);

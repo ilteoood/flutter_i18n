@@ -15,13 +15,21 @@ export 'loaders/translation_loader.dart';
 export 'widgets/I18nPlural.dart';
 export 'widgets/I18nText.dart';
 
+typedef void MissingTranslationHandler(String key, Locale locale);
+
 class FlutterI18n {
   TranslationLoader translationLoader;
 
   Map<dynamic, dynamic> decodedMap;
+  MissingTranslationHandler missingTranslationHandler;
 
-  FlutterI18n(TranslationLoader translationLoader) {
+  FlutterI18n(
+    TranslationLoader translationLoader, {
+    MissingTranslationHandler missingTranslationHandler,
+  }) {
     this.translationLoader = translationLoader ?? FileTranslationLoader();
+    this.missingTranslationHandler =
+        missingTranslationHandler ?? (key, locale) {};
   }
 
   Future<bool> load() async {
@@ -35,7 +43,13 @@ class FlutterI18n {
       final int pluralValue) {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
     final PluralTranslator pluralTranslator = PluralTranslator(
-        currentInstance.decodedMap, translationKey, pluralValue);
+      currentInstance.decodedMap,
+      translationKey,
+      pluralValue,
+      missingKeyTranslationHandler: (key) {
+        currentInstance.missingTranslationHandler(key, currentInstance.locale);
+      },
+    );
     return pluralTranslator.plural();
   }
 
@@ -48,10 +62,17 @@ class FlutterI18n {
 
   static String translate(final BuildContext context, final String key,
       {final String fallbackKey, final Map<String, String> translationParams}) {
-    final Map<dynamic, dynamic> decodedMap =
-        _retrieveCurrentInstance(context).decodedMap;
-    final SimpleTranslator simpleTranslator = SimpleTranslator(decodedMap, key,
-        fallbackKey: fallbackKey, translationParams: translationParams);
+    final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
+    final Map<dynamic, dynamic> decodedMap = currentInstance.decodedMap;
+    final SimpleTranslator simpleTranslator = SimpleTranslator(
+      decodedMap,
+      key,
+      fallbackKey: fallbackKey,
+      translationParams: translationParams,
+      missingKeyTranslationHandler: (key) {
+        currentInstance.missingTranslationHandler(key, currentInstance.locale);
+      },
+    );
     return simpleTranslator.translate();
   }
 
