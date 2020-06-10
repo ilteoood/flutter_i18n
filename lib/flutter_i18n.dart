@@ -28,7 +28,8 @@ class FlutterI18n {
     MissingTranslationHandler missingTranslationHandler,
   }) {
     this.translationLoader = translationLoader ?? FileTranslationLoader();
-    this.missingTranslationHandler = missingTranslationHandler ?? (k, l) {};
+    this.missingTranslationHandler =
+        missingTranslationHandler ?? (key, locale) {};
   }
 
   Future<bool> load() async {
