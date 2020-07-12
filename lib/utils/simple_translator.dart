@@ -44,7 +44,7 @@ class SimpleTranslator {
   }
 
   String _decodeFromMap(final String key) {
-    final Map<dynamic, dynamic> subMap = calculateSubmap(key);
+    final Map<dynamic, dynamic> subMap = calculateSubmap(key) ?? Map();
     final String lastKeyPart = key.split(KEY_SEPARATOR).last;
     final result = subMap[lastKeyPart] is String ? subMap[lastKeyPart] : null;
 
@@ -59,6 +59,9 @@ class SimpleTranslator {
     final List<String> translationKeySplitted =
         translationKey.split(KEY_SEPARATOR);
     translationKeySplitted.removeLast();
+
+    if (translationKeySplitted.isEmpty) return decodedMap;
+
     Map<dynamic, dynamic> decodedSubMap = decodedMap;
     translationKeySplitted.forEach((listKey) => decodedSubMap =
         decodedSubMap != null && decodedSubMap[listKey] != null
