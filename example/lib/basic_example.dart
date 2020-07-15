@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
+      builder: FlutterI18n.rootAppBuilder(),
     );
   }
 }

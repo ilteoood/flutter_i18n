@@ -75,6 +75,7 @@ localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
 ],
+builder: FlutterI18n.rootAppBuilder() //If you want to support RTL.
 ```
 
 Below you can find the name and description of the accepted parameters.

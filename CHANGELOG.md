@@ -171,3 +171,7 @@ Added missing translation handler, according to [issue/67](https://github.com/il
 ## [0.16.3]
 
 Removed cache parameter from loadString method, resolve [issue/116](https://github.com/ilteoood/flutter_i18n/issues/116)
+
+## [0.17.0]
+
+RTL support.

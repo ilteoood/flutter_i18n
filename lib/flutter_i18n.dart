@@ -5,6 +5,7 @@ import 'package:flutter_i18n/loaders/file_translation_loader.dart';
 import 'package:flutter_i18n/loaders/translation_loader.dart';
 import 'package:flutter_i18n/utils/plural_translator.dart';
 import 'package:flutter_i18n/utils/simple_translator.dart';
+import 'package:intl/intl.dart' as intl;
 
 export 'flutter_i18n_delegate.dart';
 export 'loaders/e2e_file_translation_loader.dart';
@@ -22,6 +23,7 @@ class FlutterI18n {
 
   Map<dynamic, dynamic> decodedMap;
   MissingTranslationHandler missingTranslationHandler;
+  final _localeStream = StreamController<Locale>();
 
   FlutterI18n(
     TranslationLoader translationLoader, {
@@ -34,6 +36,7 @@ class FlutterI18n {
 
   Future<bool> load() async {
     decodedMap = await translationLoader.load();
+    _localeStream.add(locale);
     return true;
   }
 
@@ -77,10 +80,30 @@ class FlutterI18n {
   }
 
   static Locale currentLocale(final BuildContext context) {
-    return _retrieveCurrentInstance(context).translationLoader.locale;
+    final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
+    return currentInstance?.translationLoader?.locale;
   }
 
   static FlutterI18n _retrieveCurrentInstance(BuildContext context) {
     return Localizations.of<FlutterI18n>(context, FlutterI18n);
+  }
+
+  static rootAppBuilder() {
+    return (BuildContext context, Widget child) {
+      return StreamBuilder<Locale>(
+          stream: _retrieveCurrentInstance(context)?._localeStream?.stream,
+          builder: (BuildContext context, AsyncSnapshot<Locale> snapshot) {
+            return Directionality(
+              textDirection: _findTextDirection(snapshot.data),
+              child: child,
+            );
+          });
+    };
+  }
+
+  static _findTextDirection(final Locale locale) {
+    return intl.Bidi.isRtlLanguage(locale?.countryCode)
+        ? TextDirection.rtl
+        : TextDirection.ltr;
   }
 }
