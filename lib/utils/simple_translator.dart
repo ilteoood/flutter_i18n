@@ -60,10 +60,8 @@ class SimpleTranslator {
         translationKey.split(KEY_SEPARATOR);
     translationKeySplitted.removeLast();
     Map<dynamic, dynamic> decodedSubMap = decodedMap;
-    translationKeySplitted.forEach((listKey) => decodedSubMap =
-        decodedSubMap != null && decodedSubMap[listKey] != null
-            ? decodedSubMap[listKey]
-            : Map());
+    translationKeySplitted.forEach((listKey) =>
+        decodedSubMap = (decodedSubMap ?? Map())[listKey] ?? Map());
     return decodedSubMap;
   }
 }

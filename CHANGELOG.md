@@ -175,3 +175,4 @@ Removed cache parameter from loadString method, resolve [issue/116](https://gith
 ## [0.17.0]
 
 RTL support.
+Test fix for [issue/115](https://github.com/ilteoood/flutter_i18n/issues/115)
