@@ -6,6 +6,8 @@ dependencies:
   flutter_i18n:
     path: ../
   cupertino_icons: ^0.1.2
+  http:
+  path_provider:
 
 dev_dependencies:
   flutter_test:

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'basic_example.dart' as basicExample;
 import 'namespace_example.dart' as namespaceExample;
 import 'network_example.dart' as networkExample;
+import 'local_example.dart' as localeExample;
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +49,13 @@ class MyApp extends StatelessWidget {
                     },
                     child: Text("Run `namespace` example"),
                   ),
+                  RaisedButton(
+                    key: Key('localeExample'),
+                    onPressed: () {
+                      localeExample.main();
+                    },
+                    child: Text("Run `locale` example"),
+                  )
                 ],
               ));
             })));
