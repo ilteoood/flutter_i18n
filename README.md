@@ -27,7 +27,8 @@ Available loaders:
 
 | Class name | Purpose |  
 | --- | --- |
-| `FileTranslationLoader` |  Loads translation files from JSON or YAML format | 
+| `FileTranslationLoader` |  Loads translation files from JSON, YAML or XML format | 
+| `LocalTranslationLoader` |  Is a copy of `FileTranslationLoader`, but used to loads the files from the device storage instead of assets folder | 
 | `NetworkFileTranslationLoader` | Loads translations from the remote resource | 
 | `NamespaceFileTranslationLoader` | Loads translations from separate files |
 | `E2EFileTranslationLoader` | Special loader for solving isolates problem with flutter drive |

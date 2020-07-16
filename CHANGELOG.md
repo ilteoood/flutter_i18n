@@ -176,3 +176,9 @@ Removed cache parameter from loadString method, resolve [issue/116](https://gith
 
 RTL support.
 Test fix for [issue/115](https://github.com/ilteoood/flutter_i18n/issues/115)
+
+## [0.18.0]
+
+New loader provided:
+
+* LocalTranslationLoader
