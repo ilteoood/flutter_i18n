@@ -43,7 +43,8 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
 
   @override
   Future<String> loadString(final String fileName, final String extension) {
-    return assetBundle.loadString('$basePath/$fileName.$extension', cache: false);
+    return assetBundle.loadString('$basePath/$fileName.$extension',
+        cache: false);
   }
 
   Future _loadCurrentTranslation() async {
