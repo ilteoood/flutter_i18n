@@ -1,6 +1,6 @@
 name: flutter_i18n
 description: i18n made easy for Flutter. With flutter_i18n you can make your app international, using just a simple .json file!
-version: 0.18.0
+version: 0.19.0
 homepage: https://github.com/ilteoood/flutter_i18n
 
 dependencies:

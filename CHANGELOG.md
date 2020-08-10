@@ -182,3 +182,8 @@ Test fix for [issue/115](https://github.com/ilteoood/flutter_i18n/issues/115)
 New loader provided:
 
 * LocalTranslationLoader
+
+## [0.19.0]
+
+Support for Flutter Web.
+Note: due to dart:io bug, NetworkFileTranslationLoader can't be used.
