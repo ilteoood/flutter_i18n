@@ -4,8 +4,7 @@ import 'package:flutter_i18n/loaders/file_translation_loader.dart';
 
 class LocalTranslationLoader extends FileTranslationLoader {
   LocalTranslationLoader(
-      {fallbackDir = "en",
-      basePath = "assets/flutter_i18n",
+      {basePath = "assets/flutter_i18n",
       useCountryCode = false,
       forcedLocale,
       decodeStrategies})

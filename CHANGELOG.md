@@ -187,3 +187,7 @@ New loader provided:
 
 Support for Flutter Web.
 Note: due to dart:io bug, NetworkFileTranslationLoader can't be used.
+
+## [0.19.1]
+
+Removed useless parameter from LocalTranslationLoader.
