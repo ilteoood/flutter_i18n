@@ -30,7 +30,9 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
     MessagePrinter.info("New locale: $locale");
     final TranslationLoader translationLoader =
         _translationObject.translationLoader;
-    if (translationLoader.locale != locale) {
+    if (translationLoader.locale != locale ||
+        _translationObject.decodedMap == null ||
+        _translationObject.decodedMap.isEmpty) {
       translationLoader.locale = currentLocale = locale;
       await _translationObject.load();
     }
