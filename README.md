@@ -10,7 +10,17 @@ I18n made easy, for Flutter!
 
 ------------------------------------------------
 
+## Table of contents
 
+* [Why you should use flutter_i18n?](#why-you-should-use-flutter_i18n)
+* [Loaders](#loaders)
+  * [FileTranslationLoader](#filetranslationloader-configuration)
+  * [NetworkFileTranslationLoader](#networkfiletranslationloader-configuration)
+  * [NamespaceFileTranslationLoader](#namespacefiletranslationloader-configuration)
+  * [E2EFileTranslationLoader](#e2efiletranslationloader-configuration)
+* [flutter_i18n in action](#flutter_i18n-in-action)
+* [Plugins](#plugins)
+* [Contributors](#contributors-)
 
 ## Why you should use flutter_i18n?
 
@@ -214,6 +224,13 @@ For more informations and details, read the [CHANGELOG.md](CHANGELOG.md).
 Known problems:
     
 - In iOS simulator, is always used the *en_US* locale: see [here](https://github.com/ilteoood/flutter_i18n/issues/58).
+
+## Plugins
+
+| Plugin | Description |
+|---------|-------------|
+| [flutter_i18n_locize](https://github.com/defint/flutter_i18n_locize) | Easy integration locize.io to flutter_i18n. |
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
