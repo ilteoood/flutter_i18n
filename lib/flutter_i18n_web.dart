@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:html' as html show window;
 
 import 'package:flutter/services.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 /// A web implementation of the FlutterI18n plugin.
 class FlutterI18nWeb {

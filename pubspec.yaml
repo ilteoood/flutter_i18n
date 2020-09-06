@@ -8,6 +8,8 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
   intl: ^0.16.0
   yaml: ^2.2.0
   xml2json: ^4.2.0
