@@ -1,18 +1,18 @@
 import 'dart:io';
 
-import 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
-import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
-import 'package:flutter_i18n/loaders/decoders/xml_decode_strategy.dart';
-import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
-import 'package:flutter_i18n/loaders/file_content.dart';
+import '../utils/message_printer.dart';
+import './decoders/base_decode_strategy.dart';
+import './decoders/json_decode_strategy.dart';
+import './decoders/xml_decode_strategy.dart';
+import './decoders/yaml_decode_strategy.dart';
 import 'package:path/path.dart';
 
 import './ActionInterface.dart';
 
-class ValidateAction extends ActionInterface implements IFileContent {
+class ValidateAction extends ActionInterface {
 
   @override
-  void executeAction() async {
+  void executeAction(final List<String> params) async {
     final List<String> assetsFolder = await retrieveAssetsFolders();
     assetsFolder
         .map((folder) => Directory(folder))
@@ -42,24 +42,29 @@ class ValidateAction extends ActionInterface implements IFileContent {
     return acceptedExtensions.contains(extension(fileSystemEntity.path));
   }
 
-  void validateFile(final FileSystemEntity fileSystemEntity) {
+  void validateFile(final FileSystemEntity fileSystemEntity) async {
+    MessagePrinter.debug("I've found ${fileSystemEntity.path}");
+    final BaseDecodeStrategy decodeStrategy = findStrategy(fileSystemEntity);
+    final Map content = await decodeStrategy.decode(fileSystemEntity);
+    validateMap(fileSystemEntity, content);
+  }
+
+  void validateMap(final FileSystemEntity fileSystemEntity, final Map content) {
+    if(content == null) {
+      MessagePrinter.error("Invalid file: ${fileSystemEntity.path}");
+    } else {
+      MessagePrinter.info("Valid file: ${fileSystemEntity.path}");
+    }
+  }
+
+  findStrategy(final FileSystemEntity fileSystemEntity) {
     final String fileExtension = extension(fileSystemEntity.path);
-    final BaseDecodeStrategy decodeStrategy = findStrategy(fileExtension);
-    decodeStrategy.decode(fileSystemEntity.path, this);
-  }
-
-  @override
-  Future<String> loadString(final String fileName, final String extension) {
-    return File('$fileName').readAsString();
-  }
-
-  findStrategy(final String fileExtension) {
     switch (fileExtension) {
-      case "yaml":
+      case ".yaml":
         return YamlDecodeStrategy();
-      case "xml":
+      case ".xml":
         return XmlDecodeStrategy();
-      case "json":
+      case ".json":
         return JsonDecodeStrategy();
       default:
         throw Exception("Absent strategy for $fileExtension");

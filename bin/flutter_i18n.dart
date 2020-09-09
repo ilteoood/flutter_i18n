@@ -5,7 +5,8 @@ import 'actions/ValidateAction.dart';
 void main(final List<String> args) async {
   validateLength(args);
   validateArg(args[0]);
-  retrieveAction(args[0], args.sublist(1));
+  final ActionInterface actionInterface = retrieveAction(args[0]);
+  actionInterface.executeAction(args.sublist(1));
 }
 
 void validateLength(final List<String> args) {
@@ -22,7 +23,7 @@ void validateArg(final String action) {
   }
 }
 
-ActionInterface retrieveAction(final String action, final List<String> params) {
+ActionInterface retrieveAction(final String action) {
   switch (action) {
     case 'validate':
       return ValidateAction();

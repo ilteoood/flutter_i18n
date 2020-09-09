@@ -4,9 +4,9 @@ import 'package:yaml/yaml.dart';
 
 abstract class ActionInterface {
 
-  List<String> get acceptedExtensions => ['json', 'yaml', 'xml'];
+  List<String> get acceptedExtensions => ['.json', '.yaml', '.xml'];
 
-  void executeAction();
+  void executeAction(final List<String> params);
 
   Future<dynamic> loadPubspec() async {
     final String pubSpecContent = await File("./pubspec.yaml").readAsString();
@@ -15,6 +15,7 @@ abstract class ActionInterface {
 
   Future<List<String>> retrieveAssetsFolders() async {
     dynamic pubSec = await loadPubspec();
-    return pubSec['flutter']['assets'];
+    final YamlList yamlList = pubSec['flutter']['assets'];
+    return yamlList.cast();
   }
 }
