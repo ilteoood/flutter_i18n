@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl_standalone.dart';
+import 'package:intl/intl.dart';
+import 'package:universal_io/io.dart';
 
 import '../utils/message_printer.dart';
 
@@ -17,9 +18,13 @@ abstract class TranslationLoader {
   set locale(Locale locale) => _locale = locale;
 
   Future<Locale> findDeviceLocale() async {
-    final String systemLocale = await findSystemLocale();
+    final String systemLocale = _findSystemLocale();
     MessagePrinter.info("The system locale is $systemLocale");
     return _toLocale(systemLocale);
+  }
+
+  String _findSystemLocale() {
+    return Intl.canonicalizedLocale(Platform.localeName);
   }
 
   Locale _toLocale(final String locale) {

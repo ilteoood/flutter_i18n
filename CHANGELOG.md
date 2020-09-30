@@ -195,3 +195,7 @@ Removed useless parameter from LocalTranslationLoader and fixed delegate load me
 ## [0.19.2]
 
 Plugins and better Flutter Web support.
+
+## [0.19.3]
+
+Removed dart:io for better Flutter Web support.
