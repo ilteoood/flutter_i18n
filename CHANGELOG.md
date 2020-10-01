@@ -199,3 +199,7 @@ Plugins and better Flutter Web support.
 ## [0.19.3]
 
 Removed dart:io for better Flutter Web support.
+
+## [0.19.4]
+
+Better dartdocs
