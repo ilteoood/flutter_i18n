@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
+/// Widget for plural text translation
 class I18nPlural extends StatelessWidget {
   final String _key;
   final int _pluralValue;

@@ -6,6 +6,7 @@ import 'package:flutter_i18n/utils/message_printer.dart';
 
 import 'flutter_i18n.dart';
 
+/// Translation delegate that manage the new locale received from the framework
 class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
   static FlutterI18n _translationObject;
   Locale currentLocale;

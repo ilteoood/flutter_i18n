@@ -16,6 +16,7 @@ class _CustomAssetBundle extends PlatformAssetBundle {
   }
 }
 
+/// Special loader for solving isolates problem with flutter drive
 class E2EFileTranslationLoader extends FileTranslationLoader {
   final bool useE2E;
 
@@ -35,6 +36,7 @@ class E2EFileTranslationLoader extends FileTranslationLoader {
             forcedLocale: forcedLocale,
             decodeStrategies: decodeStrategies);
 
+  /// Method used to load string from the _CustomAssetBundle
   Future<String> loadString(final String fileName, final String extension) {
     return useE2E
         ? customAssetBundle.loadString('$basePath/$fileName.$extension')

@@ -14,6 +14,7 @@ class LocalTranslationLoader extends FileTranslationLoader {
             forcedLocale: forcedLocale,
             decodeStrategies: decodeStrategies);
 
+  /// Load the file using the File class
   @override
   Future<String> loadString(final String fileName, final String extension) {
     return File('$basePath/$fileName.$extension').readAsString();

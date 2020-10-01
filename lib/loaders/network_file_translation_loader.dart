@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 
 import 'file_translation_loader.dart';
 
+/// Loads translations from the remote resource
 class NetworkFileTranslationLoader extends FileTranslationLoader {
   AssetBundle networkAssetBundle;
   final Uri baseUri;
@@ -23,6 +24,7 @@ class NetworkFileTranslationLoader extends FileTranslationLoader {
     networkAssetBundle = NetworkAssetBundle(baseUri);
   }
 
+  /// Load the file using the AssetBundle networkAssetBundle
   @override
   Future<String> loadString(final String fileName, final String extension) {
     return networkAssetBundle.loadString('$fileName.$extension');

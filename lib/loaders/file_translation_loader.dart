@@ -11,6 +11,7 @@ import "package:merge_map/merge_map.dart";
 
 import '../utils/message_printer.dart';
 
+/// Loads translation files from JSON, YAML or XML format
 class FileTranslationLoader extends TranslationLoader implements IFileContent {
   final String fallbackFile;
   final String basePath;
@@ -34,6 +35,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
     this.decodeStrategies = decodeStrategies;
   }
 
+  /// Return the translation Map
   Future<Map> load() async {
     _decodedMap = Map();
     await _loadCurrentTranslation();
@@ -41,6 +43,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
     return _decodedMap;
   }
 
+  /// Load the file using the AssetBundle rootBundle
   @override
   Future<String> loadString(final String fileName, final String extension) {
     return assetBundle.loadString('$basePath/$fileName.$extension',
@@ -66,6 +69,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
     }
   }
 
+  /// Load the fileName using one of the strategies provided
   @protected
   Future<Map> loadFile(final String fileName) async {
     final List<Future<Map>> strategiesFutures = _executeStrategies(fileName);
@@ -79,11 +83,13 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
         .toList();
   }
 
+  /// Compose the file name using the format languageCode_countryCode
   @protected
   String composeFileName() {
     return "${locale.languageCode}${composeCountryCode()}";
   }
 
+  /// Return the country code to attach to the file name, if required
   @protected
   String composeCountryCode() {
     String countryCode = "";

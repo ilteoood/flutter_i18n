@@ -18,6 +18,7 @@ export 'widgets/I18nText.dart';
 
 typedef void MissingTranslationHandler(String key, Locale locale);
 
+/// Facade used to hide the loading and translations logic
 class FlutterI18n {
   TranslationLoader translationLoader;
 
@@ -34,14 +35,17 @@ class FlutterI18n {
         missingTranslationHandler ?? (key, locale) {};
   }
 
+  /// Used to load the locale translation file
   Future<bool> load() async {
     decodedMap = await translationLoader.load();
     _localeStream.add(locale);
     return true;
   }
 
+  /// The locale used for the translation logic
   get locale => this.translationLoader.locale;
 
+  /// Facade method to the plural translation logic
   static String plural(final BuildContext context, final String translationKey,
       final int pluralValue) {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
@@ -56,6 +60,7 @@ class FlutterI18n {
     return pluralTranslator.plural();
   }
 
+  /// Facade method to force the load of a new locale
   static Future refresh(
       final BuildContext context, final Locale forcedLocale) async {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
@@ -63,6 +68,7 @@ class FlutterI18n {
     await currentInstance.load();
   }
 
+  /// Facade method to the simple translation logic
   static String translate(final BuildContext context, final String key,
       {final String fallbackKey, final Map<String, String> translationParams}) {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
@@ -79,6 +85,7 @@ class FlutterI18n {
     return simpleTranslator.translate();
   }
 
+  /// Same as `get locale`, but this can be invoked from widgets
   static Locale currentLocale(final BuildContext context) {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
     return currentInstance?.translationLoader?.locale;
@@ -88,6 +95,7 @@ class FlutterI18n {
     return Localizations.of<FlutterI18n>(context, FlutterI18n);
   }
 
+  /// Build for root widget, to support RTL languages
   static rootAppBuilder() {
     return (BuildContext context, Widget child) {
       return StreamBuilder<Locale>(

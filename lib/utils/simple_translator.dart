@@ -1,5 +1,6 @@
 typedef void MissingKeyTranslationHandler(String key);
 
+/// Translator for simple values
 class SimpleTranslator {
   static const String KEY_SEPARATOR = ".";
 
@@ -18,6 +19,7 @@ class SimpleTranslator {
     this.missingKeyTranslationHandler,
   });
 
+  /// Return the translation of the key provided, otherwise return the fallbackKey (if provided), otherwise return the same key
   String translate() {
     String translation = _translateWithKeyFallback();
     if (translationParams != null) {

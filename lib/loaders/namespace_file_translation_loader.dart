@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/loaders/file_translation_loader.dart';
 import 'package:flutter_i18n/utils/message_printer.dart';
 
+/// Loads translations from separate files
 class NamespaceFileTranslationLoader extends FileTranslationLoader {
   final String fallbackDir;
   final String basePath;
@@ -29,6 +30,7 @@ class NamespaceFileTranslationLoader extends FileTranslationLoader {
     assert(namespaces.length > 0);
   }
 
+  /// Return the translation Map for the namespace
   Future<Map> load() async {
     this.locale = locale ?? await findDeviceLocale();
     MessagePrinter.info("The current locale is ${this.locale}");

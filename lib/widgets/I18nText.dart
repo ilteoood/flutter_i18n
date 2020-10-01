@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
+/// Widget for simple text translation
 class I18nText extends StatelessWidget {
   final String _key;
   final Text child;

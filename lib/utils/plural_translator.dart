@@ -1,5 +1,6 @@
 import 'package:flutter_i18n/utils/simple_translator.dart';
 
+/// Translator for plural values
 class PluralTranslator extends SimpleTranslator {
   static const String PLURAL_SEPARATOR = "-";
   static final RegExp _parameterRegexp = RegExp("{(.+)}");
@@ -17,6 +18,7 @@ class PluralTranslator extends SimpleTranslator {
           missingKeyTranslationHandler: missingKeyTranslationHandler,
         );
 
+  /// Return the translation of plural key provided
   String plural() {
     final Map<dynamic, dynamic> decodedSubMap = calculateSubmap(key);
     key = _findCorrectKey(decodedSubMap);
