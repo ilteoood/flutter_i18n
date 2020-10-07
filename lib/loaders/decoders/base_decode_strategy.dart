@@ -4,7 +4,6 @@ import '../../utils/message_printer.dart';
 
 /// Base decode strategy to convert a text file to a Map
 abstract class BaseDecodeStrategy {
-
   /// The extension of the file to decode
   String get fileExtension;
 

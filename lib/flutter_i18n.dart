@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/loaders/file_translation_loader.dart';
 import 'package:flutter_i18n/loaders/translation_loader.dart';
+import 'package:flutter_i18n/models/loading_status.dart';
 import 'package:flutter_i18n/utils/plural_translator.dart';
 import 'package:flutter_i18n/utils/simple_translator.dart';
 import 'package:intl/intl.dart' as intl;
@@ -25,20 +26,26 @@ class FlutterI18n {
   Map<dynamic, dynamic> decodedMap;
   MissingTranslationHandler missingTranslationHandler;
   final _localeStream = StreamController<Locale>();
+  final _loadingStream = StreamController<LoadingStatus>();
+
+  get loadingStream => _loadingStream.stream;
 
   FlutterI18n(
     TranslationLoader translationLoader, {
     MissingTranslationHandler missingTranslationHandler,
   }) {
     this.translationLoader = translationLoader ?? FileTranslationLoader();
+    this._loadingStream.add(LoadingStatus.notLoaded);
     this.missingTranslationHandler =
         missingTranslationHandler ?? (key, locale) {};
   }
 
   /// Used to load the locale translation file
   Future<bool> load() async {
+    this._loadingStream.add(LoadingStatus.loading);
     decodedMap = await translationLoader.load();
     _localeStream.add(locale);
+    this._loadingStream.add(LoadingStatus.loaded);
     return true;
   }
 
@@ -107,6 +114,11 @@ class FlutterI18n {
             );
           });
     };
+  }
+
+  static Stream<LoadingStatus> retrieveLoadingStream(
+      final BuildContext context) {
+    return _retrieveCurrentInstance(context).loadingStream;
   }
 
   static _findTextDirection(final Locale locale) {

@@ -4,7 +4,6 @@ import './base_decode_strategy.dart';
 
 /// Decode strategy for JSON files
 class JsonDecodeStrategy extends BaseDecodeStrategy {
-
   /// The extension of a JSON file
   @override
   get fileExtension => "json";

@@ -4,7 +4,6 @@ import './base_decode_strategy.dart';
 
 /// Decode strategy for YAML files
 class YamlDecodeStrategy extends BaseDecodeStrategy {
-
   /// The extension of a YAML file
   @override
   get fileExtension => "yaml";
