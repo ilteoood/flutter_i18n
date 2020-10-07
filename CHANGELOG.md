@@ -203,3 +203,7 @@ Removed dart:io for better Flutter Web support.
 ## [0.19.4]
 
 Better dartdocs
+
+## [0.20.0]
+
+Loading stream, in order to detect loading translations
