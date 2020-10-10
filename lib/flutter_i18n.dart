@@ -119,11 +119,13 @@ class FlutterI18n {
     };
   }
 
+  /// Used to retrieve the loading status stream
   static Stream<LoadingStatus> retrieveLoadingStream(
       final BuildContext context) {
     return _retrieveCurrentInstance(context).loadingStream;
   }
 
+  /// Used to check if the translation file is still loading
   static Stream<bool> retrieveLoadedStream(final BuildContext context) {
     return _retrieveCurrentInstance(context).isLoadedStream;
   }
