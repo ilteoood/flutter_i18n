@@ -219,11 +219,11 @@ I18nPlural("clicked.times", 1)
 I18nPlural("clicked.times", 2, child: Text(""))
 ```
 
-For more informations and details, read the [CHANGELOG.md](CHANGELOG.md).
+If you need to listen the translation loading status, you can use:
+- ```FlutterI18n.retrieveLoadingStream``` method, that allows you to listen to every status change
+- ```FlutterI18n.retrieveLoadedStream``` method, that allows you to listen when the translation is loaded
 
-Known problems:
-    
-- In iOS simulator, is always used the *en_US* locale: see [here](https://github.com/ilteoood/flutter_i18n/issues/58).
+For more informations and details, read the [CHANGELOG.md](CHANGELOG.md).
 
 ## Plugins
 
