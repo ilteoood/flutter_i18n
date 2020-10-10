@@ -60,6 +60,12 @@ class MyHomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              StreamBuilder<bool>(
+                stream: FlutterI18n.retrieveLoadedStream(context),
+                builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                  return Text("isLoading: ${snapshot.data}");
+                },
+              ),
               I18nText(
                 "args.content",
                 child: Text(""),
