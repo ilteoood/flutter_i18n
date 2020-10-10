@@ -28,7 +28,10 @@ class FlutterI18n {
   final _localeStream = StreamController<Locale>();
   final _loadingStream = StreamController<LoadingStatus>();
 
-  get loadingStream => _loadingStream.stream;
+  Stream<LoadingStatus> get loadingStream => _loadingStream.stream;
+
+  Stream<bool> get isLoadedStream => loadingStream
+      .map((loadingStatus) => loadingStatus == LoadingStatus.loaded);
 
   FlutterI18n(
     TranslationLoader translationLoader, {
@@ -119,6 +122,10 @@ class FlutterI18n {
   static Stream<LoadingStatus> retrieveLoadingStream(
       final BuildContext context) {
     return _retrieveCurrentInstance(context).loadingStream;
+  }
+
+  static Stream<bool> retrieveLoadedStream(final BuildContext context) {
+    return _retrieveCurrentInstance(context).isLoadedStream;
   }
 
   static _findTextDirection(final Locale locale) {
