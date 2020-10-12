@@ -22,22 +22,29 @@ typedef void MissingTranslationHandler(String key, Locale locale);
 /// Facade used to hide the loading and translations logic
 class FlutterI18n {
   TranslationLoader translationLoader;
+  MissingTranslationHandler missingTranslationHandler;
+  String keySeparator;
 
   Map<dynamic, dynamic> decodedMap;
-  MissingTranslationHandler missingTranslationHandler;
+
   final _localeStream = StreamController<Locale>();
   final _loadingStream = StreamController<LoadingStatus>();
 
-  get loadingStream => _loadingStream.stream;
+  Stream<LoadingStatus> get loadingStream => _loadingStream.stream;
+
+  Stream<bool> get isLoadedStream => loadingStream
+      .map((loadingStatus) => loadingStatus == LoadingStatus.loaded);
 
   FlutterI18n(
-    TranslationLoader translationLoader, {
+    TranslationLoader translationLoader,
+    String keySeparator, {
     MissingTranslationHandler missingTranslationHandler,
   }) {
     this.translationLoader = translationLoader ?? FileTranslationLoader();
     this._loadingStream.add(LoadingStatus.notLoaded);
     this.missingTranslationHandler =
         missingTranslationHandler ?? (key, locale) {};
+    this.keySeparator = keySeparator ?? ".";
   }
 
   /// Used to load the locale translation file
@@ -59,6 +66,7 @@ class FlutterI18n {
     final PluralTranslator pluralTranslator = PluralTranslator(
       currentInstance.decodedMap,
       translationKey,
+      currentInstance.keySeparator,
       pluralValue,
       missingKeyTranslationHandler: (key) {
         currentInstance.missingTranslationHandler(key, currentInstance.locale);
@@ -79,10 +87,10 @@ class FlutterI18n {
   static String translate(final BuildContext context, final String key,
       {final String fallbackKey, final Map<String, String> translationParams}) {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
-    final Map<dynamic, dynamic> decodedMap = currentInstance.decodedMap;
     final SimpleTranslator simpleTranslator = SimpleTranslator(
-      decodedMap,
+      currentInstance.decodedMap,
       key,
+      currentInstance.keySeparator,
       fallbackKey: fallbackKey,
       translationParams: translationParams,
       missingKeyTranslationHandler: (key) {
@@ -116,9 +124,15 @@ class FlutterI18n {
     };
   }
 
+  /// Used to retrieve the loading status stream
   static Stream<LoadingStatus> retrieveLoadingStream(
       final BuildContext context) {
     return _retrieveCurrentInstance(context).loadingStream;
+  }
+
+  /// Used to check if the translation file is still loading
+  static Stream<bool> retrieveLoadedStream(final BuildContext context) {
+    return _retrieveCurrentInstance(context).isLoadedStream;
   }
 
   static _findTextDirection(final Locale locale) {

@@ -2,10 +2,9 @@ typedef void MissingKeyTranslationHandler(String key);
 
 /// Translator for simple values
 class SimpleTranslator {
-  static const String KEY_SEPARATOR = ".";
-
   final Map<dynamic, dynamic> decodedMap;
   final String fallbackKey;
+  final String keySeparator;
   final MissingKeyTranslationHandler missingKeyTranslationHandler;
 
   String key;
@@ -13,7 +12,8 @@ class SimpleTranslator {
 
   SimpleTranslator(
     this.decodedMap,
-    this.key, {
+    this.key,
+    this.keySeparator, {
     this.fallbackKey,
     this.translationParams,
     this.missingKeyTranslationHandler,
@@ -47,7 +47,7 @@ class SimpleTranslator {
 
   String _decodeFromMap(final String key) {
     final Map<dynamic, dynamic> subMap = calculateSubmap(key);
-    final String lastKeyPart = key.split(KEY_SEPARATOR).last;
+    final String lastKeyPart = key.split(this.keySeparator).last;
     final result = subMap[lastKeyPart] is String ? subMap[lastKeyPart] : null;
 
     if (result == null && key.length > 0) {
@@ -59,7 +59,7 @@ class SimpleTranslator {
 
   Map<dynamic, dynamic> calculateSubmap(final String translationKey) {
     final List<String> translationKeySplitted =
-        translationKey.split(KEY_SEPARATOR);
+        translationKey.split(this.keySeparator);
     translationKeySplitted.removeLast();
     Map<dynamic, dynamic> decodedSubMap = decodedMap;
     translationKeySplitted.forEach((listKey) =>

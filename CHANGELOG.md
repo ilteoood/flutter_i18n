@@ -206,4 +206,4 @@ Better dartdocs
 
 ## [0.20.0]
 
-Loading stream, in order to detect loading translations
+Loading and loaded stream, in order to detect loading translations status
