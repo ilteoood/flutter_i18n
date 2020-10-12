@@ -28,6 +28,7 @@ class FlutterI18n {
   Map<dynamic, dynamic> decodedMap;
 
   final _localeStream = StreamController<Locale>();
+  // ignore: close_sinks
   final _loadingStream = StreamController<LoadingStatus>();
 
   Stream<LoadingStatus> get loadingStream => _loadingStream.stream;
