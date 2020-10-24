@@ -207,3 +207,7 @@ Better dartdocs
 ## [0.20.0]
 
 Loading and loaded stream, in order to detect loading translations status
+
+## [0.20.1]
+
+Fix for streams listened twice
