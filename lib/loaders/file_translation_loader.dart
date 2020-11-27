@@ -15,6 +15,7 @@ import '../utils/message_printer.dart';
 class FileTranslationLoader extends TranslationLoader implements IFileContent {
   final String fallbackFile;
   final String basePath;
+  final String packages;
   final bool useCountryCode;
   AssetBundle assetBundle = rootBundle;
 
@@ -22,12 +23,12 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   List<BaseDecodeStrategy> _decodeStrategies;
 
   set decodeStrategies(List<BaseDecodeStrategy> decodeStrategies) =>
-      _decodeStrategies = decodeStrategies ??
-          [JsonDecodeStrategy(), YamlDecodeStrategy(), XmlDecodeStrategy()];
+      _decodeStrategies = decodeStrategies ?? [JsonDecodeStrategy(), YamlDecodeStrategy(), XmlDecodeStrategy()];
 
   FileTranslationLoader(
       {this.fallbackFile = "en",
       this.basePath = "assets/flutter_i18n",
+      this.packages = "",
       this.useCountryCode = false,
       forcedLocale,
       decodeStrategies}) {
@@ -46,8 +47,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   /// Load the file using the AssetBundle rootBundle
   @override
   Future<String> loadString(final String fileName, final String extension) {
-    return assetBundle.loadString('$basePath/$fileName.$extension',
-        cache: false);
+    return assetBundle.loadString('${packages == "" ? basePath : "packages/$packages/$basePath"}/$fileName.$extension', cache: false);
   }
 
   Future _loadCurrentTranslation() async {
@@ -78,9 +78,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   }
 
   List<Future<Map>> _executeStrategies(final String fileName) {
-    return _decodeStrategies
-        .map((decodeStrategy) => decodeStrategy.decode(fileName, this))
-        .toList();
+    return _decodeStrategies.map((decodeStrategy) => decodeStrategy.decode(fileName, this)).toList();
   }
 
   /// Compose the file name using the format languageCode_countryCode
