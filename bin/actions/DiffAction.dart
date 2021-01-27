@@ -24,18 +24,33 @@ class DiffAction extends AbstractAction {
     final Set keysSet = Set.from(baseFileContent.keys);
     keysSet.addAll(compareFileContent.keys);
     keysSet.forEach((dictKey) {
-      if(!baseFileContent.containsKey(dictKey)) {
-        MessagePrinter.error("The base dictionary doesn't contain the key $keyPrefix>$dictKey");
-      } else {
-        final dictContent = baseFileContent[dictKey];
-        if(dictContent is String) {
-
-        }
-      }
-      if(!compareFileContent.containsKey(dictKey)) {
-        MessagePrinter.error("The compared dictionary doesn't contain the key $keyPrefix.$dictKey");
-      }
+      compareMapContent(
+          baseFileContent, compareFileContent, dictKey, keyPrefix);
     });
+  }
+
+  compareMapContent(
+      Map baseMap, Map otherMap, String dictKey, String keyPrefix) {
+    if (!baseMap.containsKey(dictKey)) {
+      MessagePrinter.error(
+          "The base dictionary doesn't contain the key $keyPrefix>$dictKey");
+    } else {
+      final baseDictContent = baseMap[dictKey];
+      if (otherMap.containsKey(dictKey)) {
+        final compareDictContent = otherMap[dictKey];
+        if (baseDictContent is Map && compareDictContent is Map) {
+          mapCompare(
+              baseDictContent, compareDictContent, "$keyPrefix>$dictKey");
+        } else if (baseDictContent.runtimeType !=
+            compareDictContent.runtimeType) {
+          MessagePrinter.error(
+              "There are different kind of data for the key $keyPrefix>$dictKey ");
+        }
+      } else {
+        MessagePrinter.error(
+            "The compared dictionary doesn't contain the key $keyPrefix>$dictKey");
+      }
+    }
   }
 
   Future<Map> retrieveFileContent(
