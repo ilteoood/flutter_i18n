@@ -9,15 +9,15 @@ abstract class AbstractAction {
 
   void executeAction(final List<String> params);
 
-  Future<dynamic> loadPubspec() async {
+  Future<YamlMap> loadPubspec() async {
     final String pubSpecContent = await File("./pubspec.yaml").readAsString();
     return loadYaml(pubSpecContent);
   }
 
   Future<List<String>> retrieveAssetsFolders() async {
-    dynamic pubSec = await loadPubspec();
-    final YamlList yamlList = pubSec['flutter']['assets'];
-    return yamlList.cast();
+    final YamlMap pubSec = await loadPubspec();
+    final YamlList assetsList = pubSec['flutter']['assets'];
+    return assetsList.cast();
   }
 
   Future<List<FileSystemEntity>> retrieveAssetsContent() async {
@@ -27,7 +27,7 @@ abstract class AbstractAction {
         .where(existFolder)
         .map(folderContent)
         .where((folderContent) => folderContent.isNotEmpty)
-        .fold(List<FileSystemEntity>(), listFold)
+        .fold(<FileSystemEntity>[], listFold)
         .where(filterExtension)
         .toList();
   }
