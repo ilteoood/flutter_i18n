@@ -211,3 +211,7 @@ Loading and loaded stream, in order to detect loading translations status
 ## [0.20.1]
 
 Fix for streams listened twice
+
+## [0.21.0]
+
+Introducing validate and diff actions
