@@ -1,6 +1,6 @@
 /// Used to print console messages with the flutter_i18n prefix
 class MessagePrinter {
-  static bool _mustPrintMessage;
+  static bool _mustPrintMessage = false;
 
   static setMustPrintMessage(bool mustPrintMessage) =>
       _mustPrintMessage = mustPrintMessage;
