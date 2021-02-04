@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/loaders/file_translation_loader.dart';
 import 'package:flutter_i18n/loaders/translation_loader.dart';
@@ -7,6 +8,8 @@ import 'package:flutter_i18n/models/loading_status.dart';
 import 'package:flutter_i18n/utils/plural_translator.dart';
 import 'package:flutter_i18n/utils/simple_translator.dart';
 import 'package:intl/intl.dart' as intl;
+
+import 'utils/message_printer.dart';
 
 export 'flutter_i18n_delegate.dart';
 export 'loaders/e2e_file_translation_loader.dart';
@@ -46,6 +49,7 @@ class FlutterI18n {
     this.missingTranslationHandler =
         missingTranslationHandler ?? (key, locale) {};
     this.keySeparator = keySeparator ?? ".";
+    MessagePrinter.setMustPrintMessage(!Foundation.kReleaseMode);
   }
 
   /// Used to load the locale translation file

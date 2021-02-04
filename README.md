@@ -225,6 +225,53 @@ If you need to listen the translation loading status, you can use:
 
 For more informations and details, read the [CHANGELOG.md](CHANGELOG.md).
 
+## Utilities
+
+Using *flutter pub run flutter_i18n* inside the root of your project you can enjoy some utilities that will help you with the translations files management.
+
+### Commands
+
+#### Validate
+
+This command is used to validate all the translations files inside the project.
+
+```sh
+> flutter pub run flutter_i18n validate
+[flutter_i18n DEBUG]: I've found assets/i18n/en.yaml
+[flutter_i18n DEBUG]: I've found assets/i18n/it.json
+[flutter_i18n DEBUG]: I've found assets/i18n/es.xml
+[flutter_i18n DEBUG]: I've found assets/i18n_namespace/en/common.json
+[flutter_i18n DEBUG]: I've found assets/i18n_namespace/en/home.yaml
+[flutter_i18n DEBUG]: I've found assets/i18n_namespace/ua/common.json
+[flutter_i18n DEBUG]: I've found assets/i18n_namespace/ua/home.json
+[flutter_i18n INFO]: YAML file loaded for en
+[flutter_i18n INFO]: Valid file: assets/i18n/en.yaml
+[flutter_i18n INFO]: JSON file loaded for it
+[flutter_i18n INFO]: Valid file: assets/i18n/it.json
+[flutter_i18n INFO]: XML file loaded for es
+[flutter_i18n INFO]: Valid file: assets/i18n/es.xml
+[flutter_i18n INFO]: JSON file loaded for common
+[flutter_i18n INFO]: Valid file: assets/i18n_namespace/en/common.json
+[flutter_i18n INFO]: YAML file loaded for home
+[flutter_i18n INFO]: Valid file: assets/i18n_namespace/en/home.yaml
+[flutter_i18n INFO]: JSON file loaded for common
+[flutter_i18n INFO]: Valid file: assets/i18n_namespace/ua/common.json
+[flutter_i18n INFO]: JSON file loaded for home
+[flutter_i18n INFO]: Valid file: assets/i18n_namespace/ua/home.json
+```
+
+#### Diff
+
+This command is used to find the differences between the keys of the desired translation files.
+
+```sh
+> flutter pub run flutter_i18n diff en.yaml it.json
+[flutter_i18n INFO]: [en.yaml, it.json]
+[flutter_i18n INFO]: YAML file loaded for en
+[flutter_i18n INFO]: JSON file loaded for it
+[flutter_i18n ERROR]: The compared dictionary doesn't contain the key >title
+```
+
 ## Plugins
 
 | Plugin | Description |
