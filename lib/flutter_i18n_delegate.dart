@@ -8,19 +8,20 @@ import 'flutter_i18n.dart';
 
 /// Translation delegate that manage the new locale received from the framework
 class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
-  static FlutterI18n _translationObject;
+  final FlutterI18n _translationObject;
   Locale currentLocale;
+
+  FlutterI18n get translationObject => _translationObject;
 
   FlutterI18nDelegate(
       {translationLoader,
       MissingTranslationHandler missingTranslationHandler,
-      String keySeparator = "."}) {
-    _translationObject = FlutterI18n(
-      translationLoader,
-      keySeparator,
-      missingTranslationHandler: missingTranslationHandler,
-    );
-  }
+      String keySeparator = "."})
+      : _translationObject = FlutterI18n(
+          translationLoader,
+          keySeparator,
+          missingTranslationHandler: missingTranslationHandler,
+        );
 
   @override
   bool isSupported(final Locale locale) {
