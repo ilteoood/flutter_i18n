@@ -118,8 +118,10 @@ class FlutterI18n {
   /// Build for root widget, to support RTL languages
   static rootAppBuilder() {
     return (BuildContext context, Widget child) {
+      final instance = _retrieveCurrentInstance(context);
       return StreamBuilder<Locale>(
-          stream: _retrieveCurrentInstance(context)?._localeStream?.stream,
+          initialData: instance?.locale,
+          stream: instance?._localeStream?.stream,
           builder: (BuildContext context, AsyncSnapshot<Locale> snapshot) {
             return Directionality(
               textDirection: _findTextDirection(snapshot.data),
@@ -141,7 +143,7 @@ class FlutterI18n {
   }
 
   static _findTextDirection(final Locale locale) {
-    return intl.Bidi.isRtlLanguage(locale?.countryCode)
+    return intl.Bidi.isRtlLanguage(locale?.languageCode)
         ? TextDirection.rtl
         : TextDirection.ltr;
   }
