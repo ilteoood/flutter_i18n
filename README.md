@@ -1,6 +1,6 @@
 # flutter_i18n
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 I18n made easy, for Flutter!
 
@@ -287,16 +287,18 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/defint"><img src="https://avatars2.githubusercontent.com/u/1523848?v=4" width="100px;" alt=""/><br /><sub><b>Anton</b></sub></a><br /><a href="#infra-defint" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/ilteoood/flutter_i18n/commits?author=defint" title="Tests">⚠️</a> <a href="https://github.com/ilteoood/flutter_i18n/commits?author=defint" title="Code">💻</a></td>
-    <td align="center"><a href="https://lucasvienna.dev"><img src="https://avatars1.githubusercontent.com/u/1761244?v=4" width="100px;" alt=""/><br /><sub><b>Lucas Vienna</b></sub></a><br /><a href="https://github.com/ilteoood/flutter_i18n/commits?author=Avyiel" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/jlcool"><img src="https://avatars3.githubusercontent.com/u/381375?v=4" width="100px;" alt=""/><br /><sub><b>jlcool</b></sub></a><br /><a href="https://github.com/ilteoood/flutter_i18n/commits?author=jlcool" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/juumixx"><img src="https://avatars1.githubusercontent.com/u/5200179?v=4" width="100px;" alt=""/><br /><sub><b>Julian</b></sub></a><br /><a href="https://github.com/ilteoood/flutter_i18n/commits?author=juumixx" title="Code">💻</a> <a href="#ideas-juumixx" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://andreygordeev.com"><img src="https://avatars1.githubusercontent.com/u/2883524?v=4" width="100px;" alt=""/><br /><sub><b>Andrey Gordeev</b></sub></a><br /><a href="https://github.com/ilteoood/flutter_i18n/commits?author=agordeev" title="Code">💻</a> <a href="https://github.com/ilteoood/flutter_i18n/issues?q=author%3Aagordeev" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/defint"><img src="https://avatars2.githubusercontent.com/u/1523848?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Anton</b></sub></a><br /><a href="#infra-defint" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/ilteoood/flutter_i18n/commits?author=defint" title="Tests">⚠️</a> <a href="https://github.com/ilteoood/flutter_i18n/commits?author=defint" title="Code">💻</a></td>
+    <td align="center"><a href="https://lucasvienna.dev"><img src="https://avatars1.githubusercontent.com/u/1761244?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lucas Vienna</b></sub></a><br /><a href="https://github.com/ilteoood/flutter_i18n/commits?author=Avyiel" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/jlcool"><img src="https://avatars3.githubusercontent.com/u/381375?v=4?s=100" width="100px;" alt=""/><br /><sub><b>jlcool</b></sub></a><br /><a href="https://github.com/ilteoood/flutter_i18n/commits?author=jlcool" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/juumixx"><img src="https://avatars1.githubusercontent.com/u/5200179?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Julian</b></sub></a><br /><a href="https://github.com/ilteoood/flutter_i18n/commits?author=juumixx" title="Code">💻</a> <a href="#ideas-juumixx" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://andreygordeev.com"><img src="https://avatars1.githubusercontent.com/u/2883524?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Andrey Gordeev</b></sub></a><br /><a href="https://github.com/ilteoood/flutter_i18n/commits?author=agordeev" title="Code">💻</a> <a href="https://github.com/ilteoood/flutter_i18n/issues?q=author%3Aagordeev" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/Amir-P"><img src="https://avatars.githubusercontent.com/u/8766492?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Amir Panahandeh</b></sub></a><br /><a href="https://github.com/ilteoood/flutter_i18n/issues?q=author%3AAmir-P" title="Bug reports">🐛</a> <a href="https://github.com/ilteoood/flutter_i18n/commits?author=Amir-P" title="Code">💻</a></td>
   </tr>
 </table>
 
-<!-- markdownlint-enable -->
+<!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
