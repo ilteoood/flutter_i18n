@@ -219,6 +219,32 @@ I18nPlural("clicked.times", 1)
 I18nPlural("clicked.times", 2, child: Text(""))
 ```
 
+It's also possible to use `I18nBuilder` to rebuild the widget tree in response to locale changes. If you want to rebuild your whole app you can do this:
+
+```dart
+I18nBuilder(
+  translationObject: flutterI18nDelegate.translationObject,
+  builder: (context, locale) => MaterialApp(
+    locale: locale,
+    home: MyHomePage(),
+    localizationsDelegates: [
+      flutterI18nDelegate,
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate
+    ],
+)
+```
+
+or if your context has an ancestor of `FlutterI18n` there is no need to provide `translationObject`:
+
+```dart
+I18nBuilder(
+  builder: (context, _) => Text(FlutterI18n.translate(
+      context, 'label.main',
+      translationParams: {"user": "Flutter lover"})),
+)
+```
+
 If you need to listen the translation loading status, you can use:
 - ```FlutterI18n.retrieveLoadingStream``` method, that allows you to listen to every status change
 - ```FlutterI18n.retrieveLoadedStream``` method, that allows you to listen when the translation is loaded
