@@ -215,3 +215,7 @@ Fix for streams listened twice
 ## [0.21.0]
 
 Introducing validate and diff actions
+
+## [0.21.1]
+
+Fix for #150
