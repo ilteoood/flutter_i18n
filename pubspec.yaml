@@ -13,9 +13,9 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
   yaml: ^3.1.0
-  xml2json: ^4.2.0
-  universal_io: ^1.0.1
-  path: ^1.7.0
+  xml2json: ^5.0.0-nullsafety.0
+  universal_io: '>=1.0.2 <=2.0.0-nullsafety.2'
+  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:

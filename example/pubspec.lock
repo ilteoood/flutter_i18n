@@ -310,7 +310,7 @@ packages:
       name: petitparser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
+    version: "4.0.2"
   platform:
     dependency: transitive
     description:
@@ -532,14 +532,14 @@ packages:
       name: xml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.5.1"
+    version: "5.0.2"
   xml2json:
     dependency: transitive
     description:
       name: xml2json
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.4.0"
+    version: "5.0.0-nullsafety.0"
   yaml:
     dependency: transitive
     description:

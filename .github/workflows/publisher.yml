@@ -13,6 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Publish
-        uses: ilteoood/actions-flutter-pub-publisher@master
+        uses: sakebook/actions-flutter-pub-publisher@master
         with:
           credential: ${{ secrets.PUB_CREDENTIALS }}
