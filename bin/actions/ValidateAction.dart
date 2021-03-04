@@ -14,11 +14,11 @@ class ValidateAction extends AbstractAction {
 
   void validateFile(final FileSystemEntity fileSystemEntity) async {
     MessagePrinter.debug("I've found ${fileSystemEntity.path}");
-    final Map content = await LocalLoader(fileSystemEntity).loadContent();
+    final Map? content = await LocalLoader(fileSystemEntity).loadContent();
     validateMap(fileSystemEntity, content);
   }
 
-  void validateMap(final FileSystemEntity fileSystemEntity, final Map content) {
+  void validateMap(final FileSystemEntity fileSystemEntity, final Map? content) {
     if (content == null) {
       MessagePrinter.error("Invalid file: ${fileSystemEntity.path}");
     } else {

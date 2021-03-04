@@ -11,9 +11,9 @@ abstract class BaseDecodeStrategy {
   get decodeFunction;
 
   /// The method that do the loading
-  Future<Map> decode(
+  Future<Map?> decode(
       final String fileName, final IFileContent fileContent) async {
-    Map returnValue;
+    Map? returnValue;
     try {
       final String content = await loadFileContent(fileName, fileContent);
       MessagePrinter.info(
@@ -33,7 +33,7 @@ abstract class BaseDecodeStrategy {
   }
 
   /// The method that return the decoded Map
-  Map decodeContent(final String content) {
+  Map? decodeContent(final String content) {
     return decodeFunction(content);
   }
 }

@@ -20,17 +20,17 @@ export 'loaders/translation_loader.dart';
 export 'widgets/I18nPlural.dart';
 export 'widgets/I18nText.dart';
 
-typedef void MissingTranslationHandler(String key, Locale locale);
+typedef void MissingTranslationHandler(String key, Locale? locale);
 
 /// Facade used to hide the loading and translations logic
 class FlutterI18n {
-  TranslationLoader translationLoader;
-  MissingTranslationHandler missingTranslationHandler;
-  String keySeparator;
+  TranslationLoader? translationLoader;
+  late MissingTranslationHandler missingTranslationHandler;
+  String? keySeparator;
 
-  Map<dynamic, dynamic> decodedMap;
+  Map<dynamic, dynamic>? decodedMap;
 
-  final _localeStream = StreamController<Locale>.broadcast();
+  final _localeStream = StreamController<Locale?>.broadcast();
   // ignore: close_sinks
   final _loadingStream = StreamController<LoadingStatus>.broadcast();
 
@@ -40,34 +40,34 @@ class FlutterI18n {
       .map((loadingStatus) => loadingStatus == LoadingStatus.loaded);
 
   FlutterI18n(
-    TranslationLoader translationLoader,
+    TranslationLoader? translationLoader,
     String keySeparator, {
-    MissingTranslationHandler missingTranslationHandler,
+    MissingTranslationHandler? missingTranslationHandler,
   }) {
     this.translationLoader = translationLoader ?? FileTranslationLoader();
     this._loadingStream.add(LoadingStatus.notLoaded);
     this.missingTranslationHandler =
         missingTranslationHandler ?? (key, locale) {};
-    this.keySeparator = keySeparator ?? ".";
+    this.keySeparator = keySeparator;
     MessagePrinter.setMustPrintMessage(!Foundation.kReleaseMode);
   }
 
   /// Used to load the locale translation file
   Future<bool> load() async {
     this._loadingStream.add(LoadingStatus.loading);
-    decodedMap = await translationLoader.load();
+    decodedMap = await translationLoader!.load();
     _localeStream.add(locale);
     this._loadingStream.add(LoadingStatus.loaded);
     return true;
   }
 
   /// The locale used for the translation logic
-  get locale => this.translationLoader.locale;
+  get locale => this.translationLoader!.locale;
 
   /// Facade method to the plural translation logic
   static String plural(final BuildContext context, final String translationKey,
       final int pluralValue) {
-    final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
+    final FlutterI18n currentInstance = _retrieveCurrentInstance(context)!;
     final PluralTranslator pluralTranslator = PluralTranslator(
       currentInstance.decodedMap,
       translationKey,
@@ -82,16 +82,16 @@ class FlutterI18n {
 
   /// Facade method to force the load of a new locale
   static Future refresh(
-      final BuildContext context, final Locale forcedLocale) async {
-    final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
-    currentInstance.translationLoader.forcedLocale = forcedLocale;
+      final BuildContext context, final Locale? forcedLocale) async {
+    final FlutterI18n currentInstance = _retrieveCurrentInstance(context)!;
+    currentInstance.translationLoader!.forcedLocale = forcedLocale;
     await currentInstance.load();
   }
 
   /// Facade method to the simple translation logic
   static String translate(final BuildContext context, final String key,
-      {final String fallbackKey, final Map<String, String> translationParams}) {
-    final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
+      {final String? fallbackKey, final Map<String, String>? translationParams}) {
+    final FlutterI18n currentInstance = _retrieveCurrentInstance(context)!;
     final SimpleTranslator simpleTranslator = SimpleTranslator(
       currentInstance.decodedMap,
       key,
@@ -106,12 +106,12 @@ class FlutterI18n {
   }
 
   /// Same as `get locale`, but this can be invoked from widgets
-  static Locale currentLocale(final BuildContext context) {
-    final FlutterI18n currentInstance = _retrieveCurrentInstance(context);
+  static Locale? currentLocale(final BuildContext context) {
+    final FlutterI18n? currentInstance = _retrieveCurrentInstance(context);
     return currentInstance?.translationLoader?.locale;
   }
 
-  static FlutterI18n _retrieveCurrentInstance(BuildContext context) {
+  static FlutterI18n? _retrieveCurrentInstance(BuildContext context) {
     return Localizations.of<FlutterI18n>(context, FlutterI18n);
   }
 
@@ -119,10 +119,10 @@ class FlutterI18n {
   static rootAppBuilder() {
     return (BuildContext context, Widget child) {
       final instance = _retrieveCurrentInstance(context);
-      return StreamBuilder<Locale>(
+      return StreamBuilder<Locale?>(
           initialData: instance?.locale,
           stream: instance?._localeStream?.stream,
-          builder: (BuildContext context, AsyncSnapshot<Locale> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<Locale?> snapshot) {
             return Directionality(
               textDirection: _findTextDirection(snapshot.data),
               child: child,
@@ -134,15 +134,15 @@ class FlutterI18n {
   /// Used to retrieve the loading status stream
   static Stream<LoadingStatus> retrieveLoadingStream(
       final BuildContext context) {
-    return _retrieveCurrentInstance(context).loadingStream;
+    return _retrieveCurrentInstance(context)!.loadingStream;
   }
 
   /// Used to check if the translation file is still loading
   static Stream<bool> retrieveLoadedStream(final BuildContext context) {
-    return _retrieveCurrentInstance(context).isLoadedStream;
+    return _retrieveCurrentInstance(context)!.isLoadedStream;
   }
 
-  static _findTextDirection(final Locale locale) {
+  static _findTextDirection(final Locale? locale) {
     return intl.Bidi.isRtlLanguage(locale?.languageCode)
         ? TextDirection.rtl
         : TextDirection.ltr;

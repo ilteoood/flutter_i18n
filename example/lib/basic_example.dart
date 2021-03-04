@@ -86,7 +86,7 @@ class MyHomeState extends State<MyHomePage> {
               I18nText("label.main",
                   translationParams: {"user": "Flutter lover"}),
               I18nPlural("clicked.times", clicked),
-              FlatButton(
+              TextButton(
                   key: Key('incrementCounter'),
                   onPressed: () async {
                     incrementCounter();
@@ -94,8 +94,8 @@ class MyHomeState extends State<MyHomePage> {
                   child: Text(FlutterI18n.translate(
                       context, "button.label.clickMea",
                       fallbackKey: "button.label.clickMe"))),
-              FlatButton(
-                key: Key('changeLanguage'),
+              TextButton(
+                  key: Key('changeLanguage'),
                   onPressed: () async {
                     await changeLanguage();
                     Scaffold.of(context).showSnackBar(SnackBar(

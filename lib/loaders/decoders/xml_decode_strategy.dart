@@ -19,10 +19,10 @@ class XmlDecodeStrategy extends BaseDecodeStrategy {
   get decodeFunction => _transformer.parse;
 
   @override
-  Map decodeContent(final String content) {
+  Map? decodeContent(final String content) {
     decodeFunction(content);
     final Map jsonMap =
-        JsonDecodeStrategy().decodeContent(_transformer.toParker());
+        JsonDecodeStrategy().decodeContent(_transformer.toParker())!;
     return jsonMap[this.rootObject];
   }
 }

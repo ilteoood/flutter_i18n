@@ -17,7 +17,7 @@ class LocalLoader implements IFileContent {
     return File(this.fileSystemEntity.path).readAsString();
   }
 
-  Future<Map> loadContent() async {
+  Future<Map?> loadContent() async {
     final BaseDecodeStrategy decodeStrategy = findStrategy(fileSystemEntity);
     return await decodeStrategy.decode(
         basenameWithoutExtension(fileSystemEntity.path), this);

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
@@ -19,9 +21,9 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   AssetBundle assetBundle = rootBundle;
 
   Map<dynamic, dynamic> _decodedMap = Map();
-  List<BaseDecodeStrategy> _decodeStrategies;
+  late List<BaseDecodeStrategy> _decodeStrategies;
 
-  set decodeStrategies(List<BaseDecodeStrategy> decodeStrategies) =>
+  set decodeStrategies(List<BaseDecodeStrategy>? decodeStrategies) =>
       _decodeStrategies = decodeStrategies ??
           [JsonDecodeStrategy(), YamlDecodeStrategy(), XmlDecodeStrategy()];
 
@@ -54,7 +56,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
     try {
       this.locale = locale ?? await findDeviceLocale();
       MessagePrinter.info("The current locale is ${this.locale}");
-      _decodedMap.addAll(await loadFile(composeFileName()));
+      _decodedMap.addAll(await (loadFile(composeFileName()) as FutureOr<Map<dynamic, dynamic>>));
     } catch (e) {
       MessagePrinter.debug('Error loading translation $e');
     }
@@ -62,8 +64,8 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
 
   Future _loadFallback() async {
     try {
-      final Map fallbackMap = await loadFile(fallbackFile);
-      _decodedMap = mergeMap([fallbackMap, _decodedMap]);
+      final Map? fallbackMap = await loadFile(fallbackFile);
+      _decodedMap = mergeMap([fallbackMap!, _decodedMap]);
     } catch (e) {
       MessagePrinter.debug('Error loading translation fallback $e');
     }
@@ -71,13 +73,13 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
 
   /// Load the fileName using one of the strategies provided
   @protected
-  Future<Map> loadFile(final String fileName) async {
-    final List<Future<Map>> strategiesFutures = _executeStrategies(fileName);
-    final Stream<Map> strategiesStream = Stream.fromFutures(strategiesFutures);
+  Future<Map?> loadFile(final String fileName) async {
+    final List<Future<Map?>> strategiesFutures = _executeStrategies(fileName);
+    final Stream<Map?> strategiesStream = Stream.fromFutures(strategiesFutures);
     return strategiesStream.firstWhere((map) => map != null);
   }
 
-  List<Future<Map>> _executeStrategies(final String fileName) {
+  List<Future<Map?>> _executeStrategies(final String fileName) {
     return _decodeStrategies
         .map((decodeStrategy) => decodeStrategy.decode(fileName, this))
         .toList();
@@ -86,15 +88,15 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   /// Compose the file name using the format languageCode_countryCode
   @protected
   String composeFileName() {
-    return "${locale.languageCode}${composeCountryCode()}";
+    return "${locale!.languageCode}${composeCountryCode()}";
   }
 
   /// Return the country code to attach to the file name, if required
   @protected
   String composeCountryCode() {
     String countryCode = "";
-    if (useCountryCode && locale.countryCode != null) {
-      countryCode = "_${locale.countryCode}";
+    if (useCountryCode && locale!.countryCode != null) {
+      countryCode = "_${locale!.countryCode}";
     }
     return countryCode;
   }

@@ -27,7 +27,7 @@ abstract class AbstractAction {
         .where(existFolder)
         .map(folderContent)
         .where((folderContent) => folderContent.isNotEmpty)
-        .fold(List<FileSystemEntity>(), listFold)
+        .fold(<FileSystemEntity>[], listFold)
         .where(filterExtension)
         .toList();
   }

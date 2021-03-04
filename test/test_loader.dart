@@ -109,7 +109,7 @@ class TestXmlLoader extends FileTranslationLoader {
 
 class TestNamespaceLoader extends NamespaceFileTranslationLoader {
   TestNamespaceLoader({
-    @required namespaces,
+    required namespaces,
     forcedLocale,
     fallbackDir = "en",
     basePath = "assets/flutter_i18n",

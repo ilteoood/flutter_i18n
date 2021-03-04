@@ -225,3 +225,4 @@ Fix for #150
 Initial Flutter 2 support:
 - intl upgraded to version 0.17.0
 - example app upgraded to Android X
+- null safe migration
