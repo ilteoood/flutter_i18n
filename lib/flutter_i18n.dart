@@ -121,7 +121,7 @@ class FlutterI18n {
       final instance = _retrieveCurrentInstance(context);
       return StreamBuilder<Locale?>(
           initialData: instance?.locale,
-          stream: instance?._localeStream?.stream,
+          stream: instance?._localeStream.stream,
           builder: (BuildContext context, AsyncSnapshot<Locale?> snapshot) {
             return Directionality(
               textDirection: _findTextDirection(snapshot.data),

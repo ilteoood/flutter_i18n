@@ -48,11 +48,11 @@ class TestWidgetPageState extends State<TestWidgetPage> {
                 I18nText("object.key1"),
                 I18nText("object"),
                 I18nText("object", fallbackKey: "fileName"),
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () async {
                     var locale = FlutterI18n.currentLocale(context);
                     await FlutterI18n.refresh(context, locale);
-                  },
+                  }, child: null,
                 ),
               ],
             ),

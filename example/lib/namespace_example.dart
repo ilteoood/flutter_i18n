@@ -70,7 +70,7 @@ class MyHomeState extends State<MyHomePage> {
             children: <Widget>[
               I18nText("home.label.main", child: Text("")),
               I18nText("home.missing", child: Text("")),
-              RaisedButton(
+              ElevatedButton(
                   onPressed: () async {
                     await changeLanguage();
                   },

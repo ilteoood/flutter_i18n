@@ -14,7 +14,7 @@ class FlutterI18nWeb {
     final MethodChannel channel = MethodChannel(
       'flutter_i18n',
       const StandardMethodCodec(),
-      registrar.messenger,
+      registrar,
     );
 
     final pluginInstance = FlutterI18nWeb();
@@ -28,7 +28,6 @@ class FlutterI18nWeb {
     switch (call.method) {
       case 'getPlatformVersion':
         return getPlatformVersion();
-        break;
       default:
         throw PlatformException(
           code: 'Unimplemented',

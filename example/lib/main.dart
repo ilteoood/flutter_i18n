@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'basic_example.dart' as basicExample;
+import 'local_example.dart' as localeExample;
 import 'namespace_example.dart' as namespaceExample;
 import 'network_example.dart' as networkExample;
-import 'local_example.dart' as localeExample;
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,28 +28,28 @@ class MyApp extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  RaisedButton(
+                  ElevatedButton(
                     key: Key('basicExample'),
                     onPressed: () {
                       basicExample.main();
                     },
                     child: Text("Run `basic` example"),
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     key: Key('networkExample'),
                     onPressed: () {
                       networkExample.main();
                     },
                     child: Text("Run `network` example"),
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     key: Key('nameSpaceExample'),
                     onPressed: () {
                       namespaceExample.main();
                     },
                     child: Text("Run `namespace` example"),
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     key: Key('localeExample'),
                     onPressed: () {
                       localeExample.main();

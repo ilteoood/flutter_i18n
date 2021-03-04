@@ -21,7 +21,7 @@ void main() {
     await tester.pumpWidget(TestWidget());
     await tester.pump();
 
-    await tester.tap(find.byType(RaisedButton));
+    await tester.tap(find.byType(ElevatedButton));
   });
 
   testWidgets('a key that point to an object must return the key itself',
