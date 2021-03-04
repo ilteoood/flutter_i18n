@@ -1,20 +1,23 @@
-name: example
+name: flutter_i18n_example
+description: Demonstrates how to use the flutter_i18n plugin.
+
+publish_to: 'none'
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_i18n:
     path: ../
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^1.0.2
   http:
   path_provider:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_driver:
-    sdk: flutter
-  test: any
 
 flutter:
   uses-material-design: true
@@ -22,6 +25,3 @@ flutter:
     - assets/i18n/
     - assets/i18n_namespace/en/
     - assets/i18n_namespace/ua/
-
-environment:
-  sdk: '>=1.19.0 <3.0.0'

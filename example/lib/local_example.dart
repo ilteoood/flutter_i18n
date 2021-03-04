@@ -33,7 +33,7 @@ Future<String> findBasePath() async {
 Future downloadTranslationContent(final String basePath) async {
   final file = File('$basePath/en.json');
   final translationContentResponse = await http
-      .get('https://opensource.adobe.com/Spry/data/json/object-02.js');
+      .get(Uri.https('opensource.adobe.com', '/Spry/data/json/object-02.js'));
   await file.create(recursive: true);
   await file.writeAsString(translationContentResponse.body, flush: true);
 }

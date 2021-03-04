@@ -219,3 +219,9 @@ Introducing validate and diff actions
 ## [0.21.1]
 
 Fix for #150
+
+## [0.22.0]
+
+Initial Flutter 2 support:
+- intl upgraded to version 0.17.0
+- example app upgraded to Android X
