@@ -9,7 +9,6 @@ import 'package:flutter_i18n/loaders/decoders/xml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/file_content.dart';
 import 'package:flutter_i18n/loaders/translation_loader.dart';
-import "package:merge_map/merge_map.dart";
 
 import '../utils/message_printer.dart';
 
@@ -56,7 +55,8 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
     try {
       this.locale = locale ?? await findDeviceLocale();
       MessagePrinter.info("The current locale is ${this.locale}");
-      _decodedMap.addAll(await (loadFile(composeFileName()) as FutureOr<Map<dynamic, dynamic>>));
+      _decodedMap.addAll(await (loadFile(composeFileName())
+          as FutureOr<Map<dynamic, dynamic>>));
     } catch (e) {
       MessagePrinter.debug('Error loading translation $e');
     }
@@ -65,7 +65,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   Future _loadFallback() async {
     try {
       final Map? fallbackMap = await loadFile(fallbackFile);
-      _decodedMap = mergeMap([fallbackMap!, _decodedMap]);
+      _decodedMap = {...fallbackMap!, ..._decodedMap};
     } catch (e) {
       MessagePrinter.debug('Error loading translation fallback $e');
     }
