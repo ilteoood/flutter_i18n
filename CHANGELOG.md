@@ -230,3 +230,7 @@ Initial Flutter 2 support:
 ## [0.22.1]
 
 Nullsafe support + static analysis fixes
+
+## [0.22.2]
+
+Dartfmt
