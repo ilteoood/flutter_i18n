@@ -31,6 +31,7 @@ class FlutterI18n {
   Map<dynamic, dynamic>? decodedMap;
 
   final _localeStream = StreamController<Locale?>.broadcast();
+
   // ignore: close_sinks
   final _loadingStream = StreamController<LoadingStatus>.broadcast();
 
@@ -90,7 +91,8 @@ class FlutterI18n {
 
   /// Facade method to the simple translation logic
   static String translate(final BuildContext context, final String key,
-      {final String? fallbackKey, final Map<String, String>? translationParams}) {
+      {final String? fallbackKey,
+      final Map<String, String>? translationParams}) {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context)!;
     final SimpleTranslator simpleTranslator = SimpleTranslator(
       currentInstance.decodedMap,

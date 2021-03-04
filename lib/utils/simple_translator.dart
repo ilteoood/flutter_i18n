@@ -38,11 +38,12 @@ class SimpleTranslator {
 
   String _translateWithKeyFallback() {
     return [
-      _decodeFromMap(key),
-      _decodeFromMap(fallbackKey ?? ""),
-      fallbackKey,
-      key
-    ].firstWhere((translation) => translation != null) ?? key;
+          _decodeFromMap(key),
+          _decodeFromMap(fallbackKey ?? ""),
+          fallbackKey,
+          key
+        ].firstWhere((translation) => translation != null) ??
+        key;
   }
 
   String? _decodeFromMap(final String key) {

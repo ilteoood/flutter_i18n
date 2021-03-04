@@ -18,7 +18,8 @@ class ValidateAction extends AbstractAction {
     validateMap(fileSystemEntity, content);
   }
 
-  void validateMap(final FileSystemEntity fileSystemEntity, final Map? content) {
+  void validateMap(
+      final FileSystemEntity fileSystemEntity, final Map? content) {
     if (content == null) {
       MessagePrinter.error("Invalid file: ${fileSystemEntity.path}");
     } else {

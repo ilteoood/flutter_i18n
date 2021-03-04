@@ -1,10 +1,9 @@
 import 'dart:io';
 
-import 'package:yaml/yaml.dart';
 import 'package:path/path.dart';
+import 'package:yaml/yaml.dart';
 
 abstract class AbstractAction {
-
   List<String> get acceptedExtensions => ['.json', '.yaml', '.xml'];
 
   void executeAction(final List<String> params);
