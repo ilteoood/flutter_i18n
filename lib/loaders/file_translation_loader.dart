@@ -55,8 +55,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
     try {
       this.locale = locale ?? await findDeviceLocale();
       MessagePrinter.info("The current locale is ${this.locale}");
-      _decodedMap.addAll(await (loadFile(composeFileName())
-          as FutureOr<Map<dynamic, dynamic>>));
+      _decodedMap.addAll(await loadFile(composeFileName()) ?? Map());
     } catch (e) {
       MessagePrinter.debug('Error loading translation $e');
     }

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_i18n/utils/message_printer.dart';
@@ -14,9 +13,9 @@ class DiffAction extends AbstractAction {
     final String compareFile = params[1];
     final List<FileSystemEntity> assetsContent = await retrieveAssetsContent();
     final Map baseFileContent =
-        await (retrieveFileContent(assetsContent, baseFile) as FutureOr<Map<dynamic, dynamic>>);
+        await (retrieveFileContent(assetsContent, baseFile)) ?? Map();
     final Map compareFileContent =
-        await (retrieveFileContent(assetsContent, compareFile) as FutureOr<Map<dynamic, dynamic>>);
+        await (retrieveFileContent(assetsContent, compareFile)) ?? Map();
     mapCompare(baseFileContent, compareFileContent, "");
   }
 
