@@ -55,7 +55,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
     try {
       this.locale = locale ?? await findDeviceLocale();
       MessagePrinter.info("The current locale is ${this.locale}");
-      _decodedMap.addAll(await loadFile(composeFileName()) ?? Map());
+      _decodedMap.addAll(await loadFile(composeFileName()));
     } catch (e) {
       MessagePrinter.debug('Error loading translation $e');
     }
@@ -63,8 +63,8 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
 
   Future _loadFallback() async {
     try {
-      final Map? fallbackMap = await loadFile(fallbackFile);
-      _decodedMap = {...fallbackMap!, ..._decodedMap};
+      final Map fallbackMap = await loadFile(fallbackFile);
+      _decodedMap = {...fallbackMap, ..._decodedMap};
     } catch (e) {
       MessagePrinter.debug('Error loading translation fallback $e');
     }
@@ -72,10 +72,12 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
 
   /// Load the fileName using one of the strategies provided
   @protected
-  Future<Map?> loadFile(final String fileName) async {
+  Future<Map> loadFile(final String fileName) async {
     final List<Future<Map?>> strategiesFutures = _executeStrategies(fileName);
     final Stream<Map?> strategiesStream = Stream.fromFutures(strategiesFutures);
-    return strategiesStream.firstWhere((map) => map != null);
+    return await strategiesStream.firstWhere((map) => map != null,
+            orElse: null) ??
+        Map();
   }
 
   List<Future<Map?>> _executeStrategies(final String fileName) {

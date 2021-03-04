@@ -226,3 +226,7 @@ Initial Flutter 2 support:
 - intl upgraded to version 0.17.0
 - example app upgraded to Android X
 - null safe migration
+
+## [0.22.1]
+
+Nullsafe support + static analysis fixes
