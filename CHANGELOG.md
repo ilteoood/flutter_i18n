@@ -234,3 +234,7 @@ Nullsafe support + static analysis fixes
 ## [0.22.2]
 
 Dartfmt
+
+## [0.22.3]
+
+Fix for #159

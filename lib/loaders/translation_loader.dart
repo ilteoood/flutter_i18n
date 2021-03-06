@@ -23,7 +23,7 @@ abstract class TranslationLoader {
 
   /// Return the device current locale
   Future<Locale> findDeviceLocale() async {
-    final Locale systemLocale = ui.window.locale;
+    final systemLocale = ui.window.locale;
     MessagePrinter.info("The system locale is $systemLocale");
     return Future.value(systemLocale);
   }
