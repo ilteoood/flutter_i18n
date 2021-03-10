@@ -6,6 +6,7 @@ jobs:
       matrix:
         device:
           - "iPhone 8"
+          - "iPhone 11 Pro Max"
       fail-fast: true
     runs-on: macOS-latest
     steps:
