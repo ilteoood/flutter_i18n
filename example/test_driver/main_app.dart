@@ -1,9 +1,3 @@
-import 'package:flutter_driver/driver_extension.dart';
+import 'package:integration_test/integration_test_driver.dart';
 
-import '../lib/main.dart' as mainapp;
-
-void main() {
-  enableFlutterDriverExtension();
-
-  mainapp.main();
-}
+Future<void> main() => integrationDriver();

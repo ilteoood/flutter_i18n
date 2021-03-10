@@ -19,4 +19,8 @@ jobs:
           api-level: ${{ matrix.api-level }}
           target: ${{ matrix.target }}
           arch: x86_64
-          script: yes | flutter doctor --android-licenses && cd example && flutter drive -v -d emulator-5554 --target=test_driver/main_app.dart --driver=test_driver/basic_example_test.dart && flutter drive -v -d emulator-5554 --target=test_driver/main_app.dart --driver=test_driver/network_example_test.dart && flutter drive -v -d emulator-5554 --target=test_driver/main_app.dart --driver=test_driver/namespace_example_test.dart
+          script: yes | flutter doctor --android-licenses \
+            && cd example \
+            && flutter drive -d emulator-5554 --driver=test_driver/main_app.dart --target=test/basic_example_test.dart \
+            && flutter drive -d emulator-5554 --driver=test_driver/main_app.dart --target=test/network_example_test.dart \
+            && flutter drive -d emulator-5554 --driver=test_driver/main_app.dart --target=test/namespace_example_test.dart
