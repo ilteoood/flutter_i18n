@@ -118,19 +118,23 @@ class FlutterI18n {
   }
 
   /// Build for root widget, to support RTL languages
-  static rootAppBuilder() {
-    return (BuildContext context, Widget child) {
+  static Widget Function(BuildContext, Widget) rootAppBuilder() {
+    Widget appBuilder(BuildContext context, Widget child) {
       final instance = _retrieveCurrentInstance(context);
+
       return StreamBuilder<Locale?>(
-          initialData: instance?.locale,
-          stream: instance?._localeStream.stream,
-          builder: (BuildContext context, AsyncSnapshot<Locale?> snapshot) {
-            return Directionality(
-              textDirection: _findTextDirection(snapshot.data),
-              child: child,
-            );
-          });
-    };
+        initialData: instance?.locale,
+        stream: instance?._localeStream.stream,
+        builder: (context, snapshot) {
+          return Directionality(
+            textDirection: _findTextDirection(snapshot.data),
+            child: child,
+          );
+        },
+      );
+    }
+
+    return appBuilder;
   }
 
   /// Used to retrieve the loading status stream
@@ -144,7 +148,7 @@ class FlutterI18n {
     return _retrieveCurrentInstance(context)!.isLoadedStream;
   }
 
-  static _findTextDirection(final Locale? locale) {
+  static TextDirection _findTextDirection(final Locale? locale) {
     return intl.Bidi.isRtlLanguage(locale?.languageCode)
         ? TextDirection.rtl
         : TextDirection.ltr;
