@@ -238,3 +238,8 @@ Dartfmt
 ## [0.22.3]
 
 Fix for #159
+
+## [0.22.4]
+
+Fix for #167
+Dependencies upgrade
