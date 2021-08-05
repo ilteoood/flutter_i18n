@@ -7,6 +7,7 @@ import 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/xml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
+import 'package:flutter_i18n/loaders/decoders/toml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/file_content.dart';
 import 'package:flutter_i18n/loaders/translation_loader.dart';
 
@@ -24,7 +25,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
 
   set decodeStrategies(List<BaseDecodeStrategy>? decodeStrategies) =>
       _decodeStrategies = decodeStrategies ??
-          [JsonDecodeStrategy(), YamlDecodeStrategy(), XmlDecodeStrategy()];
+          [JsonDecodeStrategy(), YamlDecodeStrategy(), XmlDecodeStrategy(), TomlDecodeStrategy()];
 
   FileTranslationLoader(
       {this.fallbackFile = "en",

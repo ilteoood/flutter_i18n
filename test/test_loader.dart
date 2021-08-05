@@ -1,6 +1,7 @@
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/loaders/decoders/xml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
+import 'package:flutter_i18n/loaders/decoders/toml_decode_strategy.dart';
 
 Future<String> _loadString(String fileName, String extension) async {
   if (fileName.contains('_en')) {
@@ -70,6 +71,34 @@ class TestYamlLoader extends FileTranslationLoader {
       object:
         key1: Key1Value
         key2: Key2Value
+    ''');
+  }
+}
+
+class TestTomlLoader extends FileTranslationLoader {
+  TestTomlLoader({
+    forcedLocale,
+    fallbackFile = "en",
+    basePath = "assets/flutter_i18n",
+    useCountryCode = false,
+  }) : super(
+      fallbackFile: fallbackFile,
+      basePath: basePath,
+      useCountryCode: useCountryCode,
+      forcedLocale: forcedLocale,
+      decodeStrategies: [TomlDecodeStrategy()]);
+
+  @override
+  Future<String> loadString(String fileName, String extension) {
+    return Future<String>.value('''
+      keySingle = "valueSingle"
+      keyPlural-1 = "valuePlural-1"
+      keyPlural-2 = "valuePlural-2"
+      fileName = "$fileName"
+      extension = "$extension"
+      [object]
+      key1 = "Key1Value"
+      key2 = "Key2Value"
     ''');
   }
 }

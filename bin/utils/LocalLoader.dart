@@ -4,6 +4,7 @@ import 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/xml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
+import 'package:flutter_i18n/loaders/decoders/toml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/file_content.dart';
 import 'package:path/path.dart';
 
@@ -32,6 +33,8 @@ class LocalLoader implements IFileContent {
         return XmlDecodeStrategy();
       case ".json":
         return JsonDecodeStrategy();
+      case ".toml":
+        return TomlDecodeStrategy();
       default:
         throw Exception("Absent strategy for $fileExtension");
     }
