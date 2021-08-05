@@ -44,6 +44,13 @@ void main() {
     expect(result["extension"], "yaml");
   });
 
+  test('`load` should load correct map from TOML with initial values', () async {
+    final instance = TestTomlLoader();
+    final result = await instance.load();
+    expect(result["fileName"], "en");
+    expect(result["extension"], "toml");
+  });
+
   test('`load` should load correct map from XML with initial values', () async {
     final instance = TestXmlLoader();
     final result = await instance.load();
