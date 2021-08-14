@@ -118,8 +118,8 @@ class FlutterI18n {
   }
 
   /// Build for root widget, to support RTL languages
-  static Widget Function(BuildContext, Widget) rootAppBuilder() {
-    Widget appBuilder(BuildContext context, Widget child) {
+  static Widget Function(BuildContext, Widget?) rootAppBuilder() {
+    Widget appBuilder(BuildContext context, Widget? child) {
       final instance = _retrieveCurrentInstance(context);
 
       return StreamBuilder<Locale?>(
@@ -128,7 +128,7 @@ class FlutterI18n {
         builder: (context, snapshot) {
           return Directionality(
             textDirection: _findTextDirection(snapshot.data),
-            child: child,
+            child: child!,
           );
         },
       );
