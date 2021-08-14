@@ -53,11 +53,19 @@ To use this library, you must create a folder in your project's root: the `baseP
 >
 > /assets/locales
 
-Inside this folder, you'll put the *json* or *yaml* files containing the translated keys. You have two options:
+Inside this folder, you'll put the *json*, *yaml*, *xml* or *toml* files containing the translated keys. You have different options:
 
 - If you want to specify the country code
 
     > `basePath`/{languageCode}_{countryCode}.json
+
+- If you want to specify the script code
+
+    > `basePath`/{languageCode}_{scriptCode}.json
+
+- If you want to specify both
+
+    > `basePath`/{languageCode}_{scriptCode}_${countryCode}_.json
 
 - otherwise
 

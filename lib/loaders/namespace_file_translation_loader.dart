@@ -8,6 +8,7 @@ class NamespaceFileTranslationLoader extends FileTranslationLoader {
   final String fallbackDir;
   final String basePath;
   final bool useCountryCode;
+  final bool useScriptCode;
   final List<String>? namespaces;
   AssetBundle assetBundle = rootBundle;
 
@@ -18,11 +19,13 @@ class NamespaceFileTranslationLoader extends FileTranslationLoader {
       this.fallbackDir = "en",
       this.basePath = "assets/flutter_i18n",
       this.useCountryCode = false,
+      this.useScriptCode = false,
       forcedLocale,
       decodeStrategies})
       : super(
             basePath: basePath,
             useCountryCode: useCountryCode,
+            useScriptCode: useScriptCode,
             forcedLocale: forcedLocale,
             decodeStrategies: decodeStrategies) {
     assert(namespaces != null);

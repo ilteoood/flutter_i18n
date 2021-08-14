@@ -18,6 +18,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   final String fallbackFile;
   final String basePath;
   final bool useCountryCode;
+  final bool useScriptCode;
   AssetBundle assetBundle = rootBundle;
 
   Map<dynamic, dynamic> _decodedMap = Map();
@@ -31,6 +32,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
       {this.fallbackFile = "en",
       this.basePath = "assets/flutter_i18n",
       this.useCountryCode = false,
+      this.useScriptCode = false,
       forcedLocale,
       decodeStrategies}) {
     this.forcedLocale = forcedLocale;
@@ -90,15 +92,18 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   /// Compose the file name using the format languageCode_countryCode
   @protected
   String composeFileName() {
-    return "${locale!.languageCode}${composeCountryCode()}";
+    return "${locale!.languageCode}${_composeSuffixCode()}";
   }
 
   /// Return the country code to attach to the file name, if required
   @protected
-  String composeCountryCode() {
+  String _composeSuffixCode() {
     String countryCode = "";
+    if(useScriptCode && locale!.scriptCode != null) {
+      countryCode = "${countryCode}_${locale!.scriptCode}";
+    }
     if (useCountryCode && locale!.countryCode != null) {
-      countryCode = "_${locale!.countryCode}";
+      countryCode = "${countryCode}_${locale!.countryCode}";
     }
     return countryCode;
   }

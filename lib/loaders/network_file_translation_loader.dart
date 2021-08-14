@@ -14,6 +14,7 @@ class NetworkFileTranslationLoader extends FileTranslationLoader {
       forcedLocale,
       fallbackFile = "en",
       useCountryCode = false,
+      useScriptCode = false,
       decodeStrategies})
       : super(
             fallbackFile: fallbackFile,
