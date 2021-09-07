@@ -15,7 +15,6 @@ Future main() async {
         forcedLocale: Locale('es')),
   );
   WidgetsFlutterBinding.ensureInitialized();
-  await flutterI18nDelegate.load(null);
   runApp(MyApp(flutterI18nDelegate));
 }
 
@@ -48,7 +47,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomeState extends State<MyHomePage> {
-  Locale currentLang;
+  Locale? currentLang;
   int clicked = 0;
 
   @override
@@ -63,7 +62,7 @@ class MyHomeState extends State<MyHomePage> {
 
   changeLanguage() async {
     currentLang =
-        currentLang.languageCode == 'en' ? Locale('it') : Locale('en');
+        currentLang!.languageCode == 'en' ? Locale('it') : Locale('en');
     await FlutterI18n.refresh(context, currentLang);
     setState(() {});
   }

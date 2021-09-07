@@ -7,7 +7,7 @@ import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 class CustomNetworkFileTranslationLoader extends NetworkFileTranslationLoader {
-  CustomNetworkFileTranslationLoader({baseUri})
+  CustomNetworkFileTranslationLoader({required baseUri})
       : super(baseUri: baseUri, decodeStrategies: [JsonDecodeStrategy()]);
 
   Future<String> loadString(final String fileName, final String extension) {
@@ -24,7 +24,6 @@ Future main() async {
   );
 
   WidgetsFlutterBinding.ensureInitialized();
-  await flutterI18nDelegate.load(null);
   runApp(MyApp(flutterI18nDelegate));
 }
 

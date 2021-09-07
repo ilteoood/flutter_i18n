@@ -15,7 +15,7 @@ Future main() async {
       forcedLocale: Locale('it'),
     ),
     missingTranslationHandler: (key, locale) {
-      print("--- Missing Key: $key, languageCode: ${locale.languageCode}");
+      print("--- Missing Key: $key, languageCode: ${locale!.languageCode}");
     },
   );
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +51,7 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomeState extends State<MyHomePage> {
   changeLanguage() async {
-    final currentLang = FlutterI18n.currentLocale(context);
+    final currentLang = FlutterI18n.currentLocale(context)!;
     final nextLang =
         currentLang.languageCode == 'ua' ? Locale('en') : Locale('ua');
     await FlutterI18n.refresh(context, nextLang);
