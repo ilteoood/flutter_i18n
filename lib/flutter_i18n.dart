@@ -50,7 +50,6 @@ class FlutterI18n {
     this.missingTranslationHandler =
         missingTranslationHandler ?? (key, locale) {};
     this.keySeparator = keySeparator;
-    MessagePrinter.setMustPrintMessage(!Foundation.kReleaseMode);
   }
 
   /// Used to load the locale translation file

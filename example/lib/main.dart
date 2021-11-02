@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 import 'basic_example.dart' as basicExample;
 import 'local_example.dart' as localeExample;
@@ -15,6 +16,9 @@ Future main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Logger.root.onRecord.listen((record) {
+      print(record);
+    });
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

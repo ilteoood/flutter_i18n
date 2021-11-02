@@ -7,7 +7,6 @@ import 'actions/ValidateAction.dart';
 void main(final List<String> args) async {
   validateLength(args);
   final AbstractAction actionInterface = retrieveAction(args[0]);
-  MessagePrinter.setMustPrintMessage(true);
   actionInterface.executeAction(args.sublist(1));
 }
 
