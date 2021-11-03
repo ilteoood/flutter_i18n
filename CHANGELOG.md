@@ -249,3 +249,6 @@ Dependencies upgrade
 Support for script code
 Support for toml format
 Fix for #173
+
+## [0.31.0]
+Fix for #179
