@@ -286,6 +286,19 @@ This command is used to find the differences between the keys of the desired tra
 |---------|-------------|
 | [flutter_i18n_locize](https://github.com/defint/flutter_i18n_locize) | Easy integration locize.io to flutter_i18n. |
 
+## Do you like my work?
+<p>
+    <a href="https://www.patreon.com/ilteoood">
+        <img align="center" alt="patreon" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dilteoood%26type%3Dpatrons&style=for-the-badge">
+        </img>
+    </a>
+    or
+    <a href="https://www.buymeacoffee.com/ilteoood">
+        <img align="center" alt="buy-me-a-coffee" src="https://img.shields.io/badge/-buy_me_a%C2%A0coffee-gray?logo=buy-me-a-coffee">
+        </img>
+    </a>
+</p>
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
