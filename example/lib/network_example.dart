@@ -10,8 +10,8 @@ class CustomNetworkFileTranslationLoader extends NetworkFileTranslationLoader {
   CustomNetworkFileTranslationLoader({required baseUri})
       : super(baseUri: baseUri, decodeStrategies: [JsonDecodeStrategy()]);
 
-  Future<String> loadString(final String fileName, final String extension) {
-    return networkAssetBundle.loadString("");
+  Uri resolveUri(final String fileName, final String extension) {
+    return baseUri;
   }
 }
 

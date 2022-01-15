@@ -1,32 +1,35 @@
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 import 'file_translation_loader.dart';
 
 /// Loads translations from the remote resource
 class NetworkFileTranslationLoader extends FileTranslationLoader {
-  late AssetBundle networkAssetBundle;
   final Uri baseUri;
 
   NetworkFileTranslationLoader(
       {required this.baseUri,
-      forcedLocale,
-      fallbackFile = "en",
-      useCountryCode = false,
-      useScriptCode = false,
-      decodeStrategies})
+        forcedLocale,
+        fallbackFile = "en",
+        useCountryCode = false,
+        useScriptCode = false,
+        decodeStrategies})
       : super(
-            fallbackFile: fallbackFile,
-            useCountryCode: useCountryCode,
-            forcedLocale: forcedLocale,
-            decodeStrategies: decodeStrategies) {
-    networkAssetBundle = NetworkAssetBundle(baseUri);
+      fallbackFile: fallbackFile,
+      useCountryCode: useCountryCode,
+      forcedLocale: forcedLocale,
+      decodeStrategies: decodeStrategies);
+
+  /// Load the file using an http client
+  @override
+  Future<String> loadString(final String fileName, final String extension) async {
+    final resolvedUri = resolveUri(fileName, extension);
+    final result = await http.get(resolvedUri);
+    return result.body;
   }
 
-  /// Load the file using the AssetBundle networkAssetBundle
-  @override
-  Future<String> loadString(final String fileName, final String extension) {
-    return networkAssetBundle.loadString('$fileName.$extension');
+  Uri resolveUri(final String fileName, final String extension) {
+    return baseUri.resolve('$fileName.$extension');
   }
 }
