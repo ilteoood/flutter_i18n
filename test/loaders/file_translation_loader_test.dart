@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../test_asset_bundle.dart';
+import '../test_asset_bundle_fallback.dart';
 import '../test_loader.dart';
 
 void main() {
@@ -21,6 +24,26 @@ void main() {
 
     expect(result, isMap);
     expect(result, isEmpty);
+  });
+
+  test('should deep merge fallback map', () async {
+    var instance = FileTranslationLoader(
+      forcedLocale: Locale.fromSubtags(languageCode: "fr"),
+      fallbackFile: "en"
+    );
+    instance.assetBundle = TestAssetBundleFallbackFrToEn();
+
+    var result = await instance.load();
+
+    expect(result, isMap);
+    expect(result, isNotEmpty);
+    expect(result["title"], equals("flutter_18n_fr"));
+    expect(result["sub_title"], equals("Hello World"));
+    var block = result["block"];
+    expect(block, isMap);
+    expect(block, isNotEmpty);
+    expect(block["label1"], equals("This is my app"));
+    expect(block["label2"], equals("Bonjour"));
   });
 
   test('`loadString` should load correct string', () async {

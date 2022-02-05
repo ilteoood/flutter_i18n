@@ -67,10 +67,39 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   Future _loadFallback() async {
     try {
       final Map fallbackMap = await loadFile(fallbackFile);
-      _decodedMap = {...fallbackMap, ..._decodedMap};
+      _decodedMap = _deepMergeMaps(fallbackMap, _decodedMap);
+      MessagePrinter.debug('Fallback maps have been merged');
     } catch (e) {
       MessagePrinter.debug('Error loading translation fallback $e');
     }
+  }
+
+  Map<K, V> _deepMergeMaps<K, V>(
+      Map<K, V> map1,
+      Map<K, V> map2,
+      ) {
+    var result = Map<K, V>.of(map1);
+
+    map2.forEach((key, mapValue) {
+      var p1 = result[key] as V;
+      var p2 = mapValue;
+
+      V mapResult;
+      if (result.containsKey(key)) {
+        if (p1 is Map && p2 is Map) {
+          Map map1 = p1 as Map;
+          Map map2 = p2 as Map;
+          mapResult = _deepMergeMaps(map1, map2) as V;
+        } else {
+          mapResult = p2;
+        }
+      } else {
+        mapResult = mapValue;
+      }
+
+      result[key] = mapResult;
+    });
+    return result;
   }
 
   /// Load the fileName using one of the strategies provided
