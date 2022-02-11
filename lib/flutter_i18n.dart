@@ -35,6 +35,8 @@ class FlutterI18n {
   // ignore: close_sinks
   final _loadingStream = StreamController<LoadingStatus>.broadcast();
 
+  FlutterI18n of(BuildContext context) => _retrieveCurrentInstance(context)!;
+
   Stream<LoadingStatus> get loadingStream => _loadingStream.stream;
 
   Stream<bool> get isLoadedStream => loadingStream
@@ -101,6 +103,24 @@ class FlutterI18n {
       translationParams: translationParams,
       missingKeyTranslationHandler: (key) {
         currentInstance.missingTranslationHandler(key, currentInstance.locale);
+      },
+    );
+    return simpleTranslator.translate();
+  }
+
+  /// Facade method to the simple translation logic that uses provided FlutterI18n instance
+  /// Meant to be used with some dependency injection tool such as GetIt to avoid need for context
+  static String translateWithInstance(final FlutterI18n instance, final String key,
+      {final String? fallbackKey,
+        final Map<String, String>? translationParams}) {
+    final SimpleTranslator simpleTranslator = SimpleTranslator(
+      instance.decodedMap,
+      key,
+      instance.keySeparator,
+      fallbackKey: fallbackKey,
+      translationParams: translationParams,
+      missingKeyTranslationHandler: (key) {
+        instance.missingTranslationHandler(key, instance.locale);
       },
     );
     return simpleTranslator.translate();
