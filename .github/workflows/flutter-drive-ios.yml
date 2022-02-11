@@ -10,6 +10,8 @@ jobs:
       fail-fast: true
     runs-on: macOS-latest
     steps:
+      - name: Install deps
+        run: xcode-select --install
       - name: List all simulators
         run: xcrun instruments -s
       - name: Start Simulator
