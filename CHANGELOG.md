@@ -255,3 +255,7 @@ Fix for #179
 
 ## [0.31.1]
 Fix for #184
+
+## [0.32.0]
+Fix for #186
+Recursively merge the translation map with the fallback map
