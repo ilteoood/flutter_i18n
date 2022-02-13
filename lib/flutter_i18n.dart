@@ -35,7 +35,7 @@ class FlutterI18n {
   // ignore: close_sinks
   final _loadingStream = StreamController<LoadingStatus>.broadcast();
 
-  FlutterI18n of(BuildContext context) => _retrieveCurrentInstance(context)!;
+  static FlutterI18n of(BuildContext context) => _retrieveCurrentInstance(context)!;
 
   Stream<LoadingStatus> get loadingStream => _loadingStream.stream;
 
