@@ -6,20 +6,13 @@ import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-class CustomNetworkFileTranslationLoader extends NetworkFileTranslationLoader {
-  CustomNetworkFileTranslationLoader({required baseUri})
-      : super(baseUri: baseUri, decodeStrategies: [JsonDecodeStrategy()]);
-
-  Uri resolveUri(final String fileName, final String extension) {
-    return baseUri;
-  }
-}
-
 Future main() async {
   final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
-    translationLoader: CustomNetworkFileTranslationLoader(
-      baseUri: Uri.https("postman-echo.com", "get",
-          {"title": "Basic network example", "content": "Translated content"}),
+    translationLoader: NetworkFileTranslationLoader(
+      baseUri: Uri.https("lalgodepaulo.com", "translations"),
+      useCountryCode: false,
+      fallbackFile: 'en',
+      decodeStrategies: [JsonDecodeStrategy()]
     ),
   );
 
@@ -66,7 +59,7 @@ class MyHomePage extends StatelessWidget {
                 },
               ),
               I18nText(
-                "args.content",
+                "tutoriel_page.timetable",
                 child: Text(""),
               ),
             ],

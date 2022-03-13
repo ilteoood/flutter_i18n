@@ -30,6 +30,7 @@ class NetworkFileTranslationLoader extends FileTranslationLoader {
   }
 
   Uri resolveUri(final String fileName, final String extension) {
-    return baseUri.resolve('$fileName.$extension');
+    final fileToFind = '$fileName.$extension';
+    return this.baseUri.replace(path: '${this.baseUri.path}/$fileToFind');
   }
 }
