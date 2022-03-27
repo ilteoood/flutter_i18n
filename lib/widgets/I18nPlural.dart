@@ -6,14 +6,15 @@ class I18nPlural extends StatelessWidget {
   final String _key;
   final int _pluralValue;
   final Text child;
+  final FlutterI18n? instance;
   static const _default_text = Text("");
 
-  I18nPlural(this._key, this._pluralValue, {this.child = _default_text});
+  I18nPlural(this._key, this._pluralValue, {this.child = _default_text, this.instance});
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      FlutterI18n.plural(context, _key, _pluralValue),
+      FlutterI18n.plural(context, _key, _pluralValue, instance: instance),
       key: child.key,
       style: child.style,
       strutStyle: child.strutStyle,

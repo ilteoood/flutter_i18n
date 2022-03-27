@@ -65,9 +65,9 @@ class FlutterI18n {
   get locale => this.translationLoader!.locale;
 
   /// Facade method to the plural translation logic
-  static String plural(final BuildContext context, final String translationKey, final int pluralValue,
+  static String plural(final BuildContext? context, final String translationKey, final int pluralValue,
       {final FlutterI18n? instance}) {
-    final FlutterI18n currentInstance = instance ?? _retrieveCurrentInstance(context)!;
+    final FlutterI18n currentInstance = instance ?? _retrieveCurrentInstance(context!)!;
     final PluralTranslator pluralTranslator = PluralTranslator(
       currentInstance.decodedMap,
       translationKey,
@@ -81,16 +81,16 @@ class FlutterI18n {
   }
 
   /// Facade method to force the load of a new locale
-  static Future refresh(final BuildContext context, final Locale? forcedLocale, {final FlutterI18n? instance}) async {
-    final FlutterI18n currentInstance = instance ?? _retrieveCurrentInstance(context)!;
+  static Future refresh(final BuildContext? context, final Locale? forcedLocale, {final FlutterI18n? instance}) async {
+    final FlutterI18n currentInstance = instance ?? _retrieveCurrentInstance(context!)!;
     currentInstance.translationLoader!.forcedLocale = forcedLocale;
     await currentInstance.load();
   }
 
   /// Facade method to the simple translation logic
-  static String translate(final BuildContext context, final String key,
+  static String translate(final BuildContext? context, final String key,
       {final FlutterI18n? instance, final String? fallbackKey, final Map<String, String>? translationParams}) {
-    final FlutterI18n currentInstance = instance ?? _retrieveCurrentInstance(context)!;
+    final FlutterI18n currentInstance = instance ?? _retrieveCurrentInstance(context!)!;
     final SimpleTranslator simpleTranslator = SimpleTranslator(
       currentInstance.decodedMap,
       key,
@@ -105,8 +105,8 @@ class FlutterI18n {
   }
 
   /// Same as `get locale`, but this can be invoked from widgets
-  static Locale? currentLocale(final BuildContext context, {final FlutterI18n? instance}) {
-    final FlutterI18n? currentInstance = instance ?? _retrieveCurrentInstance(context);
+  static Locale? currentLocale(final BuildContext? context, {final FlutterI18n? instance}) {
+    final FlutterI18n? currentInstance = instance ?? _retrieveCurrentInstance(context!);
     return currentInstance?.translationLoader?.locale;
   }
 
