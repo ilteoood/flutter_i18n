@@ -262,3 +262,6 @@ Recursively merge the translation map with the fallback map
 
 ## [0.32.1]
 Fix for #189
+
+## [0.32.2]
+Fix for #190
