@@ -47,7 +47,7 @@ class SimpleTranslator {
   }
 
   String? _decodeFromMap(final String key) {
-    final Map<dynamic, dynamic> subMap = calculateSubmap(key)!;
+    final Map<dynamic, dynamic> subMap = calculateSubmap(key);
     final String lastKeyPart = key.split(this.keySeparator!).last;
     final result = subMap[lastKeyPart] is String ? subMap[lastKeyPart] : null;
 
@@ -58,13 +58,13 @@ class SimpleTranslator {
     return result;
   }
 
-  Map<dynamic, dynamic>? calculateSubmap(final String translationKey) {
+  Map<dynamic, dynamic> calculateSubmap(final String translationKey) {
     final List<String> translationKeySplitted =
         translationKey.split(this.keySeparator!);
     translationKeySplitted.removeLast();
     Map<dynamic, dynamic>? decodedSubMap = decodedMap;
     translationKeySplitted.forEach((listKey) =>
         decodedSubMap = (decodedSubMap ?? Map())[listKey] ?? Map());
-    return decodedSubMap;
+    return decodedSubMap ?? {};
   }
 }
