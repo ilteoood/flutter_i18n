@@ -23,7 +23,7 @@ class PluralTranslator extends SimpleTranslator {
 
   /// Return the translation of plural key provided
   String plural() {
-    final Map<dynamic, dynamic> decodedSubMap = calculateSubmap(key)!;
+    final Map<dynamic, dynamic> decodedSubMap = calculateSubmap(key);
     key = _findCorrectKey(decodedSubMap);
     final String? parameterName = _findParameterName(decodedSubMap);
     translationParams =
