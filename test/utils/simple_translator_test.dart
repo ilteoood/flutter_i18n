@@ -65,5 +65,34 @@ void main() {
       final submap = instance.calculateSubmap('');
       expect(submap, {});
     });
+
+    test('should return empty submap when the value of nested key is not a Map', () {
+      final instance = SimpleTranslator(
+        {
+          'object': {
+            'key1': 'value1',
+          },
+        },
+        'object.key1.key2',
+        '.',
+      );
+      final subMap = instance.calculateSubmap('object.key1.key2');
+      expect(subMap, {});
+    });
+
+    test('should return key when the value of nested key is not a Map', () {
+      final instance = SimpleTranslator(
+        {
+          'object': {
+            'key1': 'value1',
+          },
+        },
+        'object.key1.key2',
+        '.',
+        missingKeyTranslationHandler: (key) {},
+      );
+      final translation = instance.translate();
+      expect(translation, 'object.key1.key2');
+    });
   });
 }
