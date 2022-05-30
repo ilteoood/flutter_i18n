@@ -63,8 +63,10 @@ class SimpleTranslator {
         translationKey.split(this.keySeparator!);
     translationKeySplitted.removeLast();
     Map<dynamic, dynamic>? decodedSubMap = decodedMap;
-    translationKeySplitted.forEach((listKey) =>
-        decodedSubMap = (decodedSubMap ?? Map())[listKey] ?? Map());
+    translationKeySplitted.forEach((listKey) {
+      final subMap = (decodedSubMap ?? Map())[listKey];
+      decodedSubMap = subMap is Map ? subMap : Map();
+    });
     return decodedSubMap ?? {};
   }
 }
