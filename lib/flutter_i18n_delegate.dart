@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/loaders/translation_loader.dart';
 import 'package:flutter_i18n/utils/message_printer.dart';
 
 import 'flutter_i18n.dart';
@@ -31,10 +30,10 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
   Future<FlutterI18n> load(final Locale locale) async {
     MessagePrinter.info("New locale: $locale");
     final TranslationLoader translationLoader =
-        _translationObject!.translationLoader!;
+        _translationObject!.flutterI18nInstance.translationLoader!;
     if (translationLoader.locale != locale ||
-        _translationObject!.decodedMap == null ||
-        _translationObject!.decodedMap!.isEmpty) {
+        _translationObject!.flutterI18nInstance.decodedMap == null ||
+        _translationObject!.flutterI18nInstance.decodedMap!.isEmpty) {
       translationLoader.locale = currentLocale = locale;
       await _translationObject!.load();
     }
