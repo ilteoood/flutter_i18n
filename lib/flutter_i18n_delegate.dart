@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/loaders/translation_loader.dart';
 import 'package:flutter_i18n/utils/message_printer.dart';
 
 import 'flutter_i18n.dart';

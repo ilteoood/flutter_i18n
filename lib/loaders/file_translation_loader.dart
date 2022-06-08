@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
@@ -87,8 +86,8 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
       V mapResult;
       if (result.containsKey(key)) {
         if (p1 is Map && p2 is Map) {
-          Map map1 = p1 as Map;
-          Map map2 = p2 as Map;
+          Map map1 = p1;
+          Map map2 = p2;
           mapResult = _deepMergeMaps(map1, map2) as V;
         } else {
           mapResult = p2;
