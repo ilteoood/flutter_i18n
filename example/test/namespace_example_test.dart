@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n_example/main.dart' as appmain;
 import 'package:flutter_test/flutter_test.dart';

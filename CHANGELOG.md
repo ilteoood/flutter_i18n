@@ -268,3 +268,6 @@ Fix for #190
 
 ## [0.32.3]
 Fix for #197 and #196
+
+## [0.32.4]
+Dependencies upgrade
