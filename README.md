@@ -12,7 +12,7 @@ I18n made easy, for Flutter!
 
 ## Table of contents
 
-* [Why you should use flutter_i18n?](#why-you-should-use-flutter_i18n)
+* [Why should you use flutter_i18n?](#why-should-you-use-flutter_i18n)
 * [Loaders](#loaders)
   * [FileTranslationLoader](#filetranslationloader-configuration)
   * [NetworkFileTranslationLoader](#networkfiletranslationloader-configuration)
@@ -22,7 +22,7 @@ I18n made easy, for Flutter!
 * [Plugins](#plugins)
 * [Contributors](#contributors-)
 
-## Why you should use flutter_i18n?
+## Why should you use flutter_i18n?
 
 The main goal of *flutter_i18n* is to simplify the i18n process in Flutter.
 I would like to recreate the same experience that you have with the Angular i18n: simple *json* files, one for each language that you want to support.
