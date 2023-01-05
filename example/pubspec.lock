@@ -551,7 +551,7 @@ packages:
       name: xml2json
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.3.5"
+    version: "5.3.6"
   yaml:
     dependency: transitive
     description:
