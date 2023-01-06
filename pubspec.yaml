@@ -12,12 +12,12 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   intl: ^0.17.0
-  yaml: ^3.1.0
-  xml2json: ^5.3.2
-  path: ^1.8.0
+  yaml: ^3.1.1
+  xml2json: ^5.3.6
+  path: ^1.8.2
   toml: ^0.13.1
-  logging: ^1.0.2
-  http: ^0.13.4
+  logging: ^1.1.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

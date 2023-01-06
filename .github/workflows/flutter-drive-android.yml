@@ -5,7 +5,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        api-level: [21, 29]
+        api-level: [21, 29, 31]
         target: [default]
       fail-fast: true
     steps:
@@ -21,6 +21,6 @@ jobs:
           arch: x86_64
           script: yes | flutter doctor --android-licenses \
             && cd example \
-            && flutter drive -d emulator-5554 --driver=test_driver/main_app.dart --target=test/basic_example_test.dart \
-            && flutter drive -d emulator-5554 --driver=test_driver/main_app.dart --target=test/network_example_test.dart \
-            && flutter drive -d emulator-5554 --driver=test_driver/main_app.dart --target=test/namespace_example_test.dart
+            && flutter drive -d emulator-5554 --driver=test_driver/main_app.dart --target=integration-test/basic_example_test.dart \
+            && flutter drive -d emulator-5554 --driver=test_driver/main_app.dart --target=integration-test/network_example_test.dart \
+            && flutter drive -d emulator-5554 --driver=test_driver/main_app.dart --target=integration-test/namespace_example_test.dart
