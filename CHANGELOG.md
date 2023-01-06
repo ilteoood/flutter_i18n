@@ -271,3 +271,6 @@ Fix for #197 and #196
 
 ## [0.32.4]
 Dependencies upgrade
+
+## [0.32.5]
+Dependencies upgrade
