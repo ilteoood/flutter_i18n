@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  intl: ^0.17.0
+  intl: ^0.18.0
   yaml: ^3.1.1
   xml2json: ^5.3.6
   path: ^1.8.2
