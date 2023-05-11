@@ -274,3 +274,7 @@ Dependencies upgrade
 
 ## [0.32.5]
 Dependencies upgrade
+
+## [0.33.0]
+Support for Dart 3 and Flutter 3.10
+Fix for #204
