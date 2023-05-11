@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 6.2.1">
+  <meta name="description" content="flutter_i18n API docs, for the Dart programming language.">
+  <title>flutter_i18n - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://github.com/ilteoood/flutter_i18n">flutter_i18n package</a></li>
+  </ol>
+  <div class="self-name">flutter_i18n</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="flutter_i18n">flutter_i18n</h1>
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<p>I18n made easy, for Flutter!</p>
+<!-- Badges -->
+<p><a href="https://pub.dev/packages/flutter_i18n"><img src="https://img.shields.io/pub/v/flutter_i18n.svg" alt="Pub Package"></a>
+<a href="https://github.com/ilteoood/flutter_i18n/actions"><img src="https://github.com/ilteoood/flutter_i18n/workflows/Publish%20plugin/badge.svg" alt="GitHub Actions"></a></p>
+<hr>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#why-should-you-use-flutter_i18n">Why should you use flutter_i18n?</a></li>
+<li><a href="#loaders">Loaders</a>
+<ul>
+<li><a href="#filetranslationloader-configuration">FileTranslationLoader</a></li>
+<li><a href="#networkfiletranslationloader-configuration">NetworkFileTranslationLoader</a></li>
+<li><a href="#namespacefiletranslationloader-configuration">NamespaceFileTranslationLoader</a></li>
+<li><a href="#e2efiletranslationloader-configuration">E2EFileTranslationLoader</a></li>
+</ul>
+</li>
+<li><a href="#flutter_i18n-in-action">flutter_i18n in action</a></li>
+<li><a href="#plugins">Plugins</a></li>
+<li><a href="#contributors-">Contributors</a></li>
+</ul>
+<h2 id="why-should-you-use-flutter_i18n">Why should you use flutter_i18n?</h2>
+<p>The main goal of <em>flutter_i18n</em> is to simplify the i18n process in Flutter.
+I would like to recreate the same experience that you have with the Angular i18n: simple <em>json</em> files, one for each language that you want to support.</p>
+<h2 id="loaders">Loaders</h2>
+<p>Loader is a class which loads your translations from specific source.
+You can easy override loader and create your own.</p>
+<p>Available loaders:</p>
+<table>
+<thead>
+<tr>
+<th>Class name</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FileTranslationLoader</code></td>
+<td>Loads translation files from JSON, YAML, TOML or XML format</td>
+</tr>
+<tr>
+<td><code>LocalTranslationLoader</code></td>
+<td>Is a copy of <code>FileTranslationLoader</code>, but used to loads the files from the device storage instead of assets folder</td>
+</tr>
+<tr>
+<td><code>NetworkFileTranslationLoader</code></td>
+<td>Loads translations from the remote resource</td>
+</tr>
+<tr>
+<td><code>NamespaceFileTranslationLoader</code></td>
+<td>Loads translations from separate files</td>
+</tr>
+<tr>
+<td><code>E2EFileTranslationLoader</code></td>
+<td>Special loader for solving isolates problem with flutter drive</td>
+</tr>
+</tbody>
+</table>
+<h3 id="filetranslationloader-configuration"><code>FileTranslationLoader</code> configuration</h3>
+<p>To use this library, you must create a folder in your project's root: the <code>basePath</code>. Some examples:</p>
+<blockquote>
+<p>/assets/flutter_i18n (the default one)</p>
+<p>/assets/i18n</p>
+<p>/assets/locales</p>
+</blockquote>
+<p>Inside this folder, you'll put the <em>json</em>, <em>yaml</em>, <em>xml</em> or <em>toml</em> files containing the translated keys. You have different options:</p>
+<ul>
+<li>
+<p>If you want to specify the country code</p>
+<blockquote>
+<p><code>basePath</code>/{languageCode}_{countryCode}.json</p>
+</blockquote>
+</li>
+<li>
+<p>If you want to specify the script code</p>
+<blockquote>
+<p><code>basePath</code>/{languageCode}_{scriptCode}.json</p>
+</blockquote>
+</li>
+<li>
+<p>If you want to specify both</p>
+<blockquote>
+<p><code>basePath</code>/{languageCode}<em>{scriptCode}</em>${countryCode}_.json</p>
+</blockquote>
+</li>
+<li>
+<p>otherwise</p>
+<blockquote>
+<p><code>basePath</code>/{languageCode}.json</p>
+</blockquote>
+</li>
+</ul>
+<p>If the <em>json</em> file is not available, we will look for a <em>yaml</em> file with the same name. In case both exist, the <em>json</em> file will be used.</p>
+<p>Of course, you must declare the subtree in your <em><strong>pubspec.yaml</strong></em> as assets:</p>
+<pre class="language-yaml"><code class="language-yaml">flutter:
+  assets:
+    - {basePath}
+</code></pre>
+<p>The next step consist in the configuration of the <em>localizationsDelegates</em>; to use <em>flutter_i18n</em>, you should configure as follows:</p>
+<pre class="language-dart"><code class="language-dart">localizationsDelegates: [
+        FlutterI18nDelegate(
+          translationLoader: FileTranslationLoader(...parameters...),
+          missingTranslationHandler: (key, locale) {
+            print("--- Missing Key: $key, languageCode: ${locale.languageCode}");
+          },
+        ),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+],
+builder: FlutterI18n.rootAppBuilder() //If you want to support RTL.
+</code></pre>
+<p>Below you can find the name and description of the accepted parameters.</p>
+<p>The <em><strong>useCountryCode</strong></em> parameter depends on the <em>json</em> configuration:</p>
+<ul>
+<li>if you used the pattern {languageCode}_{countryCode}, <em><strong>useCountryCode</strong></em> must be <strong>true</strong></li>
+<li>if you used the pattern {languageCode}, <em><strong>useCountryCode</strong></em> must be <strong>false</strong></li>
+</ul>
+<p>The <em><strong>fallbackFile</strong></em> parameter was entroduces with the version <strong>0.1.0</strong> and provide a default language, used when the translation for the current running system is not provided. This should contain the name of a valid <em>json</em> file in <em>assets</em> folder.</p>
+<p>The <em><strong>basePath</strong></em> parameter is optionally used to set the base path for translations. If this option is not set, the default path will be <code>assets/flutter_i18n</code>. This path must be the same path as the one defined in your <em><strong>pubspec.yaml</strong></em>.</p>
+<p>The <em><strong>forcedLocale</strong></em> parameter is optionally used to force a locale instead finding the system one.</p>
+<p>The <em><strong>decodeStrategies</strong></em> parameters is optionally used to choose witch kind of file you want to load. By default JSON, YAML and XML are enabled. If you use only one format, you can speed-up the bootstrap process using only the one you need.</p>
+<p>If there isn't any translation available for the required key, even in the fallback file, the same key is returned.</p>
+<h3 id="networkfiletranslationloader-configuration"><code>NetworkFileTranslationLoader</code> configuration</h3>
+<p>Behaviour of this loader very similar as <code>FileTranslationLoader</code>. The main difference that we load translations from <code>NetworkAssetBundle</code> instead of <code>CachingAssetBundle</code>.</p>
+<p>Below you can find the name and description of the accepted parameters.</p>
+<p>The <em><strong>baseUri</strong></em> parameter provide base Uri for your remote translations.</p>
+<p>The <em><strong>useCountryCode</strong></em> parameter depends on the <em>json</em> configuration:</p>
+<ul>
+<li>if you used the pattern {languageCode}_{countryCode}, <em><strong>useCountryCode</strong></em> must be <strong>true</strong></li>
+<li>if you used the pattern {languageCode}, <em><strong>useCountryCode</strong></em> must be <strong>false</strong></li>
+</ul>
+<p>The <em><strong>fallbackFile</strong></em> parameter provide a default language, used when the translation for the current running system is not provided.</p>
+<p>The <em><strong>forcedLocale</strong></em> parameter is optionally used to force a locale instead finding the system one.</p>
+<p>For example if your translation files located at
+<code>https://example.com/static/en.json</code> you should configure as follows:</p>
+<pre class="language-dart"><code class="language-dart">localizationsDelegates: [
+        FlutterI18nDelegate(translationLoader: 
+          NetworkFileTranslationLoader(baseUri: Uri.https("example.com", "static")),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+],
+</code></pre>
+<h3 id="namespacefiletranslationloader-configuration"><code>NamespaceFileTranslationLoader</code> configuration</h3>
+<p>Behaviour of this loader very similar as <code>FileTranslationLoader</code>. The main difference that we load translations from separate files per each language.</p>
+<p>For example <code>FileTranslationLoader</code> format:</p>
+<blockquote>
+<p>/assets/flutter_i18n/en.json</p>
+<p>/assets/flutter_i18n/it.json</p>
+</blockquote>
+<p><code>NamespaceFileTranslationLoader</code> format:</p>
+<blockquote>
+<p>/assets/flutter_i18n/en/home_screen.json</p>
+<p>/assets/flutter_i18n/en/about_screen.json</p>
+<p>/assets/flutter_i18n/it/home_screen.json</p>
+<p>/assets/flutter_i18n/it/about_screen.json</p>
+</blockquote>
+<p>Example configuration:</p>
+<pre class="language-dart"><code class="language-dart">localizationsDelegates: [
+        FlutterI18nDelegate(translationLoader: 
+          NamespaceFileTranslationLoader(namespaces: ["home_screen", "about_screen"]),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+],
+</code></pre>
+<p>Below you can find the name and description of the accepted parameters.</p>
+<p>The <em><strong>namespaces</strong></em> provide a list of filenames for the specific language directory.</p>
+<p>The <em><strong>useCountryCode</strong></em> parameter depends on the <em>json</em> configuration:</p>
+<ul>
+<li>if you used the pattern {languageCode}_{countryCode}, <em><strong>useCountryCode</strong></em> must be <strong>true</strong></li>
+<li>if you used the pattern {languageCode}, <em><strong>useCountryCode</strong></em> must be <strong>false</strong></li>
+</ul>
+<p>The <em><strong>fallbackDir</strong></em> provide a default language directory, used when the translation for the current running system is not provided.</p>
+<p>The <em><strong>basePath</strong></em> parameter is optionally used to set the base path for translations. If this option is not set, the default path will be <code>assets/flutter_i18n</code>. This path must be the same path as the one defined in your <em><strong>pubspec.yaml</strong></em>.</p>
+<p>The <em><strong>forcedLocale</strong></em> parameter is optionally used to force a locale instead finding the system one.</p>
+<h3 id="e2efiletranslationloader-configuration"><code>E2EFileTranslationLoader</code> configuration</h3>
+<p>The same as <code>FileTranslationLoader</code> configuration. This loader can be used for solving problem with flutter drive testing.
+It removes using separate isolate for loading translations (detailed issue described here: <a href="https://github.com/flutter/flutter/issues/24703">issues/24703</a>).</p>
+<p>The <em><strong>useE2E</strong></em> parameter:</p>
+<ul>
+<li>if you are in flutter drive testing mode – must be <strong>true</strong></li>
+<li>if you are in normal mode – must be <strong>false</strong>, in this case <code>FileTranslationLoader</code> will be used</li>
+</ul>
+<h2 id="flutter_i18n-in-action">flutter_i18n in action</h2>
+<p>After the configuration steps, the only thing to do is invoke the following method:</p>
+<pre class="language-dart"><code class="language-dart">FlutterI18n.translate(buildContext, "your.key")
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><em>buildContext</em> is the <em>BuildContext</em> instance of the widget</li>
+<li><em>your.key</em> is the key to translate</li>
+</ul>
+<p>Other examples of use:</p>
+<p>Force a language to be loaded at run-time:</p>
+<pre class="language-dart"><code class="language-dart">await FlutterI18n.refresh(buildContext, languageCode, {countryCode});
+</code></pre>
+<p>Plural translations:</p>
+<pre class="language-dart"><code class="language-dart">FlutterI18n.plural(buildContext, "your.key", pluralValue);
+</code></pre>
+<p>Text widget shorthand:</p>
+<pre class="language-dart"><code class="language-dart">I18nText("your.key", child: Text(""))
+I18nText("your.key", translationParams: {"user": "Flutter lover"})
+I18nPlural("clicked.times", 1)
+I18nPlural("clicked.times", 2, child: Text(""))
+</code></pre>
+<p>If you need to listen the translation loading status, you can use:</p>
+<ul>
+<li><code>FlutterI18n.retrieveLoadingStream</code> method, that allows you to listen to every status change</li>
+<li><code>FlutterI18n.retrieveLoadedStream</code> method, that allows you to listen when the translation is loaded</li>
+</ul>
+<p>For more informations and details, read the <a href="CHANGELOG.md">CHANGELOG.md</a>.</p>
+<h2 id="utilities">Utilities</h2>
+<p>Using <em>flutter pub run flutter_i18n</em> inside the root of your project you can enjoy some utilities that will help you with the translations files management.</p>
+<h3 id="commands">Commands</h3>
+<h4 id="validate">Validate</h4>
+<p>This command is used to validate all the translations files inside the project.</p>
+<pre class="language-sh"><code class="language-sh">&gt; flutter pub run flutter_i18n validate
+[flutter_i18n DEBUG]: I've found assets/i18n/en.yaml
+[flutter_i18n DEBUG]: I've found assets/i18n/it.json
+[flutter_i18n DEBUG]: I've found assets/i18n/es.xml
+[flutter_i18n DEBUG]: I've found assets/i18n_namespace/en/common.json
+[flutter_i18n DEBUG]: I've found assets/i18n_namespace/en/home.yaml
+[flutter_i18n DEBUG]: I've found assets/i18n_namespace/ua/common.json
+[flutter_i18n DEBUG]: I've found assets/i18n_namespace/ua/home.json
+[flutter_i18n INFO]: YAML file loaded for en
+[flutter_i18n INFO]: Valid file: assets/i18n/en.yaml
+[flutter_i18n INFO]: JSON file loaded for it
+[flutter_i18n INFO]: Valid file: assets/i18n/it.json
+[flutter_i18n INFO]: XML file loaded for es
+[flutter_i18n INFO]: Valid file: assets/i18n/es.xml
+[flutter_i18n INFO]: JSON file loaded for common
+[flutter_i18n INFO]: Valid file: assets/i18n_namespace/en/common.json
+[flutter_i18n INFO]: YAML file loaded for home
+[flutter_i18n INFO]: Valid file: assets/i18n_namespace/en/home.yaml
+[flutter_i18n INFO]: JSON file loaded for common
+[flutter_i18n INFO]: Valid file: assets/i18n_namespace/ua/common.json
+[flutter_i18n INFO]: JSON file loaded for home
+[flutter_i18n INFO]: Valid file: assets/i18n_namespace/ua/home.json
+</code></pre>
+<h4 id="diff">Diff</h4>
+<p>This command is used to find the differences between the keys of the desired translation files.</p>
+<pre class="language-sh"><code class="language-sh">&gt; flutter pub run flutter_i18n diff en.yaml it.json
+[flutter_i18n INFO]: [en.yaml, it.json]
+[flutter_i18n INFO]: YAML file loaded for en
+[flutter_i18n INFO]: JSON file loaded for it
+[flutter_i18n ERROR]: The compared dictionary doesn't contain the key &gt;title
+</code></pre>
+<h2 id="plugins">Plugins</h2>
+<table>
+<thead>
+<tr>
+<th>Plugin</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/defint/flutter_i18n_locize">flutter_i18n_locize</a></td>
+<td>Easy integration locize.io to flutter_i18n.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="do-you-like-my-work">Do you like my work?</h2>
+<p>
+    <a href="https://www.patreon.com/ilteoood">
+        <img align="center" alt="patreon" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dilteoood%26type%3Dpatrons&amp;style=for-the-badge">
+        
+    </a>
+    or
+    <a href="https://www.buymeacoffee.com/ilteoood">
+        <img align="center" alt="buy-me-a-coffee" src="https://img.shields.io/badge/-buy_me_a%C2%A0coffee-gray?logo=buy-me-a-coffee">
+        
+    </a>
+</p>
+<h2 id="contributors-">Contributors ✨</h2>
+<p>Thanks goes to these wonderful people (<a href="https://allcontributors.org/docs/en/emoji-key">emoji key</a>):</p>
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- markdownlint-disable -->
+
+<a href="https://github.com/defint"><img src="https://avatars2.githubusercontent.com/u/1523848?v=4?s=100" width="100px;" alt=""><br><sub><b>Anton</b></sub></a><br><a href="#infra-defint" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/ilteoood/flutter_i18n/commits?author=defint" title="Tests">⚠️</a> <a href="https://github.com/ilteoood/flutter_i18n/commits?author=defint" title="Code">💻</a>
+<a href="https://lucasvienna.dev"><img src="https://avatars1.githubusercontent.com/u/1761244?v=4?s=100" width="100px;" alt=""><br><sub><b>Lucas Vienna</b></sub></a><br><a href="https://github.com/ilteoood/flutter_i18n/commits?author=Avyiel" title="Code">💻</a>
+<a href="https://github.com/jlcool"><img src="https://avatars3.githubusercontent.com/u/381375?v=4?s=100" width="100px;" alt=""><br><sub><b>jlcool</b></sub></a><br><a href="https://github.com/ilteoood/flutter_i18n/commits?author=jlcool" title="Code">💻</a>
+<a href="https://github.com/juumixx"><img src="https://avatars1.githubusercontent.com/u/5200179?v=4?s=100" width="100px;" alt=""><br><sub><b>Julian</b></sub></a><br><a href="https://github.com/ilteoood/flutter_i18n/commits?author=juumixx" title="Code">💻</a> <a href="#ideas-juumixx" title="Ideas, Planning, &amp; Feedback">🤔</a>
+<a href="https://andreygordeev.com"><img src="https://avatars1.githubusercontent.com/u/2883524?v=4?s=100" width="100px;" alt=""><br><sub><b>Andrey Gordeev</b></sub></a><br><a href="https://github.com/ilteoood/flutter_i18n/commits?author=agordeev" title="Code">💻</a> <a href="https://github.com/ilteoood/flutter_i18n/issues?q=author%3Aagordeev" title="Bug reports">🐛</a>
+<a href="https://github.com/Amir-P"><img src="https://avatars.githubusercontent.com/u/8766492?v=4?s=100" width="100px;" alt=""><br><sub><b>Amir Panahandeh</b></sub></a><br><a href="https://github.com/ilteoood/flutter_i18n/issues?q=author%3AAmir-P" title="Bug reports">🐛</a> <a href="https://github.com/ilteoood/flutter_i18n/commits?author=Amir-P" title="Code">💻</a>
+
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+<p>This project follows the <a href="https://github.com/all-contributors/all-contributors">all-contributors</a> specification. Contributions of any kind welcome!</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="base_decode_strategy">
+  <span class="name"><a href="loaders_decoders_base_decode_strategy/loaders_decoders_base_decode_strategy-library.html">base_decode_strategy</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="e2e_file_translation_loader">
+  <span class="name"><a href="loaders_e2e_file_translation_loader/loaders_e2e_file_translation_loader-library.html">e2e_file_translation_loader</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="file_content">
+  <span class="name"><a href="loaders_file_content/loaders_file_content-library.html">file_content</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="file_translation_loader">
+  <span class="name"><a href="loaders_file_translation_loader/loaders_file_translation_loader-library.html">file_translation_loader</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="flutter_i18n">
+  <span class="name"><a href="flutter_i18n/flutter_i18n-library.html">flutter_i18n</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="flutter_i18n_delegate">
+  <span class="name"><a href="flutter_i18n_delegate/flutter_i18n_delegate-library.html">flutter_i18n_delegate</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="flutter_i18n_web">
+  <span class="name"><a href="flutter_i18n_web/flutter_i18n_web-library.html">flutter_i18n_web</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="I18nPlural">
+  <span class="name"><a href="widgets_I18nPlural/widgets_I18nPlural-library.html">I18nPlural</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="I18nText">
+  <span class="name"><a href="widgets_I18nText/widgets_I18nText-library.html">I18nText</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="json_decode_strategy">
+  <span class="name"><a href="loaders_decoders_json_decode_strategy/loaders_decoders_json_decode_strategy-library.html">json_decode_strategy</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="loading_status">
+  <span class="name"><a href="models_loading_status/models_loading_status-library.html">loading_status</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="local_translation_loader">
+  <span class="name"><a href="loaders_local_translation_loader/loaders_local_translation_loader-library.html">local_translation_loader</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="message_printer">
+  <span class="name"><a href="utils_message_printer/utils_message_printer-library.html">message_printer</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="namespace_file_translation_loader">
+  <span class="name"><a href="loaders_namespace_file_translation_loader/loaders_namespace_file_translation_loader-library.html">namespace_file_translation_loader</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="network_file_translation_loader">
+  <span class="name"><a href="loaders_network_file_translation_loader/loaders_network_file_translation_loader-library.html">network_file_translation_loader</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="plural_translator">
+  <span class="name"><a href="utils_plural_translator/utils_plural_translator-library.html">plural_translator</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="simple_translator">
+  <span class="name"><a href="utils_simple_translator/utils_simple_translator-library.html">simple_translator</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="toml_decode_strategy">
+  <span class="name"><a href="loaders_decoders_toml_decode_strategy/loaders_decoders_toml_decode_strategy-library.html">toml_decode_strategy</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="translation_loader">
+  <span class="name"><a href="loaders_translation_loader/loaders_translation_loader-library.html">translation_loader</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="xml_decode_strategy">
+  <span class="name"><a href="loaders_decoders_xml_decode_strategy/loaders_decoders_xml_decode_strategy-library.html">xml_decode_strategy</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="yaml_decode_strategy">
+  <span class="name"><a href="loaders_decoders_yaml_decode_strategy/loaders_decoders_yaml_decode_strategy-library.html">yaml_decode_strategy</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="https://github.com/ilteoood/flutter_i18n">flutter_i18n package</a></li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">flutter_i18n</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="loaders_decoders_base_decode_strategy/loaders_decoders_base_decode_strategy-library.html">base_decode_strategy</a></li>
+      <li><a href="loaders_e2e_file_translation_loader/loaders_e2e_file_translation_loader-library.html">e2e_file_translation_loader</a></li>
+      <li><a href="loaders_file_content/loaders_file_content-library.html">file_content</a></li>
+      <li><a href="loaders_file_translation_loader/loaders_file_translation_loader-library.html">file_translation_loader</a></li>
+      <li><a href="flutter_i18n/flutter_i18n-library.html">flutter_i18n</a></li>
+      <li><a href="flutter_i18n_delegate/flutter_i18n_delegate-library.html">flutter_i18n_delegate</a></li>
+      <li><a href="flutter_i18n_web/flutter_i18n_web-library.html">flutter_i18n_web</a></li>
+      <li><a href="widgets_I18nPlural/widgets_I18nPlural-library.html">I18nPlural</a></li>
+      <li><a href="widgets_I18nText/widgets_I18nText-library.html">I18nText</a></li>
+      <li><a href="loaders_decoders_json_decode_strategy/loaders_decoders_json_decode_strategy-library.html">json_decode_strategy</a></li>
+      <li><a href="models_loading_status/models_loading_status-library.html">loading_status</a></li>
+      <li><a href="loaders_local_translation_loader/loaders_local_translation_loader-library.html">local_translation_loader</a></li>
+      <li><a href="utils_message_printer/utils_message_printer-library.html">message_printer</a></li>
+      <li><a href="loaders_namespace_file_translation_loader/loaders_namespace_file_translation_loader-library.html">namespace_file_translation_loader</a></li>
+      <li><a href="loaders_network_file_translation_loader/loaders_network_file_translation_loader-library.html">network_file_translation_loader</a></li>
+      <li><a href="utils_plural_translator/utils_plural_translator-library.html">plural_translator</a></li>
+      <li><a href="utils_simple_translator/utils_simple_translator-library.html">simple_translator</a></li>
+      <li><a href="loaders_decoders_toml_decode_strategy/loaders_decoders_toml_decode_strategy-library.html">toml_decode_strategy</a></li>
+      <li><a href="loaders_translation_loader/loaders_translation_loader-library.html">translation_loader</a></li>
+      <li><a href="loaders_decoders_xml_decode_strategy/loaders_decoders_xml_decode_strategy-library.html">xml_decode_strategy</a></li>
+      <li><a href="loaders_decoders_yaml_decode_strategy/loaders_decoders_yaml_decode_strategy-library.html">yaml_decode_strategy</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    flutter_i18n
+      0.32.5
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

@@ -1,5 +1,5 @@
 name: flutter_i18n
-description: i18n made easy for Flutter. With flutter_i18n you can make your app international, using just a simple .json file!
+description: i18n made easy for Flutter. With flutter_i18n you can make your app international, using just a simple .json, .xml, .yaml or .toml file!
 version: 0.32.5
 homepage: https://github.com/ilteoood/flutter_i18n
 issue_tracker: https://github.com/ilteoood/flutter_i18n/issues
