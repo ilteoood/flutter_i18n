@@ -12,7 +12,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Publish
-        uses: sakebook/actions-flutter-pub-publisher@v1.3.1
+      - uses: subosito/flutter-action@v2
         with:
-          credential: ${{ secrets.PUB_CREDENTIALS }}
+          channel: 'stable'
+      - run: |
+          mkdir -p $FLUTTER_HOME/.pub-cache
+          echo '${{ secrets.PUB_CREDENTIALS }}' >  $FLUTTER_HOME/.pub-cache/credentials.json
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter pub publish
