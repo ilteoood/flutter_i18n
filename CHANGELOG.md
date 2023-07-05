@@ -278,3 +278,6 @@ Dependencies upgrade
 ## [0.33.0]
 Support for Dart 3 and Flutter 3.10
 Fix for #204
+
+## [0.34.0]
+Upgrade http@1.1.0, logging@1.2.0, xml2json@6.1.0
