@@ -133,12 +133,14 @@ For example if your translation files located at
 `https://example.com/static/en.json` you should configure as follows:
 
 ```dart
-localizationsDelegates: [
+MaterialApp(
+  localizationsDelegates: [
         FlutterI18nDelegate(translationLoader: 
           NetworkFileTranslationLoader(baseUri: Uri.https("example.com", "static")),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
-],
+  ],
+)
 ```
 
 ### `NamespaceFileTranslationLoader` configuration
@@ -164,12 +166,14 @@ For example `FileTranslationLoader` format:
 Example configuration:
 
 ```dart
-localizationsDelegates: [
+MaterialApp(
+  localizationsDelegates: [
         FlutterI18nDelegate(translationLoader: 
           NamespaceFileTranslationLoader(namespaces: ["home_screen", "about_screen"]),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
-],
+  ],
+)
 ```
 
 Below you can find the name and description of the accepted parameters.
