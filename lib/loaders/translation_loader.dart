@@ -1,5 +1,4 @@
-import 'dart:ui' as ui;
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/utils/message_printer.dart';
 
@@ -23,7 +22,7 @@ abstract class TranslationLoader {
 
   /// Return the device current locale
   Future<Locale> findDeviceLocale() async {
-    final systemLocale = ui.window.locale;
+    final systemLocale = PlatformDispatcher.instance.locale;
     MessagePrinter.info("The system locale is $systemLocale");
     return Future.value(systemLocale);
   }
