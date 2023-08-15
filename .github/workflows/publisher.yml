@@ -15,9 +15,6 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - run: |
-          mkdir -p $FLUTTER_HOME/.pub-cache
-          echo '${{ secrets.PUB_CREDENTIALS }}' >  $FLUTTER_HOME/.pub-cache/credentials.json
       - run: flutter pub get
       - run: flutter test
       - run: flutter pub publish
