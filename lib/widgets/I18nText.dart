@@ -24,10 +24,11 @@ class I18nText extends StatelessWidget {
       textDirection: child.textDirection,
       softWrap: child.softWrap,
       overflow: child.overflow,
-      textScaleFactor: child.textScaleFactor,
+      textScaler: child.textScaler,
       maxLines: child.maxLines,
       semanticsLabel: child.semanticsLabel,
       textWidthBasis: child.textWidthBasis,
+      textHeightBehavior: child.textHeightBehavior,
     );
   }
 }
