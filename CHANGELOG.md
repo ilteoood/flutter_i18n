@@ -286,3 +286,6 @@ Fix: deprecation warnings
 ## [0.35.0]
 Upgrade intl@0.18.1, xml2json@6.2.2, toml@0.15.0, http@1.1.2
 Fix: deprecation warnings
+
+## [0.35.1]
+Change intl version to '>=0.17.0-0 <=0.19.0'
