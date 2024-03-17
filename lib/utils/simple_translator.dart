@@ -48,39 +48,38 @@ class SimpleTranslator {
 
   String? _decodeFromMap(final String key) {
     final dynamic subMap = calculateSubmap(key);
-    final String lastKeyPart = key.split(this.keySeparator!).last;
+    if (subMap is List) {
+      final String lastKeyPart = key.split(this.keySeparator!).last;
+      final result = subMap[int.parse(lastKeyPart)] is String
+          ? subMap[int.parse(lastKeyPart)]
+          : null;
 
-    // Check if the last part of the key is numeric and handle it as an index in a list
-    final result = _isNumeric(lastKeyPart) && subMap is List
-        ? subMap[int.parse(lastKeyPart)]
-        : subMap is Map ? subMap[lastKeyPart] : null;
+      if (result == null && key.length > 0) {
+        missingKeyTranslationHandler!(key);
+      }
 
-    if (result == null && key.length > 0) {
-      missingKeyTranslationHandler!(key);
+      return result;
+    } else if (subMap is Map) {
+      final String lastKeyPart = key.split(this.keySeparator!).last;
+      final result = subMap[lastKeyPart] is String ? subMap[lastKeyPart] : null;
+
+      if (result == null && key.length > 0) {
+        missingKeyTranslationHandler!(key);
+      }
+
+      return result;
     }
-
-    return result is String ? result : null;
   }
 
   dynamic calculateSubmap(final String translationKey) {
     final List<String> translationKeySplitted =
         translationKey.split(this.keySeparator!);
-    dynamic currentLevel = decodedMap;
-    for (final String part in translationKeySplitted) {
-      if (_isNumeric(part) && currentLevel is List) {
-        currentLevel = currentLevel[int.parse(part)];
-      } else if (currentLevel is Map) {
-        currentLevel = currentLevel[part];
-      } else {
-        // If the current level is neither Map nor List, or the key is not valid, return null
-        return null;
-      }
-    }
-    return currentLevel;
-  }
-
-  // Utility function to check if a string is numeric
-  bool _isNumeric(String str) {
-    return int.tryParse(str) != null;
+    translationKeySplitted.removeLast();
+    dynamic decodedSubMap = decodedMap;
+    translationKeySplitted.forEach((listKey) {
+      final subMap = (decodedSubMap ?? Map())[listKey];
+      decodedSubMap = subMap;
+    });
+    return decodedSubMap ?? {};
   }
 }
