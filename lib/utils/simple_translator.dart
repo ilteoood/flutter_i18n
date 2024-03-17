@@ -47,35 +47,40 @@ class SimpleTranslator {
   }
 
   String? _decodeFromMap(final String key) {
-    final dynamic subMapOrList = calculateSubmap(key);
+    final dynamic subMap = calculateSubmap(key);
     final String lastKeyPart = key.split(this.keySeparator!).last;
 
-    // Check if the result is a map and contains the last key part as a string
-    if (subMapOrList is Map && subMapOrList[lastKeyPart] is String) {
-      return subMapOrList[lastKeyPart];
+    // Check if the last part of the key is numeric and handle it as an index in a list
+    final result = _isNumeric(lastKeyPart) && subMap is List
+        ? subMap[int.parse(lastKeyPart)]
+        : subMap is Map ? subMap[lastKeyPart] : null;
+
+    if (result == null && key.length > 0) {
+      missingKeyTranslationHandler!(key);
     }
 
-    // If a list or non-string value is encountered, handle it appropriately (e.g., log an error)
-    if (key.isNotEmpty && (subMapOrList is List || !(subMapOrList is String))) {
-      missingKeyTranslationHandler?.call(key);
-    }
-
-    return null;
+    return result is String ? result : null;
   }
 
   dynamic calculateSubmap(final String translationKey) {
     final List<String> translationKeySplitted =
         translationKey.split(this.keySeparator!);
-    translationKeySplitted.removeLast();
-    dynamic decodedSubMap = decodedMap;
-    for (var listKey in translationKeySplitted) {
-      if (decodedSubMap != null && decodedSubMap is Map) {
-        decodedSubMap = decodedSubMap[listKey];
+    dynamic currentLevel = decodedMap;
+    for (final String part in translationKeySplitted) {
+      if (_isNumeric(part) && currentLevel is List) {
+        currentLevel = currentLevel[int.parse(part)];
+      } else if (currentLevel is Map) {
+        currentLevel = currentLevel[part];
       } else {
-        // Break out of the loop if we encounter a non-map structure
-        break;
+        // If the current level is neither Map nor List, or the key is not valid, return null
+        return null;
       }
     }
-    return decodedSubMap;
+    return currentLevel;
+  }
+
+  // Utility function to check if a string is numeric
+  bool _isNumeric(String str) {
+    return int.tryParse(str) != null;
   }
 }
