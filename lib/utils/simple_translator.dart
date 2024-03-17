@@ -47,26 +47,35 @@ class SimpleTranslator {
   }
 
   String? _decodeFromMap(final String key) {
-    final Map<dynamic, dynamic> subMap = calculateSubmap(key);
+    final dynamic subMapOrList = calculateSubmap(key);
     final String lastKeyPart = key.split(this.keySeparator!).last;
-    final result = subMap[lastKeyPart] is String ? subMap[lastKeyPart] : null;
 
-    if (result == null && key.length > 0) {
-      missingKeyTranslationHandler!(key);
+    // Check if the result is a map and contains the last key part as a string
+    if (subMapOrList is Map && subMapOrList[lastKeyPart] is String) {
+      return subMapOrList[lastKeyPart];
     }
 
-    return result;
+    // If a list or non-string value is encountered, handle it appropriately (e.g., log an error)
+    if (key.isNotEmpty && (subMapOrList is List || !(subMapOrList is String))) {
+      missingKeyTranslationHandler?.call(key);
+    }
+
+    return null;
   }
 
-  Map<dynamic, dynamic> calculateSubmap(final String translationKey) {
+  dynamic calculateSubmap(final String translationKey) {
     final List<String> translationKeySplitted =
         translationKey.split(this.keySeparator!);
     translationKeySplitted.removeLast();
-    Map<dynamic, dynamic>? decodedSubMap = decodedMap;
-    translationKeySplitted.forEach((listKey) {
-      final subMap = (decodedSubMap ?? Map())[listKey];
-      decodedSubMap = subMap is Map ? subMap : Map();
-    });
-    return decodedSubMap ?? {};
+    dynamic decodedSubMap = decodedMap;
+    for (var listKey in translationKeySplitted) {
+      if (decodedSubMap != null && decodedSubMap is Map) {
+        decodedSubMap = decodedSubMap[listKey];
+      } else {
+        // Break out of the loop if we encounter a non-map structure
+        break;
+      }
+    }
+    return decodedSubMap;
   }
 }
