@@ -50,6 +50,10 @@ class SimpleTranslator {
     final dynamic subMap = calculateSubmap(key);
     if (subMap is List) {
       final String lastKeyPart = key.split(this.keySeparator!).last;
+      if (int.parse(lastKeyPart) >= subMap.length) {
+        missingKeyTranslationHandler!(key);
+        return null;
+      }
       final result = subMap[int.parse(lastKeyPart)] is String
           ? subMap[int.parse(lastKeyPart)]
           : null;
@@ -77,8 +81,20 @@ class SimpleTranslator {
     translationKeySplitted.removeLast();
     dynamic decodedSubMap = decodedMap;
     translationKeySplitted.forEach((listKey) {
-      final subMap = (decodedSubMap ?? Map())[listKey];
-      decodedSubMap = subMap;
+      decodedSubMap =
+          decodedSubMap is Map || decodedSubMap is List ? decodedSubMap : Map();
+      dynamic subMap;
+      if (decodedSubMap is List) {
+        if(int.parse(listKey) < decodedSubMap.length){
+          subMap = (decodedSubMap ?? List.empty())[int.parse(listKey)];
+        }
+        else {
+          subMap = Map();
+        }
+      } else if( decodedSubMap is Map) {
+        subMap = (decodedSubMap ?? Map())[listKey];
+      }
+      decodedSubMap = subMap is Map || subMap is List ? subMap : Map();
     });
     return decodedSubMap ?? {};
   }

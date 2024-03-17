@@ -66,7 +66,9 @@ void main() {
       expect(submap, {});
     });
 
-    test('should return empty submap when the value of nested key is not a Map', () {
+    test(
+        'should return empty submap when the value of nested key is not a Map or List',
+        () {
       final instance = SimpleTranslator(
         {
           'object': {
@@ -94,5 +96,90 @@ void main() {
       final translation = instance.translate();
       expect(translation, 'object.key1.key2');
     });
+  });
+
+  // additional tests
+  test('should correctly handle a list item translation', () {
+    final instance = SimpleTranslator(
+      {
+        'list': ['item0', 'item1', 'item2'],
+      },
+      'list.1',
+      '.',
+    );
+    final translation = instance.translate();
+    expect(translation, 'item1');
+  });
+
+  test('should return empty string for out of range index in a list', () {
+    final instance = SimpleTranslator(
+      {
+        'list': ['item0', 'item1', 'item2'],
+      },
+      'list.3',
+      '.',
+      missingKeyTranslationHandler: (key) {},
+    );
+    final translation = instance.translate();
+    expect(translation, 'list.3');
+  });
+
+  test('should handle nested maps correctly', () {
+    final instance = SimpleTranslator(
+      {
+        'object': {
+          'nested': {'key': 'value'},
+        },
+      },
+      'object.nested.key',
+      '.',
+    );
+    final translation = instance.translate();
+    expect(translation, 'value');
+  });
+
+  test('should return empty map for invalid nested path in map', () {
+    final instance = SimpleTranslator(
+      {
+        'object': {
+          'nested': {'key': 'value'},
+        },
+      },
+      'object.wrongKey.key',
+      '.',
+    );
+    final subMap = instance.calculateSubmap('object.wrongKey.key');
+    expect(subMap, {});
+  });
+
+  test('should handle nested lists correctly', () {
+    final instance = SimpleTranslator(
+      {
+        'list': [
+          ['item00', 'item01'],
+          ['item10', 'item11']
+        ],
+      },
+      'list.1.0',
+      '.',
+    );
+    final translation = instance.translate();
+    expect(translation, 'item10');
+  });
+
+  test('should return empty map for invalid index in nested list', () {
+    final instance = SimpleTranslator(
+      {
+        'list': [
+          ['item00', 'item01'],
+          ['item10', 'item11']
+        ],
+      },
+      'list.2.1',
+      '.',
+      missingKeyTranslationHandler: (key) {},
+    );
+    final translation = instance.calculateSubmap('list.2.1');
+    expect(translation, {});
   });
 }
