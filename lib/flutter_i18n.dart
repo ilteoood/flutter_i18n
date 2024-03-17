@@ -163,7 +163,8 @@ class FlutterI18n {
     Map<dynamic, dynamic> localeMap;
     final FlutterI18n? currentInstance = _retrieveCurrentInstance(context);
     if (localeCode == null) {
-      localeCode = currentInstance?.translationLoader?.locale?.toString() ?? 'en';
+      localeCode =
+          currentInstance?.translationLoader?.locale?.toString() ?? 'en';
     }
     if (translationCache.hasLocale(localeCode)) {
       localeMap = translationCache.getLocale(localeCode)!;
