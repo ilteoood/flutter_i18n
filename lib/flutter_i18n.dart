@@ -2,10 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/loaders/file_translation_loader.dart';
+import 'package:flutter_i18n/loaders/local_translation_loader.dart';
+import 'package:flutter_i18n/loaders/namespace_file_translation_loader.dart';
+import 'package:flutter_i18n/loaders/network_file_translation_loader.dart';
 import 'package:flutter_i18n/loaders/translation_loader.dart';
 import 'package:flutter_i18n/models/loading_status.dart';
 import 'package:flutter_i18n/utils/plural_translator.dart';
 import 'package:flutter_i18n/utils/simple_translator.dart';
+import 'package:flutter_i18n/utils/translation_cache.dart';
 import 'package:intl/intl.dart' as intl;
 
 export 'flutter_i18n_delegate.dart';
@@ -53,6 +57,7 @@ class FlutterI18n {
   Future<bool> load() async {
     this._loadingStream.add(LoadingStatus.loading);
     decodedMap = await translationLoader!.load();
+    translationCache.setLocale(locale.toString(), decodedMap!);
     _localeStream.add(locale);
     this._loadingStream.add(LoadingStatus.loaded);
     return true;
@@ -148,5 +153,93 @@ class FlutterI18n {
     return intl.Bidi.isRtlLanguage(locale?.languageCode)
         ? TextDirection.rtl
         : TextDirection.ltr;
+  }
+
+  static TranslationCache translationCache = TranslationCache();
+
+  /// [Map<dynamic, dynamic>] or a [List<dynamic>]
+  static Future<dynamic> getLocaleMap(BuildContext context,
+      [String? key, String? localeCode]) async {
+    Map<dynamic, dynamic> localeMap;
+    final FlutterI18n? currentInstance = _retrieveCurrentInstance(context);
+    if (localeCode == null) {
+      localeCode = currentInstance?.translationLoader?.locale?.toString() ?? 'en';
+    }
+    if (translationCache.hasLocale(localeCode)) {
+      localeMap = translationCache.getLocale(localeCode)!;
+      if (key == null) {
+        return localeMap;
+      } else {
+        return getValueFromKey(localeMap, key);
+      }
+    }
+
+    TranslationLoader? translationLoader = currentInstance?.translationLoader;
+
+    if (translationLoader is FileTranslationLoader) {
+      FileTranslationLoader newTranslationLoader = FileTranslationLoader(
+        basePath: translationLoader.basePath,
+        fallbackFile: translationLoader.fallbackFile,
+        forcedLocale: Locale(localeCode),
+        useCountryCode: translationLoader.useCountryCode,
+        useScriptCode: translationLoader.useScriptCode,
+      );
+      localeMap = await newTranslationLoader.load();
+    } else if (translationLoader is NamespaceFileTranslationLoader) {
+      NamespaceFileTranslationLoader newTranslationLoader =
+          NamespaceFileTranslationLoader(
+        namespaces: translationLoader.namespaces,
+        fallbackDir: translationLoader.fallbackDir,
+        basePath: translationLoader.basePath,
+        useCountryCode: translationLoader.useCountryCode,
+        useScriptCode: translationLoader.useScriptCode,
+        forcedLocale: Locale(localeCode),
+      );
+      localeMap = await newTranslationLoader.load();
+    } else if (translationLoader is NetworkFileTranslationLoader) {
+      NetworkFileTranslationLoader newTranslationLoader =
+          NetworkFileTranslationLoader(
+        baseUri: translationLoader.baseUri,
+        forcedLocale: Locale(localeCode),
+        fallbackFile: translationLoader.fallbackFile,
+        useCountryCode: translationLoader.useCountryCode,
+        useScriptCode: translationLoader.useScriptCode,
+      );
+      localeMap = await newTranslationLoader.load();
+    } else {
+      throw Exception("Unsupported translation loader");
+    }
+
+    translationCache.setLocale(localeCode, localeMap);
+    if (key == null) {
+      return localeMap;
+    } else {
+      return getValueFromKey(localeMap, key);
+    }
+  }
+
+  static dynamic getValueFromKey(Map<dynamic, dynamic> map, String key) {
+    dynamic value = map;
+    List<String> keys = key.split('.');
+
+    for (String subkey in keys) {
+      if (value is Map) {
+        value = value[subkey];
+      } else if (value is List && int.tryParse(subkey) != null) {
+        int index = int.parse(subkey);
+        if (index >= 0 && index < value.length) {
+          value = value[index];
+        } else {
+          return null; // Out of bounds
+        }
+      } else {
+        return null; // Invalid key or type
+      }
+
+      if (value == null) {
+        return null; // Key not found or invalid path
+      }
+    }
+    return value;
   }
 }
