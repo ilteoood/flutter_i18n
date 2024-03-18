@@ -91,9 +91,10 @@ class FlutterI18n {
   }
 
   /// Facade method to the simple translation logic
-  static String translate(final BuildContext context, final String key,
+  static dynamic translate(final BuildContext context, final String key,
       {final String? fallbackKey,
-      final Map<String, String>? translationParams}) {
+      final Map<String, String>? translationParams,
+      final bool? mustReturnString}) {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context)!;
     final SimpleTranslator simpleTranslator = SimpleTranslator(
       currentInstance.decodedMap,
@@ -104,6 +105,7 @@ class FlutterI18n {
       missingKeyTranslationHandler: (key) {
         currentInstance.missingTranslationHandler(key, currentInstance.locale);
       },
+      mustReturnString: mustReturnString ?? false
     );
     return simpleTranslator.translate();
   }

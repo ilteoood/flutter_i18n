@@ -40,7 +40,7 @@ class TestWidgetPageState extends State<TestWidgetPage> {
         ),
         body: Builder(builder: (context) {
           return Center(
-            child: Column(
+            child: ListView(
               children: <Widget>[
                 I18nText("keySingle"),
                 I18nPlural("keyPlural", 1, child: Text("")),

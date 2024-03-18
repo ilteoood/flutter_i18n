@@ -6,6 +6,7 @@ class SimpleTranslator {
   final String? fallbackKey;
   final String? keySeparator;
   final MissingKeyTranslationHandler? missingKeyTranslationHandler;
+  final bool mustReturnString;
 
   String key;
   Map<String?, String>? translationParams;
@@ -17,11 +18,12 @@ class SimpleTranslator {
     this.fallbackKey,
     this.translationParams,
     this.missingKeyTranslationHandler,
+    this.mustReturnString = false,
   });
 
   /// Return the translation of the key provided, otherwise return the fallbackKey (if provided), otherwise return the same key
-  String translate() {
-    String translation = _translateWithKeyFallback();
+  dynamic translate() {
+    dynamic translation = _translateWithKeyFallback();
     if (translationParams != null) {
       translation = _replaceParams(translation);
     }
@@ -36,7 +38,7 @@ class SimpleTranslator {
     return translation;
   }
 
-  String _translateWithKeyFallback() {
+  dynamic _translateWithKeyFallback() {
     return [
           _decodeFromMap(key),
           _decodeFromMap(fallbackKey ?? ""),
@@ -46,7 +48,7 @@ class SimpleTranslator {
         key;
   }
 
-  String? _decodeFromMap(final String key) {
+  dynamic? _decodeFromMap(final String key) {
     final dynamic subMap = calculateSubmap(key);
     if (subMap is List) {
       final String lastKeyPart = key.split(this.keySeparator!).last;
@@ -54,9 +56,10 @@ class SimpleTranslator {
         missingKeyTranslationHandler!(key);
         return null;
       }
-      final result = subMap[int.parse(lastKeyPart)] is String
-          ? subMap[int.parse(lastKeyPart)]
-          : null;
+      var result = subMap[int.parse(lastKeyPart)];
+      if (mustReturnString && result is! String) {
+        result = null;
+      }
 
       if (result == null && key.length > 0) {
         missingKeyTranslationHandler!(key);
@@ -65,7 +68,10 @@ class SimpleTranslator {
       return result;
     } else if (subMap is Map) {
       final String lastKeyPart = key.split(this.keySeparator!).last;
-      final result = subMap[lastKeyPart] is String ? subMap[lastKeyPart] : null;
+      var result = subMap[lastKeyPart];
+      if (mustReturnString && result is! String) {
+        result = null;
+      }
 
       if (result == null && key.length > 0) {
         missingKeyTranslationHandler!(key);
@@ -85,13 +91,12 @@ class SimpleTranslator {
           decodedSubMap is Map || decodedSubMap is List ? decodedSubMap : Map();
       dynamic subMap;
       if (decodedSubMap is List) {
-        if(int.parse(listKey) < decodedSubMap.length){
+        if (int.parse(listKey) < decodedSubMap.length) {
           subMap = (decodedSubMap ?? List.empty())[int.parse(listKey)];
-        }
-        else {
+        } else {
           subMap = Map();
         }
-      } else if( decodedSubMap is Map) {
+      } else if (decodedSubMap is Map) {
         subMap = (decodedSubMap ?? Map())[listKey];
       }
       decodedSubMap = subMap is Map || subMap is List ? subMap : Map();

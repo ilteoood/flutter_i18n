@@ -16,7 +16,9 @@ class I18nText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       FlutterI18n.translate(context, _key,
-          fallbackKey: fallbackKey, translationParams: translationParams),
+          fallbackKey: fallbackKey,
+          translationParams: translationParams,
+          mustReturnString: true),
       key: child.key,
       style: child.style,
       strutStyle: child.strutStyle,
