@@ -28,6 +28,7 @@ class FlutterI18n {
   TranslationLoader? translationLoader;
   late MissingTranslationHandler missingTranslationHandler;
   String? keySeparator;
+  bool? mustReturnString;
 
   Map<dynamic, dynamic>? decodedMap;
 
@@ -45,12 +46,14 @@ class FlutterI18n {
     TranslationLoader? translationLoader,
     String keySeparator, {
     MissingTranslationHandler? missingTranslationHandler,
+    bool? mustReturnString,
   }) {
     this.translationLoader = translationLoader ?? FileTranslationLoader();
     this._loadingStream.add(LoadingStatus.notLoaded);
     this.missingTranslationHandler =
         missingTranslationHandler ?? (key, locale) {};
     this.keySeparator = keySeparator;
+    this.mustReturnString = mustReturnString ?? true;
   }
 
   /// Used to load the locale translation file
@@ -97,16 +100,11 @@ class FlutterI18n {
       final bool? mustReturnString}) {
     final FlutterI18n currentInstance = _retrieveCurrentInstance(context)!;
     final SimpleTranslator simpleTranslator = SimpleTranslator(
-      currentInstance.decodedMap,
-      key,
-      currentInstance.keySeparator,
-      fallbackKey: fallbackKey,
-      translationParams: translationParams,
-      missingKeyTranslationHandler: (key) {
-        currentInstance.missingTranslationHandler(key, currentInstance.locale);
-      },
-      mustReturnString: mustReturnString ?? false
-    );
+        currentInstance.decodedMap, key, currentInstance.keySeparator,
+        fallbackKey: fallbackKey, translationParams: translationParams,
+        missingKeyTranslationHandler: (key) {
+      currentInstance.missingTranslationHandler(key, currentInstance.locale);
+    }, mustReturnString: mustReturnString ?? currentInstance.mustReturnString!);
     return simpleTranslator.translate();
   }
 

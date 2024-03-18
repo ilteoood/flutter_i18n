@@ -13,11 +13,13 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
   FlutterI18nDelegate(
       {translationLoader,
       MissingTranslationHandler? missingTranslationHandler,
-      String keySeparator = "."}) {
+      String keySeparator = ".",
+      bool mustReturnString = false}) {
     _translationObject = FlutterI18n(
       translationLoader,
       keySeparator,
       missingTranslationHandler: missingTranslationHandler,
+      mustReturnString:mustReturnString
     );
   }
 
