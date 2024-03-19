@@ -47,55 +47,50 @@ class SimpleTranslator {
   }
 
   String? _decodeFromMap(final String key) {
-    final dynamic subMap = calculateSubmap(key);
-    if (subMap is List) {
-      final String lastKeyPart = key.split(this.keySeparator!).last;
-      if (int.parse(lastKeyPart) >= subMap.length) {
+    final dynamic subStructure = calculateSubStructure(key);
+    var result = null;
+    final String lastKeyPart = key.split(this.keySeparator!).last;
+    if (subStructure is List) {
+      if (int.parse(lastKeyPart) >= subStructure.length) {
         missingKeyTranslationHandler!(key);
         return null;
       }
-      final result = subMap[int.parse(lastKeyPart)] is String
-          ? subMap[int.parse(lastKeyPart)]
-          : null;
-
-      if (result == null && key.length > 0) {
-        missingKeyTranslationHandler!(key);
-      }
-
-      return result;
-    } else if (subMap is Map) {
-      final String lastKeyPart = key.split(this.keySeparator!).last;
-      final result = subMap[lastKeyPart] is String ? subMap[lastKeyPart] : null;
-
-      if (result == null && key.length > 0) {
-        missingKeyTranslationHandler!(key);
-      }
-
-      return result;
+      result = subStructure[int.parse(lastKeyPart)];
+    } else if (subStructure is Map) {
+      result = subStructure[lastKeyPart];
     }
+    result = result is String ? result : null;
+    if (result == null && key.length > 0) {
+      missingKeyTranslationHandler!(key);
+    }
+
+    return result;
   }
 
-  dynamic calculateSubmap(final String translationKey) {
+  dynamic calculateSubStructure(final String translationKey) {
     final List<String> translationKeySplitted =
         translationKey.split(this.keySeparator!);
     translationKeySplitted.removeLast();
-    dynamic decodedSubMap = decodedMap;
+    dynamic decodedSubStructure = decodedMap;
     translationKeySplitted.forEach((listKey) {
-      decodedSubMap =
-          decodedSubMap is Map || decodedSubMap is List ? decodedSubMap : Map();
-      dynamic subMap;
-      if (decodedSubMap is List) {
-        if(int.parse(listKey) < decodedSubMap.length){
-          subMap = (decodedSubMap ?? List.empty())[int.parse(listKey)];
+      decodedSubStructure =
+          decodedSubStructure is Map || decodedSubStructure is List
+              ? decodedSubStructure
+              : Map();
+      dynamic subStructure;
+      if (decodedSubStructure is List) {
+        if (int.parse(listKey) < decodedSubStructure.length) {
+          subStructure =
+              (decodedSubStructure ?? List.empty())[int.parse(listKey)];
+        } else {
+          subStructure = Map();
         }
-        else {
-          subMap = Map();
-        }
-      } else if( decodedSubMap is Map) {
-        subMap = (decodedSubMap ?? Map())[listKey];
+      } else if (decodedSubStructure is Map) {
+        subStructure = (decodedSubStructure ?? Map())[listKey];
       }
-      decodedSubMap = subMap is Map || subMap is List ? subMap : Map();
+      decodedSubStructure =
+          subStructure is Map || subStructure is List ? subStructure : Map();
     });
-    return decodedSubMap ?? {};
+    return decodedSubStructure ?? {};
   }
 }

@@ -39,7 +39,7 @@ void main() {
       expect(translation, 'object.key1');
     });
 
-    test('should calculate submap from key', () {
+    test('should calculate substructure from key', () {
       final instance = SimpleTranslator(
         {
           'object': {
@@ -49,25 +49,25 @@ void main() {
         'object.key1',
         '.',
       );
-      final submap = instance.calculateSubmap('object.key1');
+      final substructure = instance.calculateSubStructure('object.key1');
       expect(
-        submap,
+        substructure,
         {'key1': 'value1'},
       );
     });
 
-    test('should calculate empty submap from empty key', () {
+    test('should calculate empty substructure from empty key', () {
       final instance = SimpleTranslator(
         null,
         'object.key1',
         '.',
       );
-      final submap = instance.calculateSubmap('');
-      expect(submap, {});
+      final substructure = instance.calculateSubStructure('');
+      expect(substructure, {});
     });
 
     test(
-        'should return empty submap when the value of nested key is not a Map or List',
+        'should return empty substructure when the value of nested key is not a Map or List',
         () {
       final instance = SimpleTranslator(
         {
@@ -78,8 +78,8 @@ void main() {
         'object.key1.key2',
         '.',
       );
-      final subMap = instance.calculateSubmap('object.key1.key2');
-      expect(subMap, {});
+      final subStructure = instance.calculateSubStructure('object.key1.key2');
+      expect(subStructure, {});
     });
 
     test('should return key when the value of nested key is not a Map', () {
@@ -148,8 +148,8 @@ void main() {
       'object.wrongKey.key',
       '.',
     );
-    final subMap = instance.calculateSubmap('object.wrongKey.key');
-    expect(subMap, {});
+    final subStructure = instance.calculateSubStructure('object.wrongKey.key');
+    expect(subStructure, {});
   });
 
   test('should handle nested lists correctly', () {
@@ -179,7 +179,7 @@ void main() {
       '.',
       missingKeyTranslationHandler: (key) {},
     );
-    final translation = instance.calculateSubmap('list.2.1');
+    final translation = instance.calculateSubStructure('list.2.1');
     expect(translation, {});
   });
 }
