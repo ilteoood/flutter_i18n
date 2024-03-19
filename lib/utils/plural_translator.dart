@@ -23,27 +23,27 @@ class PluralTranslator extends SimpleTranslator {
 
   /// Return the translation of plural key provided
   String plural() {
-    final Map<dynamic, dynamic> decodedSubMap = calculateSubmap(key);
-    key = _findCorrectKey(decodedSubMap);
-    final String? parameterName = _findParameterName(decodedSubMap);
+    final Map<dynamic, dynamic> decodedSubStructure = calculateSubStructure(key);
+    key = _findCorrectKey(decodedSubStructure);
+    final String? parameterName = _findParameterName(decodedSubStructure);
     translationParams =
         Map.fromIterables([parameterName], [pluralValue.toString()]);
     return translate();
   }
 
-  String _findCorrectKey(final Map<dynamic, dynamic> decodedSubMap) {
+  String _findCorrectKey(final Map<dynamic, dynamic> decodedSubStructure) {
     final List<String> splittedKey = key.split(this.keySeparator!);
     final String translationKey = splittedKey.removeLast();
     final String pluralSuffix =
-        _findPluralSuffix(decodedSubMap, translationKey);
+        _findPluralSuffix(decodedSubStructure, translationKey);
     final String lastKeyPart = "$translationKey$PLURAL_SEPARATOR$pluralSuffix";
     splittedKey.add(lastKeyPart);
     return splittedKey.join(this.keySeparator!);
   }
 
   String _findPluralSuffix(
-      final Map<dynamic, dynamic> decodedSubMap, final String translationKey) {
-    final int? pluralSuffix = decodedSubMap.keys
+      final Map<dynamic, dynamic> decodedSubStructure, final String translationKey) {
+    final int? pluralSuffix = decodedSubStructure.keys
         .where((mapKey) => mapKey.startsWith(translationKey))
         .where((mapKey) => mapKey.split(PLURAL_SEPARATOR).length == 2)
         .map((mapKey) => int.tryParse(mapKey.split(PLURAL_SEPARATOR).last))
@@ -53,10 +53,10 @@ class PluralTranslator extends SimpleTranslator {
     return pluralSuffix?.toString() ?? '';
   }
 
-  String? _findParameterName(final Map<dynamic, dynamic> decodedSubMap) {
+  String? _findParameterName(final Map<dynamic, dynamic> decodedSubStructure) {
     String? parameterName = "";
     final String? translation =
-        decodedSubMap[key.split(this.keySeparator!).last];
+        decodedSubStructure[key.split(this.keySeparator!).last];
     if (translation != null && _parameterRegexp.hasMatch(translation)) {
       final Match match = _parameterRegexp.firstMatch(translation)!;
       parameterName = match.groupCount > 0 ? match.group(1)! : "";

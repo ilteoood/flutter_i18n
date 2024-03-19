@@ -47,10 +47,19 @@ class SimpleTranslator {
   }
 
   String? _decodeFromMap(final String key) {
-    final Map<dynamic, dynamic> subMap = calculateSubmap(key);
+    final dynamic subStructure = calculateSubStructure(key);
+    var result = null;
     final String lastKeyPart = key.split(this.keySeparator!).last;
-    final result = subMap[lastKeyPart] is String ? subMap[lastKeyPart] : null;
-
+    if (subStructure is List) {
+      if (int.parse(lastKeyPart) >= subStructure.length) {
+        missingKeyTranslationHandler!(key);
+        return null;
+      }
+      result = subStructure[int.parse(lastKeyPart)];
+    } else if (subStructure is Map) {
+      result = subStructure[lastKeyPart];
+    }
+    result = result is String ? result : null;
     if (result == null && key.length > 0) {
       missingKeyTranslationHandler!(key);
     }
@@ -58,15 +67,30 @@ class SimpleTranslator {
     return result;
   }
 
-  Map<dynamic, dynamic> calculateSubmap(final String translationKey) {
+  dynamic calculateSubStructure(final String translationKey) {
     final List<String> translationKeySplitted =
         translationKey.split(this.keySeparator!);
     translationKeySplitted.removeLast();
-    Map<dynamic, dynamic>? decodedSubMap = decodedMap;
+    dynamic decodedSubStructure = decodedMap;
     translationKeySplitted.forEach((listKey) {
-      final subMap = (decodedSubMap ?? Map())[listKey];
-      decodedSubMap = subMap is Map ? subMap : Map();
+      decodedSubStructure =
+          decodedSubStructure is Map || decodedSubStructure is List
+              ? decodedSubStructure
+              : Map();
+      dynamic subStructure;
+      if (decodedSubStructure is List) {
+        if (int.parse(listKey) < decodedSubStructure.length) {
+          subStructure =
+              (decodedSubStructure ?? List.empty())[int.parse(listKey)];
+        } else {
+          subStructure = Map();
+        }
+      } else if (decodedSubStructure is Map) {
+        subStructure = (decodedSubStructure ?? Map())[listKey];
+      }
+      decodedSubStructure =
+          subStructure is Map || subStructure is List ? subStructure : Map();
     });
-    return decodedSubMap ?? {};
+    return decodedSubStructure ?? {};
   }
 }
