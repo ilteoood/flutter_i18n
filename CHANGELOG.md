@@ -289,3 +289,6 @@ Fix: deprecation warnings
 
 ## [0.35.1]
 Change intl version to '>=0.17.0-0 <=0.19.0'
+
+## [0.36.0]
+Ability to define custom separator
