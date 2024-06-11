@@ -5,9 +5,6 @@ import 'package:flutter_i18n/utils/message_printer.dart';
 /// Loads translations from separate files
 class NamespaceFileTranslationLoader extends FileTranslationLoader {
   final String fallbackDir;
-  final String basePath;
-  final bool useCountryCode;
-  final bool useScriptCode;
   final List<String>? namespaces;
   AssetBundle assetBundle = rootBundle;
 
@@ -16,13 +13,15 @@ class NamespaceFileTranslationLoader extends FileTranslationLoader {
   NamespaceFileTranslationLoader(
       {required this.namespaces,
       this.fallbackDir = "en",
-      this.basePath = "assets/flutter_i18n",
-      this.useCountryCode = false,
-      this.useScriptCode = false,
+      basePath = "assets/flutter_i18n",
+      separator = "_",
+      useCountryCode = false,
+      useScriptCode = false,
       forcedLocale,
       decodeStrategies})
       : super(
             basePath: basePath,
+            separator: separator,
             useCountryCode: useCountryCode,
             useScriptCode: useScriptCode,
             forcedLocale: forcedLocale,

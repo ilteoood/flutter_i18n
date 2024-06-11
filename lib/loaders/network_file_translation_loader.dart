@@ -13,11 +13,13 @@ class NetworkFileTranslationLoader extends FileTranslationLoader {
       {required this.baseUri,
         forcedLocale,
         fallbackFile = "en",
+        separator = "_",
         useCountryCode = false,
         useScriptCode = false,
         decodeStrategies})
       : super(
       fallbackFile: fallbackFile,
+      separator: separator,
       useCountryCode: useCountryCode,
       forcedLocale: forcedLocale,
       decodeStrategies: decodeStrategies);
