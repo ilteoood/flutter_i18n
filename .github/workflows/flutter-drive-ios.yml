@@ -5,9 +5,10 @@ jobs:
     strategy:
       matrix:
         device:
-          - "iPhone 8"
-          - "iPhone 11 Pro Max"
-          - "iPhone 13 Pro Max"
+          - "iPhone 15"
+          - "iPhone 15 Plus"
+          - "iPhone 15 Pro"
+          - "iPhone 15 Pro Max"
       fail-fast: true
     runs-on: macos-latest
     steps:
