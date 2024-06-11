@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
+import 'package:flutter_i18n/loaders/decoders/toml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/xml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
-import 'package:flutter_i18n/loaders/decoders/toml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/file_content.dart';
 import 'package:flutter_i18n/loaders/translation_loader.dart';
 
@@ -16,6 +16,7 @@ import '../utils/message_printer.dart';
 class FileTranslationLoader extends TranslationLoader implements IFileContent {
   final String fallbackFile;
   final String basePath;
+  final String separator;
   final bool useCountryCode;
   final bool useScriptCode;
   AssetBundle assetBundle = rootBundle;
@@ -25,11 +26,17 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
 
   set decodeStrategies(List<BaseDecodeStrategy>? decodeStrategies) =>
       _decodeStrategies = decodeStrategies ??
-          [JsonDecodeStrategy(), YamlDecodeStrategy(), XmlDecodeStrategy(), TomlDecodeStrategy()];
+          [
+            JsonDecodeStrategy(),
+            YamlDecodeStrategy(),
+            XmlDecodeStrategy(),
+            TomlDecodeStrategy()
+          ];
 
   FileTranslationLoader(
       {this.fallbackFile = "en",
       this.basePath = "assets/flutter_i18n",
+      this.separator = "_",
       this.useCountryCode = false,
       this.useScriptCode = false,
       forcedLocale,
@@ -74,9 +81,9 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   }
 
   Map<K, V> _deepMergeMaps<K, V>(
-      Map<K, V> map1,
-      Map<K, V> map2,
-      ) {
+    Map<K, V> map1,
+    Map<K, V> map2,
+  ) {
     var result = Map<K, V>.of(map1);
 
     map2.forEach((key, mapValue) {
@@ -127,11 +134,11 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   @protected
   String _composeSuffixCode() {
     String countryCode = "";
-    if(useScriptCode && locale!.scriptCode != null) {
-      countryCode = "${countryCode}_${locale!.scriptCode}";
+    if (useScriptCode && locale!.scriptCode != null) {
+      countryCode = "${countryCode}${separator}${locale!.scriptCode}";
     }
     if (useCountryCode && locale!.countryCode != null) {
-      countryCode = "${countryCode}_${locale!.countryCode}";
+      countryCode = "${countryCode}${separator}${locale!.countryCode}";
     }
     return countryCode;
   }
