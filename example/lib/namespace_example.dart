@@ -11,9 +11,10 @@ Future main() async {
       useCountryCode: false,
       fallbackDir: 'en',
       basePath: 'assets/i18n_namespace',
-      forcedLocale: Locale('it'),
+      forcedLocale: const Locale('it'),
     ),
     missingTranslationHandler: (key, locale) {
+      // ignore: avoid_print
       print("--- Missing Key: $key, languageCode: ${locale!.languageCode}");
     },
   );
@@ -24,7 +25,7 @@ Future main() async {
 class MyApp extends StatelessWidget {
   final FlutterI18nDelegate flutterI18nDelegate;
 
-  MyApp(this.flutterI18nDelegate);
+  const MyApp(this.flutterI18nDelegate, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
       localizationsDelegates: [
         flutterI18nDelegate,
         GlobalMaterialLocalizations.delegate,
@@ -44,6 +45,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   MyHomeState createState() => MyHomeState();
 }
@@ -52,7 +55,7 @@ class MyHomeState extends State<MyHomePage> {
   changeLanguage() async {
     final currentLang = FlutterI18n.currentLocale(context)!;
     final nextLang =
-        currentLang.languageCode == 'ua' ? Locale('en') : Locale('ua');
+        currentLang.languageCode == 'ua' ? const Locale('en') : const Locale('ua');
     await FlutterI18n.refresh(context, nextLang);
     setState(() {});
   }
@@ -67,13 +70,13 @@ class MyHomeState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              I18nText("home.label.main", child: Text("")),
-              I18nText("home.missing", child: Text("")),
+              I18nText("home.label.main", child: const Text("")),
+              I18nText("home.missing", child: const Text("")),
               ElevatedButton(
                   onPressed: () async {
                     await changeLanguage();
                   },
-                  child: Text("Change language"))
+                  child: const Text("Change language"))
             ],
           ),
         );

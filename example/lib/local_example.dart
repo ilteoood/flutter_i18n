@@ -38,7 +38,7 @@ Future downloadTranslationContent(final String basePath) async {
 }
 
 class Test extends StatefulWidget {
-  Test(this.flutterI18nDelegate);
+  const Test(this.flutterI18nDelegate, {super.key});
 
   final FlutterI18nDelegate flutterI18nDelegate;
 
@@ -57,7 +57,7 @@ class _TestState extends State<Test> {
       ],
       home: Builder(
         builder: (context) => Scaffold(
-          appBar: AppBar(title: Text('Test')),
+          appBar: AppBar(title: const Text('Test')),
           body: Column(children: <Widget>[
             Container(
               color: Colors.blue,
