@@ -10,8 +10,8 @@ void main() {
   launchApp(WidgetTester tester) async {
     appmain.main();
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(new Key('networkExample')));
-    await tester.pumpAndSettle(Duration(milliseconds: 5000));
+    await tester.tap(find.byKey(const Key('networkExample')));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
   }
 
   testWidgets('Network translation loader example',

@@ -9,7 +9,7 @@ void main() {
   launchApp(WidgetTester tester) async {
     appmain.main();
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(new Key('nameSpaceExample')));
+    await tester.tap(find.byKey(const Key('nameSpaceExample')));
     await tester.pumpAndSettle();
   }
 
