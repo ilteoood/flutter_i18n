@@ -10,7 +10,7 @@ Future main() async {
         useCountryCode: false,
         fallbackFile: 'en',
         basePath: 'assets/i18n',
-        forcedLocale: Locale('es')),
+        forcedLocale: const Locale('es')),
   );
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp(flutterI18nDelegate));
@@ -19,7 +19,7 @@ Future main() async {
 class MyApp extends StatelessWidget {
   final FlutterI18nDelegate flutterI18nDelegate;
 
-  MyApp(this.flutterI18nDelegate);
+  const MyApp(this.flutterI18nDelegate, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
       localizationsDelegates: [
         flutterI18nDelegate,
         GlobalMaterialLocalizations.delegate,
@@ -40,6 +40,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   MyHomeState createState() => MyHomeState();
 }
@@ -66,10 +68,10 @@ class MyHomeState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 I18nText("label.main",
-                    translationParams: {"user": "Flutter lover"}),
+                    translationParams: const {"user": "Flutter lover"}),
                 I18nPlural("clicked.times", clicked),
                 TextButton(
-                    key: Key('incrementCounter'),
+                    key: const Key('incrementCounter'),
                     onPressed: () async {
                       incrementCounter();
                     },
@@ -77,10 +79,10 @@ class MyHomeState extends State<MyHomePage> {
                         context, "button.label.clickMea",
                         fallbackKey: "button.label.clickMe"))),
                 TextButton(
-                    key: Key('changeLanguage'),
+                    key: const Key('changeLanguage'),
                     onPressed: () async {
                       final Locale? currentLang = FlutterI18n.currentLocale(context);
-                      await FlutterI18n.refresh(context, currentLang!.languageCode == 'en' ? Locale('it') : Locale('en'));
+                      await FlutterI18n.refresh(context, currentLang!.languageCode == 'en' ? const Locale('it') : const Locale('en'));
 
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(FlutterI18n.translate(

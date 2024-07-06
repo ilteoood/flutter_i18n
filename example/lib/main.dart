@@ -1,31 +1,29 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 
-import 'basic_example.dart' as basicExample;
-import 'local_example.dart' as localeExample;
-import 'namespace_example.dart' as namespaceExample;
-import 'network_example.dart' as networkExample;
+import 'basic_example.dart' as basic_example;
+import 'local_example.dart' as locale_example;
+import 'namespace_example.dart' as namespace_example;
+import 'network_example.dart' as network_example;
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    Logger.root.onRecord.listen((record) {
-      print(record);
-    });
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
         home: Scaffold(
-            appBar: AppBar(title: Text("Flutter i18n")),
+            appBar: AppBar(title: const Text("Flutter i18n")),
             body: Builder(builder: (BuildContext context) {
               return Center(
                   child: Column(
@@ -33,32 +31,32 @@ class MyApp extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   ElevatedButton(
-                    key: Key('basicExample'),
+                    key: const Key('basicExample'),
                     onPressed: () {
-                      basicExample.main();
+                      basic_example.main();
                     },
-                    child: Text("Run `basic` example"),
+                    child: const Text("Run `basic` example"),
                   ),
                   ElevatedButton(
-                    key: Key('networkExample'),
+                    key: const Key('networkExample'),
                     onPressed: () {
-                      networkExample.main();
+                      network_example.main();
                     },
-                    child: Text("Run `network` example"),
+                    child: const Text("Run `network` example"),
                   ),
                   ElevatedButton(
-                    key: Key('nameSpaceExample'),
+                    key: const Key('nameSpaceExample'),
                     onPressed: () {
-                      namespaceExample.main();
+                      namespace_example.main();
                     },
-                    child: Text("Run `namespace` example"),
+                    child: const Text("Run `namespace` example"),
                   ),
                   ElevatedButton(
-                    key: Key('localeExample'),
+                    key: const Key('localeExample'),
                     onPressed: () {
-                      localeExample.main();
+                      locale_example.main();
                     },
-                    child: Text("Run `locale` example"),
+                    child: const Text("Run `locale` example"),
                   )
                 ],
               ));
