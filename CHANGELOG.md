@@ -292,3 +292,6 @@ Change intl version to '>=0.17.0-0 <=0.19.0'
 
 ## [0.36.0]
 Ability to define custom separator
+
+## [0.36.1]
+Fix for #222

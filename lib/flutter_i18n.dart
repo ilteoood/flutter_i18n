@@ -7,6 +7,7 @@ import 'package:flutter_i18n/models/loading_status.dart';
 import 'package:flutter_i18n/utils/plural_translator.dart';
 import 'package:flutter_i18n/utils/simple_translator.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:rxdart/subjects.dart';
 
 export 'flutter_i18n_delegate.dart';
 export 'loaders/e2e_file_translation_loader.dart';
@@ -27,10 +28,10 @@ class FlutterI18n {
 
   Map<dynamic, dynamic>? decodedMap;
 
-  final _localeStream = StreamController<Locale?>.broadcast();
+  final _localeStream = BehaviorSubject<Locale?>();
 
   // ignore: close_sinks
-  final _loadingStream = StreamController<LoadingStatus>.broadcast();
+  final _loadingStream = BehaviorSubject<LoadingStatus>();
 
   Stream<LoadingStatus> get loadingStream => _loadingStream.stream;
 

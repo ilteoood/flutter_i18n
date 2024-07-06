@@ -16,6 +16,7 @@ class CustomNetworkFileTranslationLoader extends NetworkFileTranslationLoader {
 }
 
 Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
     translationLoader: CustomNetworkFileTranslationLoader(
       baseUri: Uri.https("postman-echo.com", "get",
@@ -23,7 +24,6 @@ Future main() async {
     ),
   );
 
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp(flutterI18nDelegate));
 }
 
