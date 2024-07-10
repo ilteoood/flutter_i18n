@@ -66,13 +66,14 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
         cache: false);
   }
 
-  Future _loadTranslation(String fileName, bool isFallback) async {
+  Future<Map<dynamic, dynamic>> _loadTranslation(String fileName, bool isFallback) async {
     try {
       return await loadFile(fileName);
     } catch (e) {
       MessagePrinter.debug(
           'Error loading translation${isFallback ? " fallback " : " "}$e');
     }
+    return Map();
   }
 
   Future _defineLocale() async {
