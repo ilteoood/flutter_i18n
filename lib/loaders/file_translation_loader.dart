@@ -48,9 +48,14 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   /// Return the translation Map
   Future<Map> load() async {
     _decodedMap = Map();
+    final fileName = composeFileName();
     await this._defineLocale();
-    await _loadCurrentTranslation();
-    await _loadFallback();
+    _decodedMap.addAll(await _loadTranslation(fileName, false));
+    if (fileName != fallbackFile) {
+      final Map fallbackMap = await _loadTranslation(fallbackFile, true);
+      _decodedMap = _deepMergeMaps(fallbackMap, _decodedMap);
+      MessagePrinter.debug('Fallback maps have been merged');
+    }
     return _decodedMap;
   }
 
@@ -61,27 +66,18 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
         cache: false);
   }
 
-  Future _loadCurrentTranslation() async {
+  Future _loadTranslation(String fileName, bool isFallback) async {
     try {
-      _decodedMap.addAll(await loadFile(composeFileName()));
+      return await loadFile(fileName);
     } catch (e) {
-      MessagePrinter.debug('Error loading translation $e');
+      MessagePrinter.debug(
+          'Error loading translation${isFallback ? " fallback " : " "}$e');
     }
   }
 
   Future _defineLocale() async {
     this.locale = locale ?? await findDeviceLocale();
     MessagePrinter.info("The current locale is ${this.locale}");
-  }
-
-  Future _loadFallback() async {
-    try {
-      final Map fallbackMap = await loadFile(fallbackFile);
-      _decodedMap = _deepMergeMaps(fallbackMap, _decodedMap);
-      MessagePrinter.debug('Fallback maps have been merged');
-    } catch (e) {
-      MessagePrinter.debug('Error loading translation fallback $e');
-    }
   }
 
   Map<K, V> _deepMergeMaps<K, V>(
