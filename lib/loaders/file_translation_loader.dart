@@ -14,7 +14,7 @@ import '../utils/message_printer.dart';
 
 /// Loads translation files from JSON, YAML or XML format
 class FileTranslationLoader extends TranslationLoader implements IFileContent {
-  final String fallbackFile;
+  final String? fallbackFile;
   final String basePath;
   final String separator;
   final bool useCountryCode;
@@ -51,8 +51,8 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
     final fileName = composeFileName();
     await this._defineLocale();
     _decodedMap.addAll(await _loadTranslation(fileName, false));
-    if (fileName != fallbackFile) {
-      final Map fallbackMap = await _loadTranslation(fallbackFile, true);
+    if (fallbackFile != null && fileName != fallbackFile) {
+      final Map fallbackMap = await _loadTranslation(fallbackFile!, true);
       _decodedMap = _deepMergeMaps(fallbackMap, _decodedMap);
       MessagePrinter.debug('Fallback maps have been merged');
     }
