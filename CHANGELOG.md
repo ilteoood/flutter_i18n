@@ -295,3 +295,7 @@ Ability to define custom separator
 
 ## [0.36.1]
 Fix for #222
+
+## [0.36.2]
+Fix for #185
+Fix for #216
