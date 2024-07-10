@@ -26,9 +26,8 @@ void main() {
 
   test('should deep merge fallback map', () async {
     var instance = FileTranslationLoader(
-      forcedLocale: Locale.fromSubtags(languageCode: "fr"),
-      fallbackFile: "en"
-    );
+        forcedLocale: Locale.fromSubtags(languageCode: "fr"),
+        fallbackFile: "en");
     instance.assetBundle = TestAssetBundleFallbackFrToEn();
 
     var result = await instance.load();
@@ -44,6 +43,25 @@ void main() {
     expect(block["label2"], equals("Bonjour"));
   });
 
+  test('should skip merge fallback map', () async {
+    var instance = FileTranslationLoader(
+        forcedLocale: Locale.fromSubtags(languageCode: "fr"),
+        fallbackFile: null);
+    instance.assetBundle = TestAssetBundleFallbackFrToEn();
+
+    var result = await instance.load();
+
+    expect(result, isMap);
+    expect(result, isNotEmpty);
+    expect(result["title"], equals("flutter_18n_fr"));
+    expect(result["sub_title"], equals(null));
+    var block = result["block"];
+    expect(block, isMap);
+    expect(block, isNotEmpty);
+    expect(block["label1"], equals(null));
+    expect(block["label2"], equals("Bonjour"));
+  });
+
   test('`loadString` should load correct string', () async {
     final instance = TestJsonLoader();
     final result = await instance.loadString("_fileName", "_extension");
@@ -51,21 +69,24 @@ void main() {
     expect(result, contains("_extension"));
   });
 
-  test('`load` should load correct map from JSON with initial values', () async {
+  test('`load` should load correct map from JSON with initial values',
+      () async {
     final instance = TestJsonLoader();
     final result = await instance.load();
     expect(result["fileName"], "en");
     expect(result["extension"], "json");
   });
 
-  test('`load` should load correct map from YAML with initial values', () async {
+  test('`load` should load correct map from YAML with initial values',
+      () async {
     final instance = TestYamlLoader();
     final result = await instance.load();
     expect(result["fileName"], "en");
     expect(result["extension"], "yaml");
   });
 
-  test('`load` should load correct map from TOML with initial values', () async {
+  test('`load` should load correct map from TOML with initial values',
+      () async {
     final instance = TestTomlLoader();
     final result = await instance.load();
     expect(result["fileName"], "en");
