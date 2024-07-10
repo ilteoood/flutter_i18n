@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
+import 'package:flutter/widgets.dart';
 
 import 'file_translation_loader.dart';
 
@@ -19,12 +21,12 @@ class E2EFileTranslationLoader extends FileTranslationLoader {
   AssetBundle customAssetBundle = _CustomAssetBundle();
 
   E2EFileTranslationLoader(
-      {forcedLocale,
-      fallbackFile = "en",
-      basePath = "assets/flutter_i18n",
-      useCountryCode = false,
-      this.useE2E = true,
-      decodeStrategies})
+      {Locale? forcedLocale,
+      String? fallbackFile = "en",
+      String basePath = "assets/flutter_i18n",
+      bool useCountryCode = false,
+      bool this.useE2E = true,
+      List<BaseDecodeStrategy>? decodeStrategies})
       : super(
             fallbackFile: fallbackFile,
             basePath: basePath,

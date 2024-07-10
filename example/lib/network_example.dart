@@ -6,7 +6,7 @@ import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 class CustomNetworkFileTranslationLoader extends NetworkFileTranslationLoader {
-  CustomNetworkFileTranslationLoader({required baseUri})
+  CustomNetworkFileTranslationLoader(Uri baseUri)
       : super(baseUri: baseUri, decodeStrategies: [JsonDecodeStrategy()]);
 
   @override
@@ -19,7 +19,7 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
     translationLoader: CustomNetworkFileTranslationLoader(
-      baseUri: Uri.https("postman-echo.com", "get",
+      Uri.https("postman-echo.com", "get",
           {"title": "Basic network example", "content": "Translated content"}),
     ),
   );
