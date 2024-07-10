@@ -1,7 +1,8 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_i18n/loaders/decoders/toml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/xml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
-import 'package:flutter_i18n/loaders/decoders/toml_decode_strategy.dart';
 
 Future<String> _loadString(String fileName, String extension) async {
   if (fileName.contains('_en')) {
@@ -31,10 +32,10 @@ Future<String> _loadString(String fileName, String extension) async {
 
 class TestJsonLoader extends FileTranslationLoader {
   TestJsonLoader({
-    forcedLocale,
-    fallbackFile = "en",
-    basePath = "assets/flutter_i18n",
-    useCountryCode = false,
+    Locale? forcedLocale,
+    String fallbackFile = "en",
+    String basePath = "assets/flutter_i18n",
+    bool useCountryCode = false,
   }) : super(
             fallbackFile: fallbackFile,
             basePath: basePath,
@@ -49,10 +50,10 @@ class TestJsonLoader extends FileTranslationLoader {
 
 class TestYamlLoader extends FileTranslationLoader {
   TestYamlLoader({
-    forcedLocale,
-    fallbackFile = "en",
-    basePath = "assets/flutter_i18n",
-    useCountryCode = false,
+    Locale? forcedLocale,
+    String fallbackFile = "en",
+    String basePath = "assets/flutter_i18n",
+    bool useCountryCode = false,
   }) : super(
             fallbackFile: fallbackFile,
             basePath: basePath,
@@ -77,10 +78,10 @@ class TestYamlLoader extends FileTranslationLoader {
 
 class TestTomlLoader extends FileTranslationLoader {
   TestTomlLoader({
-    forcedLocale,
-    fallbackFile = "en",
-    basePath = "assets/flutter_i18n",
-    useCountryCode = false,
+    Locale? forcedLocale,
+    String fallbackFile = "en",
+    String basePath = "assets/flutter_i18n",
+    bool useCountryCode = false,
   }) : super(
       fallbackFile: fallbackFile,
       basePath: basePath,
@@ -105,10 +106,10 @@ class TestTomlLoader extends FileTranslationLoader {
 
 class TestXmlLoader extends FileTranslationLoader {
   TestXmlLoader({
-    forcedLocale,
-    fallbackFile = "en",
-    basePath = "assets/flutter_i18n",
-    useCountryCode = false,
+    Locale? forcedLocale,
+    String fallbackFile = "en",
+    String basePath = "assets/flutter_i18n",
+    bool useCountryCode = false,
   }) : super(
             fallbackFile: fallbackFile,
             basePath: basePath,

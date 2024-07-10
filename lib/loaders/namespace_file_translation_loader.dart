@@ -1,4 +1,6 @@
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/file_translation_loader.dart';
 import 'package:flutter_i18n/utils/message_printer.dart';
 
@@ -11,14 +13,14 @@ class NamespaceFileTranslationLoader extends FileTranslationLoader {
   Map<dynamic, dynamic> _decodedMap = {};
 
   NamespaceFileTranslationLoader(
-      {required this.namespaces,
-      this.fallbackDir = "en",
-      basePath = "assets/flutter_i18n",
-      separator = "_",
-      useCountryCode = false,
-      useScriptCode = false,
-      forcedLocale,
-      decodeStrategies})
+      {required List<String>? this.namespaces,
+      String this.fallbackDir = "en",
+      String basePath = "assets/flutter_i18n",
+      String separator = "_",
+      bool useCountryCode = false,
+      bool useScriptCode = false,
+      Locale? forcedLocale,
+      List<BaseDecodeStrategy>? decodeStrategies})
       : super(
             basePath: basePath,
             separator: separator,

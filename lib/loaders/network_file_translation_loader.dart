@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
+import 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
 import 'package:http/http.dart' as http;
 
 import 'file_translation_loader.dart';
@@ -9,13 +11,13 @@ class NetworkFileTranslationLoader extends FileTranslationLoader {
   final Uri baseUri;
 
   NetworkFileTranslationLoader(
-      {required this.baseUri,
-      forcedLocale,
-      fallbackFile = "en",
-      separator = "_",
-      useCountryCode = false,
-      useScriptCode = false,
-      decodeStrategies})
+      {required Uri this.baseUri,
+      Locale? forcedLocale,
+      String fallbackFile = "en",
+      String separator = "_",
+      bool useCountryCode = false,
+      bool useScriptCode = false,
+      List<BaseDecodeStrategy>? decodeStrategies})
       : super(
             fallbackFile: fallbackFile,
             separator: separator,

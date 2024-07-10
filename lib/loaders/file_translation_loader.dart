@@ -34,13 +34,13 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
           ];
 
   FileTranslationLoader(
-      {this.fallbackFile = "en",
-      this.basePath = "assets/flutter_i18n",
-      this.separator = "_",
-      this.useCountryCode = false,
-      this.useScriptCode = false,
-      forcedLocale,
-      decodeStrategies}) {
+      {String? this.fallbackFile = "en",
+      String this.basePath = "assets/flutter_i18n",
+      String this.separator = "_",
+      bool this.useCountryCode = false,
+      bool this.useScriptCode = false,
+      Locale? forcedLocale,
+      List<BaseDecodeStrategy>? decodeStrategies}) {
     this.forcedLocale = forcedLocale;
     this.decodeStrategies = decodeStrategies;
   }
