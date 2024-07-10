@@ -48,8 +48,8 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   /// Return the translation Map
   Future<Map> load() async {
     _decodedMap = Map();
-    final fileName = composeFileName();
     await this._defineLocale();
+    final fileName = composeFileName();
     _decodedMap.addAll(await _loadTranslation(fileName, false));
     if (fallbackFile != null && fileName != fallbackFile) {
       final Map fallbackMap = await _loadTranslation(fallbackFile!, true);
