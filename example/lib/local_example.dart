@@ -43,7 +43,7 @@ class Test extends StatefulWidget {
   final FlutterI18nDelegate flutterI18nDelegate;
 
   @override
-  _TestState createState() => _TestState();
+  State<Test> createState() => _TestState();
 }
 
 class _TestState extends State<Test> {

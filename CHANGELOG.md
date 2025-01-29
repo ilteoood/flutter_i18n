@@ -2,12 +2,14 @@
 
 *flutter_i18n* now manage strings that contain parameters; an example can be: "Hello, {user}!"
 For a correct translation, you must use the third parameter of the *translate* method, a *Map<String, String>* where:
+
 - the keys are the placeholders used in the *.json* file (i.e. user)
 - the values are what you want to display
 
 ## [0.3.0]
 
 *flutter_i18n* now supports language change at runtime. To use it, you ***must*** invoke the method
+
 ```sh
 await FlutterI18n.refresh(buildContext, languageCode, {countryCode});
 ```
@@ -17,6 +19,7 @@ await FlutterI18n.refresh(buildContext, languageCode, {countryCode});
 ## [0.4.0]
 
 *flutter_i18n* now supports plurals. To use it, invoke the method:
+
 ```sh
 FlutterI18n.plural(buildContext, "your.key", pluralValue);
 ```
@@ -40,7 +43,6 @@ FlutterI18n.plural(buildContext, "clicked.times", pluralValue);
 ```
 
 FlutterI18n will choose the right key using the value of pluralValue: it will match the last key with a value <= of pluralValue.
-
 
 ## [0.5.0]
 
@@ -112,6 +114,7 @@ You can use it when the translation *key* is not found.
 ## [0.10.0]
 
 Added stateless widgets in order to avoid to deal with BuildContext.
+
 ```dart
 I18nText("your.key", Text(""))
 I18nText("your.key", Text(""), translationParams: {"user": "Flutter lover"})
@@ -122,9 +125,9 @@ I18nPlural("clicked.times", 2, Text(""))
 
 New translation mechanism, with different and customizable loaders provided:
 
-* FileTranslationLoader
-* NetworkFileTranslationLoader
-* E2EFileTranslationLoader
+- FileTranslationLoader
+- NetworkFileTranslationLoader
+- E2EFileTranslationLoader
 
 ## [0.11.1]
 
@@ -181,7 +184,7 @@ Test fix for [issue/115](https://github.com/ilteoood/flutter_i18n/issues/115)
 
 New loader provided:
 
-* LocalTranslationLoader
+- LocalTranslationLoader
 
 ## [0.19.0]
 
@@ -223,6 +226,7 @@ Fix for #150
 ## [0.22.0]
 
 Initial Flutter 2 support:
+
 - intl upgraded to version 0.17.0
 - example app upgraded to Android X
 - null safe migration
@@ -251,51 +255,70 @@ Support for toml format
 Fix for #173
 
 ## [0.31.0]
+
 Fix for #179
 
 ## [0.31.1]
+
 Fix for #184
 
 ## [0.32.0]
+
 Fix for #186
 Recursively merge the translation map with the fallback map
 
 ## [0.32.1]
+
 Fix for #189
 
 ## [0.32.2]
+
 Fix for #190
 
 ## [0.32.3]
+
 Fix for #197 and #196
 
 ## [0.32.4]
+
 Dependencies upgrade
 
 ## [0.32.5]
+
 Dependencies upgrade
 
 ## [0.33.0]
+
 Support for Dart 3 and Flutter 3.10
 Fix for #204
 
 ## [0.34.0]
+
 Upgrade http@1.1.0, logging@1.2.0, xml2json@6.2.0, yaml@3.1.2, path@1.8.3
 Fix: deprecation warnings
 
 ## [0.35.0]
+
 Upgrade intl@0.18.1, xml2json@6.2.2, toml@0.15.0, http@1.1.2
 Fix: deprecation warnings
 
 ## [0.35.1]
+
 Change intl version to '>=0.17.0-0 <=0.19.0'
 
 ## [0.36.0]
+
 Ability to define custom separator
 
 ## [0.36.1]
+
 Fix for #222
 
 ## [0.36.2]
+
 Fix for #185
 Fix for #216
+
+## [0.36.3]
+
+Upgrade packages

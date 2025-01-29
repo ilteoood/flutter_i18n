@@ -81,16 +81,23 @@ class MyHomeState extends State<MyHomePage> {
                 TextButton(
                     key: const Key('changeLanguage'),
                     onPressed: () async {
-                      final Locale? currentLang = FlutterI18n.currentLocale(context);
-                      await FlutterI18n.refresh(context, currentLang!.languageCode == 'en' ? const Locale('it') : const Locale('en'));
+                      final Locale? currentLang =
+                          FlutterI18n.currentLocale(context);
+                      await FlutterI18n.refresh(
+                          context,
+                          currentLang!.languageCode == 'en'
+                              ? const Locale('it')
+                              : const Locale('en'));
 
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(FlutterI18n.translate(
-                            context, "button.toastMessage")),
-                      ));
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(FlutterI18n.translate(
+                              context, "button.toastMessage")),
+                        ));
+                      }
                     },
-                    child: Text(
-                        FlutterI18n.translate(context, "button.label.language")))
+                    child: Text(FlutterI18n.translate(
+                        context, "button.label.language")))
               ],
             ),
           ),
