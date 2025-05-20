@@ -322,7 +322,3 @@ Fix for #216
 ## [0.36.3]
 
 Upgrade packages
-
-## [0.36.4]
-
-Upgrade packages
