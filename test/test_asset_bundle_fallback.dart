@@ -9,3 +9,15 @@ class TestAssetBundleFallbackFrToEn extends PlatformAssetBundle {
     }
   }
 }
+
+class TestAssetBundleFallback extends PlatformAssetBundle {
+  Future<String> loadString(String key, {bool cache = true}) async {
+    if (key == 'assets/flutter_i18n/en.json') {
+      return '{"hello": "Hello", "world": "World"}';
+    }
+    if (key == 'assets/flutter_i18n/de.json') {
+      return '{"label": "Deutsch"}';
+    }
+    throw Exception('Asset not found: $key');
+  }
+}

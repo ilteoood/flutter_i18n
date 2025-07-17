@@ -37,8 +37,8 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
       {String? this.fallbackFile = "en",
       String this.basePath = "assets/flutter_i18n",
       String this.separator = "_",
-      bool this.useCountryCode = false,
-      bool this.useScriptCode = false,
+      bool this.useCountryCode = true,
+      bool this.useScriptCode = true,
       Locale? forcedLocale,
       List<BaseDecodeStrategy>? decodeStrategies}) {
     this.forcedLocale = forcedLocale;
@@ -49,13 +49,25 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   Future<Map> load() async {
     _decodedMap = Map();
     await this._defineLocale();
-    final fileName = composeFileName();
-    _decodedMap.addAll(await _loadTranslation(fileName, false));
-    if (fallbackFile != null && fileName != fallbackFile) {
+    
+    final candidateFiles = generateLocaleCandidates();
+    Map<dynamic, dynamic> loadedMap = Map();
+    
+    for (final candidateFile in candidateFiles) {
+      final translationMap = await _loadTranslation(candidateFile, false);
+      if (translationMap.isNotEmpty) {
+        loadedMap = _deepMergeMaps(translationMap, loadedMap);
+        MessagePrinter.debug('Loaded translation file: $candidateFile');
+      }
+    }
+    
+    if (fallbackFile != null && !candidateFiles.contains(fallbackFile)) {
       final Map fallbackMap = await _loadTranslation(fallbackFile!, true);
-      _decodedMap = _deepMergeMaps(fallbackMap, _decodedMap);
+      loadedMap = _deepMergeMaps(fallbackMap, loadedMap);
       MessagePrinter.debug('Fallback maps have been merged');
     }
+    
+    _decodedMap = loadedMap;
     return _decodedMap;
   }
 
@@ -70,8 +82,11 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
     try {
       return await loadFile(fileName);
     } catch (e) {
-      MessagePrinter.debug(
-          'Error loading translation${isFallback ? " fallback " : " "}$e');
+      if (isFallback) {
+        MessagePrinter.debug('Error loading fallback translation $fileName: $e');
+      } else {
+        MessagePrinter.debug('Translation file $fileName not found, trying next candidate');
+      }
     }
     return Map();
   }
@@ -123,6 +138,34 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
     return _decodeStrategies
         .map((decodeStrategy) => decodeStrategy.decode(fileName, this))
         .toList();
+  }
+
+  /// Generate a list of locale candidate files in fallback order
+  @protected
+  List<String> generateLocaleCandidates() {
+    final candidates = <String>[];
+    final locale = this.locale!;
+    
+    // Most specific: language + script + country (e.g., "zh_Hans_CN")
+    if (useScriptCode && useCountryCode && 
+        locale.scriptCode != null && locale.countryCode != null) {
+      candidates.add("${locale.languageCode}${separator}${locale.scriptCode}${separator}${locale.countryCode}");
+    }
+    
+    // Language + country (e.g., "en_US", "de_DE")
+    if (useCountryCode && locale.countryCode != null) {
+      candidates.add("${locale.languageCode}${separator}${locale.countryCode}");
+    }
+    
+    // Language + script (e.g., "zh_Hans")
+    if (useScriptCode && locale.scriptCode != null) {
+      candidates.add("${locale.languageCode}${separator}${locale.scriptCode}");
+    }
+    
+    // Base language (e.g., "en", "de", "zh")
+    candidates.add(locale.languageCode);
+    
+    return candidates;
   }
 
   /// Compose the file name using the format languageCode_countryCode
