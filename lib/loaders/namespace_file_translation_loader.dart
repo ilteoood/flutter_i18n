@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/file_translation_loader.dart';
@@ -8,8 +7,6 @@ import 'package:flutter_i18n/utils/message_printer.dart';
 class NamespaceFileTranslationLoader extends FileTranslationLoader {
   final String fallbackDir;
   final List<String>? namespaces;
-  @override
-  AssetBundle assetBundle = rootBundle;
 
   final Map<dynamic, dynamic> _decodedMap = {};
 

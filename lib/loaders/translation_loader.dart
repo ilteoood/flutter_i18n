@@ -4,8 +4,6 @@ import 'package:flutter_i18n/utils/message_printer.dart';
 
 /// Contains the common loading logic
 abstract class TranslationLoader {
-  static const String LOCALE_SEPARATOR = "_";
-
   /// Load method to implement
   Future<Map> load();
 

@@ -2,17 +2,15 @@ import 'package:flutter_i18n/utils/simple_translator.dart';
 
 /// Translator for plural values
 class PluralTranslator extends SimpleTranslator {
-  static const String PLURAL_SEPARATOR = "-";
+  static const String pluralSeparator = "-";
   static final RegExp _parameterRegexp = RegExp("{(.+)}");
 
   final int pluralValue;
-  @override
-  final String? keySeparator;
 
   PluralTranslator(
     Map? decodedMap,
     String key,
-    this.keySeparator,
+    String? keySeparator,
     this.pluralValue, {
     MissingKeyTranslationHandler? missingKeyTranslationHandler,
   }) : super(
@@ -37,7 +35,7 @@ class PluralTranslator extends SimpleTranslator {
     final String translationKey = splittedKey.removeLast();
     final String pluralSuffix =
         _findPluralSuffix(decodedSubMap, translationKey);
-    final String lastKeyPart = "$translationKey$PLURAL_SEPARATOR$pluralSuffix";
+    final String lastKeyPart = "$translationKey$pluralSeparator$pluralSuffix";
     splittedKey.add(lastKeyPart);
     return splittedKey.join(keySeparator!);
   }
@@ -46,8 +44,8 @@ class PluralTranslator extends SimpleTranslator {
       final Map<dynamic, dynamic> decodedSubMap, final String translationKey) {
     final int? pluralSuffix = decodedSubMap.keys
         .where((mapKey) => mapKey.startsWith(translationKey))
-        .where((mapKey) => mapKey.split(PLURAL_SEPARATOR).length == 2)
-        .map((mapKey) => int.tryParse(mapKey.split(PLURAL_SEPARATOR).last))
+        .where((mapKey) => mapKey.split(pluralSeparator).length == 2)
+        .map((mapKey) => int.tryParse(mapKey.split(pluralSeparator).last))
         .where((mapKeyPluralValue) => mapKeyPluralValue != null)
         .lastWhere((mapKeyPluralValue) => mapKeyPluralValue! <= pluralValue,
             orElse: () => null);

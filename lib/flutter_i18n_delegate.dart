@@ -11,7 +11,7 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
   Locale? currentLocale;
 
   FlutterI18nDelegate(
-      {translationLoader,
+      {TranslationLoader? translationLoader,
       MissingTranslationHandler? missingTranslationHandler,
       String keySeparator = "."}) {
     _translationObject = FlutterI18n(

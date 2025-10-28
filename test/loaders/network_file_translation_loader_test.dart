@@ -2,7 +2,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class CustomNetworkFileTranslationLoader extends NetworkFileTranslationLoader {
-  CustomNetworkFileTranslationLoader({required baseUri})
+  CustomNetworkFileTranslationLoader({required Uri baseUri})
       : super(baseUri: baseUri);
 
   @override
