@@ -7,12 +7,12 @@ import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
 Future<String> _loadString(String fileName, String extension) async {
   if (fileName.contains('_en')) {
     // Throw the error for all cases with this locale.
-    throw new Error();
+    throw Error();
   }
 
   if (fileName.contains('uk') && extension == 'json') {
     // Throw the error only for json extension with this locale.
-    throw new Error();
+    throw Error();
   }
 
   return '''
@@ -138,11 +138,11 @@ class TestXmlLoader extends FileTranslationLoader {
 
 class TestNamespaceLoader extends NamespaceFileTranslationLoader {
   TestNamespaceLoader({
-    required namespaces,
-    forcedLocale,
-    fallbackDir = "en",
-    basePath = "assets/flutter_i18n",
-    useCountryCode = false,
+    required List<String>? namespaces,
+    Locale? forcedLocale,
+    String fallbackDir = "en",
+    String basePath = "assets/flutter_i18n",
+    bool useCountryCode = false,
   }) : super(
           namespaces: namespaces,
           fallbackDir: fallbackDir,
