@@ -8,7 +8,7 @@ abstract class BaseDecodeStrategy {
   String get fileExtension;
 
   /// The method used to load the text file to a Map
-  get decodeFunction;
+  dynamic Function(String) get decodeFunction;
 
   /// The method that do the loading
   Future<Map?> decode(
