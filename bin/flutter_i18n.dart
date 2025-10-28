@@ -1,6 +1,6 @@
-import 'actions/ActionInterface.dart';
-import 'actions/DiffAction.dart';
-import 'actions/ValidateAction.dart';
+import 'actions/action_interface.dart';
+import 'actions/diff_action.dart';
+import 'actions/validate_action.dart';
 
 void main(final List<String> args) async {
   validateLength(args);

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_i18n/utils/message_printer.dart';
 
-import './ActionInterface.dart';
+import 'action_interface.dart';
 import '../utils/LocalLoader.dart';
 
 class ValidateAction extends AbstractAction {

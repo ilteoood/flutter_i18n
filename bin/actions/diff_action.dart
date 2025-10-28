@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter_i18n/utils/message_printer.dart';
 
 import '../utils/LocalLoader.dart';
-import 'ActionInterface.dart';
+import 'action_interface.dart';
 
 class DiffAction extends AbstractAction {
   @override
