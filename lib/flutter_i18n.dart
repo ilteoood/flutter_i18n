@@ -40,14 +40,13 @@ class FlutterI18n {
 
   FlutterI18n(
     TranslationLoader? translationLoader,
-    String keySeparator, {
+    String this.keySeparator, {
     MissingTranslationHandler? missingTranslationHandler,
   }) {
     this.translationLoader = translationLoader ?? FileTranslationLoader();
     _loadingStream.add(LoadingStatus.notLoaded);
     this.missingTranslationHandler =
         missingTranslationHandler ?? (key, locale) {};
-    this.keySeparator = keySeparator;
   }
 
   /// Used to load the locale translation file
