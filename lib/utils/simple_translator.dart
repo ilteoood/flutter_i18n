@@ -1,4 +1,4 @@
-typedef void MissingKeyTranslationHandler(String key);
+typedef MissingKeyTranslationHandler = void Function(String key);
 
 /// Translator for simple values
 class SimpleTranslator {
@@ -48,10 +48,10 @@ class SimpleTranslator {
 
   String? _decodeFromMap(final String key) {
     final Map<dynamic, dynamic> subMap = calculateSubmap(key);
-    final String lastKeyPart = key.split(this.keySeparator!).last;
+    final String lastKeyPart = key.split(keySeparator!).last;
     final result = subMap[lastKeyPart] is String ? subMap[lastKeyPart] : null;
 
-    if (result == null && key.length > 0) {
+    if (result == null && key.isNotEmpty) {
       missingKeyTranslationHandler!(key);
     }
 
@@ -60,13 +60,13 @@ class SimpleTranslator {
 
   Map<dynamic, dynamic> calculateSubmap(final String translationKey) {
     final List<String> translationKeySplitted =
-        translationKey.split(this.keySeparator!);
+        translationKey.split(keySeparator!);
     translationKeySplitted.removeLast();
     Map<dynamic, dynamic>? decodedSubMap = decodedMap;
-    translationKeySplitted.forEach((listKey) {
-      final subMap = (decodedSubMap ?? Map())[listKey];
-      decodedSubMap = subMap is Map ? subMap : Map();
-    });
+    for (var listKey in translationKeySplitted) {
+      final subMap = (decodedSubMap ?? {})[listKey];
+      decodedSubMap = subMap is Map ? subMap : {};
+    }
     return decodedSubMap ?? {};
   }
 }

@@ -9,8 +9,8 @@ void main(final List<String> args) async {
 }
 
 void validateLength(final List<String> args) {
-  if (args.length == 0) {
-    throw new Exception("Empty list of args");
+  if (args.isEmpty) {
+    throw Exception("Empty list of args");
   }
 }
 
@@ -21,6 +21,6 @@ AbstractAction retrieveAction(final String action) {
     case 'diff':
       return DiffAction();
     default:
-      throw new Exception("Unrecognized arg: $action");
+      throw Exception("Unrecognized arg: $action");
   }
 }

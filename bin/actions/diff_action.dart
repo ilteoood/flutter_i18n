@@ -13,23 +13,23 @@ class DiffAction extends AbstractAction {
     final String compareFile = params[1];
     final List<FileSystemEntity> assetsContent = await retrieveAssetsContent();
     final Map baseFileContent =
-        await (retrieveFileContent(assetsContent, baseFile)) ?? Map();
+        await (retrieveFileContent(assetsContent, baseFile)) ?? {};
     final Map compareFileContent =
-        await (retrieveFileContent(assetsContent, compareFile)) ?? Map();
+        await (retrieveFileContent(assetsContent, compareFile)) ?? {};
     mapCompare(baseFileContent, compareFileContent, "");
   }
 
-  mapCompare(final Map baseFileContent, final Map compareFileContent,
+  void mapCompare(final Map baseFileContent, final Map compareFileContent,
       final String keyPrefix) {
     final Set keysSet = Set.from(baseFileContent.keys);
     keysSet.addAll(compareFileContent.keys);
-    keysSet.forEach((dictKey) {
+    for (var dictKey in keysSet) {
       compareMapContent(
           baseFileContent, compareFileContent, dictKey, keyPrefix);
-    });
+    }
   }
 
-  compareMapContent(
+  void compareMapContent(
       Map baseMap, Map otherMap, String dictKey, String keyPrefix) {
     if (!baseMap.containsKey(dictKey)) {
       MessagePrinter.error(
@@ -76,7 +76,8 @@ class DiffAction extends AbstractAction {
 
   void checkFileList(
       final List<FileSystemEntity> possibleFiles, final String fileToRetrieve) {
-    if (possibleFiles.isEmpty)
-      throw new Exception("Unable to find $fileToRetrieve");
+    if (possibleFiles.isEmpty) {
+      throw Exception("Unable to find $fileToRetrieve");
+    }
   }
 }

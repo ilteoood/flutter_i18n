@@ -21,7 +21,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   final bool useScriptCode;
   AssetBundle assetBundle = rootBundle;
 
-  Map<dynamic, dynamic> _decodedMap = Map();
+  Map<dynamic, dynamic> _decodedMap = {};
   late List<BaseDecodeStrategy> _decodeStrategies;
 
   set decodeStrategies(List<BaseDecodeStrategy>? decodeStrategies) =>
@@ -34,11 +34,11 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
           ];
 
   FileTranslationLoader(
-      {String? this.fallbackFile = "en",
-      String this.basePath = "assets/flutter_i18n",
-      String this.separator = "_",
-      bool this.useCountryCode = false,
-      bool this.useScriptCode = false,
+      {this.fallbackFile = "en",
+      this.basePath = "assets/flutter_i18n",
+      this.separator = "_",
+      this.useCountryCode = false,
+      this.useScriptCode = false,
       Locale? forcedLocale,
       List<BaseDecodeStrategy>? decodeStrategies}) {
     this.forcedLocale = forcedLocale;
@@ -46,9 +46,10 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   }
 
   /// Return the translation Map
+  @override
   Future<Map> load() async {
-    _decodedMap = Map();
-    await this._defineLocale();
+    _decodedMap = {};
+    await _defineLocale();
     final fileName = composeFileName();
     _decodedMap.addAll(await _loadTranslation(fileName, false));
     if (fallbackFile != null && fileName != fallbackFile) {
@@ -73,12 +74,12 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
       MessagePrinter.debug(
           'Error loading translation${isFallback ? " fallback " : " "}$e');
     }
-    return Map();
+    return {};
   }
 
   Future _defineLocale() async {
-    this.locale = locale ?? await findDeviceLocale();
-    MessagePrinter.info("The current locale is ${this.locale}");
+    locale = locale ?? await findDeviceLocale();
+    MessagePrinter.info("The current locale is $locale");
   }
 
   Map<K, V> _deepMergeMaps<K, V>(
@@ -116,7 +117,7 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
     final Stream<Map?> strategiesStream = Stream.fromFutures(strategiesFutures);
     return await strategiesStream.firstWhere((map) => map != null,
             orElse: null) ??
-        Map();
+        {};
   }
 
   List<Future<Map?>> _executeStrategies(final String fileName) {
@@ -136,10 +137,10 @@ class FileTranslationLoader extends TranslationLoader implements IFileContent {
   String _composeSuffixCode() {
     String countryCode = "";
     if (useScriptCode && locale!.scriptCode != null) {
-      countryCode = "${countryCode}${separator}${locale!.scriptCode}";
+      countryCode = "$countryCode$separator${locale!.scriptCode}";
     }
     if (useCountryCode && locale!.countryCode != null) {
-      countryCode = "${countryCode}${separator}${locale!.countryCode}";
+      countryCode = "$countryCode$separator${locale!.countryCode}";
     }
     return countryCode;
   }
