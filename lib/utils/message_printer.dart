@@ -4,15 +4,15 @@ import 'package:logging/logging.dart';
 class MessagePrinter {
   static final logger = Logger("flutter_i18n");
 
-  static debug(final String message) {
+  static void debug(final String message) {
     logger.fine(message);
   }
 
-  static info(final String message) {
+  static void info(final String message) {
     logger.info(message);
   }
 
-  static error(final String message) {
+  static void error(final String message) {
     logger.shout(message);
   }
 }

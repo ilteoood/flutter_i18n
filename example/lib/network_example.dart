@@ -67,9 +67,9 @@ class MyHomePage extends StatelessWidget {
                   return Text("isLoading: ${snapshot.data}");
                 },
               ),
-              I18nText(
+              const I18nText(
                 "args.content",
-                child: const Text(""),
+                child: Text(""),
               ),
             ],
           ),

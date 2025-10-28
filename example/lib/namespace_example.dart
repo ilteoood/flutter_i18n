@@ -70,8 +70,8 @@ class MyHomeState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              I18nText("home.label.main", child: const Text("")),
-              I18nText("home.missing", child: const Text("")),
+              const I18nText("home.label.main", child: Text("")),
+              const I18nText("home.missing", child: Text("")),
               ElevatedButton(
                   onPressed: () async {
                     await changeLanguage();

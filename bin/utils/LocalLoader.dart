@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter_i18n/loaders/decoders/base_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
+import 'package:flutter_i18n/loaders/decoders/toml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/xml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
-import 'package:flutter_i18n/loaders/decoders/toml_decode_strategy.dart';
 import 'package:flutter_i18n/loaders/file_content.dart';
 import 'package:path/path.dart';
 
@@ -15,7 +15,7 @@ class LocalLoader implements IFileContent {
 
   @override
   Future<String> loadString(final String fileName, final String extension) {
-    return File(this.fileSystemEntity.path).readAsString();
+    return File(fileSystemEntity.path).readAsString();
   }
 
   Future<Map?> loadContent() async {
@@ -24,7 +24,7 @@ class LocalLoader implements IFileContent {
         basenameWithoutExtension(fileSystemEntity.path), this);
   }
 
-  findStrategy(final FileSystemEntity fileSystemEntity) {
+  BaseDecodeStrategy findStrategy(final FileSystemEntity fileSystemEntity) {
     final String fileExtension = extension(fileSystemEntity.path);
     switch (fileExtension) {
       case ".yaml":

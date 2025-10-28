@@ -18,7 +18,7 @@ export 'loaders/translation_loader.dart';
 export 'widgets/I18nPlural.dart';
 export 'widgets/I18nText.dart';
 
-typedef void MissingTranslationHandler(String key, Locale? locale);
+typedef MissingTranslationHandler = void Function(String key, Locale? locale);
 
 /// Facade used to hide the loading and translations logic
 class FlutterI18n {
@@ -44,7 +44,7 @@ class FlutterI18n {
     MissingTranslationHandler? missingTranslationHandler,
   }) {
     this.translationLoader = translationLoader ?? FileTranslationLoader();
-    this._loadingStream.add(LoadingStatus.notLoaded);
+    _loadingStream.add(LoadingStatus.notLoaded);
     this.missingTranslationHandler =
         missingTranslationHandler ?? (key, locale) {};
     this.keySeparator = keySeparator;
@@ -52,15 +52,15 @@ class FlutterI18n {
 
   /// Used to load the locale translation file
   Future<bool> load() async {
-    this._loadingStream.add(LoadingStatus.loading);
+    _loadingStream.add(LoadingStatus.loading);
     decodedMap = await translationLoader!.load();
     _localeStream.add(locale);
-    this._loadingStream.add(LoadingStatus.loaded);
+    _loadingStream.add(LoadingStatus.loaded);
     return true;
   }
 
   /// The locale used for the translation logic
-  get locale => this.translationLoader!.locale;
+  Locale? get locale => translationLoader!.locale;
 
   /// Facade method to the plural translation logic
   static String plural(final BuildContext context, final String translationKey,

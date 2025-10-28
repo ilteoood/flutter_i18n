@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 
 class TestAssetBundleFallbackFrToEn extends PlatformAssetBundle {
+  @override
   Future<String> loadString(String key, {bool cache = true}) async {
     if (key.endsWith("fr.json")) {
       return '{"title": "flutter_18n_fr", "block": {"label2": "Bonjour"}}';

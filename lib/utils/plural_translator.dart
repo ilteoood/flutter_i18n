@@ -6,6 +6,7 @@ class PluralTranslator extends SimpleTranslator {
   static final RegExp _parameterRegexp = RegExp("{(.+)}");
 
   final int pluralValue;
+  @override
   final String? keySeparator;
 
   PluralTranslator(
@@ -32,13 +33,13 @@ class PluralTranslator extends SimpleTranslator {
   }
 
   String _findCorrectKey(final Map<dynamic, dynamic> decodedSubMap) {
-    final List<String> splittedKey = key.split(this.keySeparator!);
+    final List<String> splittedKey = key.split(keySeparator!);
     final String translationKey = splittedKey.removeLast();
     final String pluralSuffix =
         _findPluralSuffix(decodedSubMap, translationKey);
     final String lastKeyPart = "$translationKey$PLURAL_SEPARATOR$pluralSuffix";
     splittedKey.add(lastKeyPart);
-    return splittedKey.join(this.keySeparator!);
+    return splittedKey.join(keySeparator!);
   }
 
   String _findPluralSuffix(
@@ -56,7 +57,7 @@ class PluralTranslator extends SimpleTranslator {
   String? _findParameterName(final Map<dynamic, dynamic> decodedSubMap) {
     String? parameterName = "";
     final String? translation =
-        decodedSubMap[key.split(this.keySeparator!).last];
+        decodedSubMap[key.split(keySeparator!).last];
     if (translation != null && _parameterRegexp.hasMatch(translation)) {
       final Match match = _parameterRegexp.firstMatch(translation)!;
       parameterName = match.groupCount > 0 ? match.group(1)! : "";

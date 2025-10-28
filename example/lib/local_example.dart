@@ -62,7 +62,7 @@ class _TestState extends State<Test> {
             Container(
               color: Colors.blue,
               padding: const EdgeInsets.all(40),
-              child: I18nText('type'),
+              child: const I18nText('type'),
             ),
           ]),
         ),

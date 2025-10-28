@@ -9,8 +9,8 @@ class I18nText extends StatelessWidget {
   final Map<String, String>? translationParams;
   static const _default_text = Text("");
 
-  I18nText(this._key,
-      {this.child = _default_text, this.fallbackKey, this.translationParams});
+  const I18nText(this._key,
+      {Key? key, this.child = _default_text, this.fallbackKey, this.translationParams}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

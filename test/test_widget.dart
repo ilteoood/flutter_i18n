@@ -5,6 +5,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import './test_loader.dart';
 
 class TestWidget extends StatelessWidget {
+  const TestWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
@@ -27,6 +29,8 @@ class TestWidget extends StatelessWidget {
 }
 
 class TestWidgetPage extends StatefulWidget {
+  const TestWidgetPage({Key? key}) : super(key: key);
+
   @override
   createState() => TestWidgetPageState();
 }

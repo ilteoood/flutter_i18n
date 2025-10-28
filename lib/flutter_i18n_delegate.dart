@@ -42,7 +42,7 @@ class FlutterI18nDelegate extends LocalizationsDelegate<FlutterI18n> {
 
   @override
   bool shouldReload(final FlutterI18nDelegate old) {
-    return this.currentLocale == null ||
-        this.currentLocale == old.currentLocale;
+    return currentLocale == null ||
+        currentLocale == old.currentLocale;
   }
 }
