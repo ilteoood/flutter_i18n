@@ -5,7 +5,7 @@ import './base_decode_strategy.dart';
 
 /// Decode strategy for XML files
 class XmlDecodeStrategy extends BaseDecodeStrategy {
-  Xml2Json _transformer = new Xml2Json();
+  final Xml2Json _transformer = Xml2Json();
   final String rootObject;
 
   XmlDecodeStrategy({this.rootObject = "root"});
@@ -23,6 +23,6 @@ class XmlDecodeStrategy extends BaseDecodeStrategy {
     decodeFunction(content);
     final Map jsonMap =
         JsonDecodeStrategy().decodeContent(_transformer.toParker())!;
-    return jsonMap[this.rootObject];
+    return jsonMap[rootObject];
   }
 }

@@ -7,10 +7,10 @@ class I18nText extends StatelessWidget {
   final Text child;
   final String? fallbackKey;
   final Map<String, String>? translationParams;
-  static const _default_text = Text("");
+  static const _defaultText = Text("");
 
   const I18nText(this._key,
-      {Key? key, this.child = _default_text, this.fallbackKey, this.translationParams}) : super(key: key);
+      {Key? key, this.child = _defaultText, this.fallbackKey, this.translationParams}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
