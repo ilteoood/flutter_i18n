@@ -288,10 +288,12 @@ class UnusedAction extends AbstractAction {
     if (refs.isEmpty) {
       buf.writeln('*None*');
     } else {
-      buf.writeln('| File | Line | Content |');
-      buf.writeln('|------|------|---------|');
+      buf.writeln('| File | Content |');
+      buf.writeln('|------|---------|');
       for (final ref in refs) {
-        buf.writeln('| ${ref.filePath} | ${ref.line} | `${ref.lineContent}` |');
+        final rel = p.relative(ref.filePath, from: Directory.current.path);
+        buf.writeln(
+            '| [$rel:${ref.line}]($rel#L${ref.line}) | `${ref.lineContent}` |');
       }
     }
     buf.writeln();
