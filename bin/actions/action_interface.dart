@@ -20,15 +20,20 @@ abstract class AbstractAction {
   }
 
   Future<List<FileSystemEntity>> retrieveAssetsContent() async {
-    final List<String> assetsFolder = await retrieveAssetsFolders();
-    return assetsFolder
-        .map((folder) => Directory(folder))
-        .where(existFolder)
-        .map(folderContent)
-        .where((folderContent) => folderContent.isNotEmpty)
-        .fold(<FileSystemEntity>[], listFold)
-        .where(filterExtension)
-        .toList();
+    final List<String> assetEntries = await retrieveAssetsFolders();
+    final results = <FileSystemEntity>[];
+    for (final entry in assetEntries) {
+      final dir = Directory(entry);
+      if (dir.existsSync()) {
+        results.addAll(dir.listSync().where(filterExtension));
+        continue;
+      }
+      final file = File(entry);
+      if (file.existsSync() && filterExtension(file)) {
+        results.add(file);
+      }
+    }
+    return results;
   }
 
   bool existFolder(final Directory directory) {

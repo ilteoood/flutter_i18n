@@ -97,29 +97,38 @@ class UnusedAction extends AbstractAction {
     final assetFolders = await retrieveAssetsFolders();
     for (final folder in assetFolders) {
       final dir = Directory(folder);
-      if (!dir.existsSync()) continue;
+      if (dir.existsSync()) {
+        // Skip folders already covered by a namespace basePath.
+        final norm = p.normalize(folder);
+        if (nsBasePaths.any((bp) =>
+            norm == bp || norm.startsWith('$bp${p.separator}'))) {
+          continue;
+        }
 
-      // Skip folders already covered by a namespace basePath.
-      final norm = p.normalize(folder);
-      if (nsBasePaths.any((bp) =>
-          norm == bp || norm.startsWith('$bp${p.separator}'))) {
+        final children = dir.listSync();
+        if (children.any((c) => c is Directory)) {
+          // Namespace A: folder contains locale-code subdirectories.
+          for (final child in children) {
+            if (child is Directory) {
+              await _addNamespaceDir(child, keys);
+            }
+          }
+        } else if (namespaceConfigs.isEmpty &&
+            _isNamespaceLocaleDir(folder, assetFolders)) {
+          // Namespace B: locale dir listed individually, no config found.
+          await _addNamespaceDir(dir, keys);
+        } else {
+          await _addFlatDir(dir, keys);
+        }
         continue;
       }
 
-      final children = dir.listSync();
-      if (children.any((c) => c is Directory)) {
-        // Namespace A: folder contains locale-code subdirectories.
-        for (final child in children) {
-          if (child is Directory) {
-            await _addNamespaceDir(child, keys);
-          }
-        }
-      } else if (namespaceConfigs.isEmpty &&
-          _isNamespaceLocaleDir(folder, assetFolders)) {
-        // Namespace B: locale dir listed individually, no config found.
-        await _addNamespaceDir(dir, keys);
-      } else {
-        await _addFlatDir(dir, keys);
+      // Individual files listed directly in assets.
+      final file = File(folder);
+      if (file.existsSync() &&
+          acceptedExtensions.contains(p.extension(folder))) {
+        final map = await LocalLoader(file).loadContent();
+        if (map != null) keys.addAll(KeyExtractor.extract(map));
       }
     }
 
