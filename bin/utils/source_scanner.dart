@@ -162,8 +162,8 @@ class SourceScanner {
         if (!s.contains(r'$')) literalKeys.add(s);
       }
       final lineNum = _offsetToLine(strippedLines, match.start);
-      dynamicRefs
-          .add(DynamicKeyRef(file.path, lineNum, lines[lineNum - 1].trim()));
+      final fullCall = stripped.substring(match.start, closeParen + 1);
+      dynamicRefs.add(DynamicKeyRef(file.path, lineNum, fullCall));
     }
   }
 

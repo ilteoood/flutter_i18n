@@ -237,8 +237,10 @@ class UnusedAction extends AbstractAction {
     if (keys.isEmpty) {
       MessagePrinter.info('  None');
     } else {
+      var n = 1;
       for (final key in keys) {
-        MessagePrinter.info('  - $key');
+        MessagePrinter.info('  $n. $key');
+        n++;
       }
     }
   }
@@ -253,9 +255,14 @@ class UnusedAction extends AbstractAction {
     if (refs.isEmpty) {
       MessagePrinter.info('  None');
     } else {
+      var n = 1;
       for (final ref in refs) {
-        MessagePrinter.info(
-            '  ${ref.filePath}:${ref.line}  →  ${ref.lineContent}');
+        final rel = p.relative(ref.filePath, from: Directory.current.path);
+        MessagePrinter.info('  $n. $rel:${ref.line}');
+        for (final line in ref.lineContent.split('\n')) {
+          MessagePrinter.info('    $line');
+        }
+        n++;
       }
     }
     MessagePrinter.info('');
@@ -271,8 +278,10 @@ class UnusedAction extends AbstractAction {
     if (keys.isEmpty) {
       buf.writeln('*None*');
     } else {
+      var n = 1;
       for (final key in keys) {
-        buf.writeln('- `$key`');
+        buf.writeln('$n. `$key`');
+        n++;
       }
     }
     buf.writeln();
@@ -288,12 +297,18 @@ class UnusedAction extends AbstractAction {
     if (refs.isEmpty) {
       buf.writeln('*None*');
     } else {
-      buf.writeln('| File | Content |');
-      buf.writeln('|------|---------|');
+      var n = 1;
       for (final ref in refs) {
         final rel = p.relative(ref.filePath, from: Directory.current.path);
-        buf.writeln(
-            '| [$rel:${ref.line}]($rel#L${ref.line}) | `${ref.lineContent}` |');
+        buf.writeln('$n. **[$rel:${ref.line}]($rel#L${ref.line})**');
+        buf.writeln();
+        buf.writeln('  ```dart');
+        for (final line in ref.lineContent.split('\n')) {
+          buf.writeln('  $line');
+        }
+        buf.writeln('  ```');
+        buf.writeln();
+        n++;
       }
     }
     buf.writeln();
