@@ -45,28 +45,20 @@ class SourceScanResult {
 ///
 /// Also captures keys from `fallbackKey:` named parameters.
 class SourceScanner {
-  // Matches FlutterI18n.translate/plural where key is the 2nd positional arg.
-  // \b ensures we don't match MyFlutterI18n or FlutterI18nFoo.
-  static final _fluentKeyRe = RegExp(
-    r"""(?:\w+\.)?\bFlutterI18n\s*\.\s*(?:translate|plural)\s*\([^,]+,\s*["']([^"']*)["']""",
-  );
-
-  // Matches I18nText/I18nPlural constructors where key is the 1st arg.
-  static final _widgetKeyRe = RegExp(
-    r"""(?:\w+\.)?\bI18n(?:Text|Plural)\s*\(\s*["']([^"']*)["']""",
-  );
-
   // Matches fallbackKey: "..." or fallbackKey: '...'
   static final _fallbackKeyRe = RegExp(
     r"""fallbackKey\s*:\s*["']([^"']*)["']""",
   );
 
   // Matches any FlutterI18n.translate/plural or I18nText/I18nPlural call
-  // line (used to detect dynamic usages that weren't caught by the
-  // literal-key regexes above).
+  // site — the opening `(` is included so we can locate the argument list.
   static final _dynamicCallRe = RegExp(
     r"""(?:\w+\.)?\b(?:FlutterI18n\s*\.\s*(?:translate|plural)|I18n(?:Text|Plural))\s*\(""",
   );
+
+  // Extracts hardcoded string literals from call arguments — useful for
+  // ternary branches like `cond ? "key.a" : "key.b"`.
+  static final _stringLiteralRe = RegExp(r"""["']([^"']+)["']""");
 
   /// Scans all `.dart` files under [projectRoot] and returns extracted keys
   /// plus any dynamic references.
@@ -145,18 +137,83 @@ class SourceScanner {
       final closeParen = _findMatchingParen(stripped, openParen);
       if (closeParen == -1) continue;
 
-      final region = stripped.substring(match.start, closeParen + 1);
-      final keyMatch =
-          _fluentKeyRe.firstMatch(region) ?? _widgetKeyRe.firstMatch(region);
+      // Fluent API → key is 2nd positional arg (index 1).
+      // Widget constructors → key is 1st positional arg (index 0).
+      final isFluent = match.group(0)!.contains('FlutterI18n');
+      final argIndex = isFluent ? 1 : 0;
 
-      if (keyMatch != null && !keyMatch.group(1)!.contains(r'$')) {
-        literalKeys.add(keyMatch.group(1)!);
-      } else {
-        final lineNum = _offsetToLine(strippedLines, match.start);
-        dynamicRefs
-            .add(DynamicKeyRef(file.path, lineNum, lines[lineNum - 1].trim()));
+      final keyArg = _extractArg(stripped, match.end, argIndex);
+      if (keyArg == null) continue;
+
+      if (_isPureString(keyArg)) {
+        final inner = keyArg.trim();
+        final value = inner.substring(1, inner.length - 1);
+        if (!value.contains(r'$')) {
+          literalKeys.add(value);
+          continue;
+        }
+      }
+
+      // Key argument is not a plain string — extract any hardcoded string
+      // literals inside it (e.g. ternary branches) for the literal set,
+      // and also flag the call as dynamic.
+      for (final m in _stringLiteralRe.allMatches(keyArg)) {
+        final s = m.group(1)!;
+        if (!s.contains(r'$')) literalKeys.add(s);
+      }
+      final lineNum = _offsetToLine(strippedLines, match.start);
+      dynamicRefs
+          .add(DynamicKeyRef(file.path, lineNum, lines[lineNum - 1].trim()));
+    }
+  }
+
+  /// True when [arg] is a single string literal (possibly surrounded by
+  /// whitespace), e.g. `"home.title"` or `  'settings.general'  `.
+  static bool _isPureString(String arg) {
+    final t = arg.trim();
+    return (t.startsWith('"') && t.endsWith('"') && t.length >= 2) ||
+        (t.startsWith("'") && t.endsWith("'") && t.length >= 2);
+  }
+
+  /// Extracts the [argIndex]-th positional argument (0-based) from the
+  /// argument list starting at [start] in [content].  Tracks nested
+  /// parentheses and string literals so that commas inside them are not
+  /// treated as argument separators.
+  static String? _extractArg(String content, int start, int argIndex) {
+    var depth = 0;
+    var inSingle = false;
+    var inDouble = false;
+    var argStart = start;
+    var currentArg = 0;
+
+    for (var i = start; i < content.length; i++) {
+      final ch = content[i];
+      if (ch == "'" && !inDouble) {
+        inSingle = !inSingle;
+      } else if (ch == '"' && !inSingle) {
+        inDouble = !inDouble;
+      } else if (!inSingle && !inDouble) {
+        if (ch == '(') {
+          depth++;
+        } else if (ch == ')') {
+          if (depth == 0) {
+            // End of call — return the current arg if it is the target.
+            if (currentArg == argIndex) {
+              return content.substring(argStart, i);
+            }
+            return null;
+          }
+          depth--;
+        } else if (ch == ',' && depth == 0) {
+          if (currentArg == argIndex) {
+            return content.substring(argStart, i);
+          }
+          currentArg++;
+          argStart = i + 1;
+        }
       }
     }
+    return null;
   }
 
   /// Converts a character offset in joined [lines] (separated by '\n') to a

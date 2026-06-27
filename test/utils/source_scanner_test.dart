@@ -391,5 +391,33 @@ void main() {
       expect(result.namespaceConfigs[1].basePath, isNull);
       expect(result.namespaceConfigs[1].namespaces, ['home']);
     });
+
+    test('extracts literal keys from ternary branches, still flags dynamic',
+        () {
+      writeDartFile('a.dart', '''
+        import 'package:flutter_i18n/flutter_i18n.dart';
+        void f(BuildContext c, bool cond) {
+          FlutterI18n.translate(c, cond ? "key.true" : "key.false");
+        }
+      ''');
+      final result = SourceScanner.scan(tmpDir.path);
+      expect(result.literalKeys, containsAll(['key.true', 'key.false']));
+      expect(result.dynamicRefs, isNotEmpty);
+      expect(result.dynamicRefs.first.lineContent,
+          contains('FlutterI18n.translate'));
+    });
+
+    test('extracts literal key from ternary with one hardcoded branch', () {
+      writeDartFile('a.dart', '''
+        import 'package:flutter_i18n/flutter_i18n.dart';
+        void f(BuildContext c, String fallback) {
+          FlutterI18n.translate(c, cond ? "key.if" : fallback);
+        }
+      ''');
+      final result = SourceScanner.scan(tmpDir.path);
+      expect(result.literalKeys, contains('key.if'));
+      expect(result.literalKeys, isNot(contains('fallback')));
+      expect(result.dynamicRefs, isNotEmpty);
+    });
   });
 }
