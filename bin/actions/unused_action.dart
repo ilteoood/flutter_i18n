@@ -14,7 +14,7 @@ class UnusedAction extends AbstractAction {
   List<String> _scanPaths = [];
 
   @override
-  List<String> get acceptedExtensions => ['.json', '.yaml', '.xml', '.toml'];
+  Set<String> get acceptedExtensions => {'.json', '.yaml', '.xml', '.toml'};
 
   @override
   void executeAction(final List<String> params) async {

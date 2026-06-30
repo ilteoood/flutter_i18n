@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import 'package:yaml/yaml.dart';
 
 abstract class AbstractAction {
-  List<String> get acceptedExtensions => ['.json', '.yaml', '.xml'];
+  Set<String> get acceptedExtensions => {'.json', '.yaml', '.xml'};
 
   void executeAction(final List<String> params);
 
@@ -34,20 +34,6 @@ abstract class AbstractAction {
       }
     }
     return results;
-  }
-
-  bool existFolder(final Directory directory) {
-    return directory.existsSync();
-  }
-
-  List<FileSystemEntity> folderContent(final Directory directory) {
-    return directory.listSync();
-  }
-
-  List<FileSystemEntity> listFold(final List<FileSystemEntity> previousValue,
-      final List<FileSystemEntity> currentValue) {
-    previousValue.addAll(currentValue);
-    return previousValue;
   }
 
   bool filterExtension(final FileSystemEntity fileSystemEntity) {
