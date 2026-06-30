@@ -325,8 +325,7 @@ void main() {
       final result = SourceScanner.scan(tmpDir.path);
       expect(result.literalKeys, isEmpty);
       expect(result.dynamicRefs, isNotEmpty);
-      expect(result.dynamicRefs.first.lineContent,
-          contains('I18nText(key)'));
+      expect(result.dynamicRefs.first.lineContent, contains('I18nText(key)'));
     });
 
     test('detects dynamic key in I18nPlural', () {
@@ -337,8 +336,8 @@ void main() {
       final result = SourceScanner.scan(tmpDir.path);
       expect(result.literalKeys, isEmpty);
       expect(result.dynamicRefs, isNotEmpty);
-      expect(result.dynamicRefs.first.lineContent,
-          contains('I18nPlural(key, n)'));
+      expect(
+          result.dynamicRefs.first.lineContent, contains('I18nPlural(key, n)'));
     });
 
     test('scans only specified scanPaths', () {

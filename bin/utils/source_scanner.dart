@@ -256,8 +256,7 @@ class SourceScanner {
 
   /// Scans [file] for NamespaceFileTranslationLoader constructors and
   /// extracts namespace configuration.
-  static void _scanNamespaceConfigs(
-      File file, List<NamespaceConfig> results) {
+  static void _scanNamespaceConfigs(File file, List<NamespaceConfig> results) {
     final content = file.readAsStringSync();
 
     for (final match in _nsLoaderRe.allMatches(content)) {
@@ -311,8 +310,7 @@ class SourceScanner {
   /// Parses `"common", "home"` or `'common', 'home'` into a list of strings.
   static List<String> _parseStringList(String input) {
     final result = <String>[];
-    for (final match
-        in RegExp(r"""['"]([^'"]*)['"]""").allMatches(input)) {
+    for (final match in RegExp(r"""['"]([^'"]*)['"]""").allMatches(input)) {
       result.add(match.group(1)!);
     }
     return result;

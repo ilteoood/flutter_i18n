@@ -83,18 +83,18 @@ void main() {
     });
 
     test('allows custom maxSuffix', () {
-      expect(KeyExtractor.normalizePlural('error-404', maxSuffix: 999),
-          'error');
+      expect(
+          KeyExtractor.normalizePlural('error-404', maxSuffix: 999), 'error');
     });
   });
 
-    test('skips null values', () {
-      final map = {
-        'title': 'Hello',
-        'nullable': null,
-        'nested': {'valid': 'OK', 'alsoNull': null},
-      };
-      final keys = KeyExtractor.extract(map);
-      expect(keys, {'title', 'nested.valid'});
-    });
+  test('skips null values', () {
+    final map = {
+      'title': 'Hello',
+      'nullable': null,
+      'nested': {'valid': 'OK', 'alsoNull': null},
+    };
+    final keys = KeyExtractor.extract(map);
+    expect(keys, {'title', 'nested.valid'});
+  });
 }

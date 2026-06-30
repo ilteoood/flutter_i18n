@@ -58,7 +58,8 @@ class UnusedAction extends AbstractAction {
       } else if (param.startsWith('--path=')) {
         final v = param.substring('--path='.length);
         if (v.isEmpty) {
-          MessagePrinter.error('--path requires a value (e.g. --path=report.md)');
+          MessagePrinter.error(
+              '--path requires a value (e.g. --path=report.md)');
         } else {
           _mdPath = v;
         }
@@ -100,8 +101,8 @@ class UnusedAction extends AbstractAction {
       if (dir.existsSync()) {
         // Skip folders already covered by a namespace basePath.
         final norm = p.normalize(folder);
-        if (nsBasePaths.any((bp) =>
-            norm == bp || norm.startsWith('$bp${p.separator}'))) {
+        if (nsBasePaths
+            .any((bp) => norm == bp || norm.startsWith('$bp${p.separator}'))) {
           continue;
         }
 
