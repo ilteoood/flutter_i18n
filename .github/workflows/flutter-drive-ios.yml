@@ -5,7 +5,7 @@ jobs:
     strategy:
       matrix:
         device:
-          - "iPhone 16 Plus"
+          - "iPhone 17 Pro"
       fail-fast: true
     runs-on: macos-latest
     steps:
