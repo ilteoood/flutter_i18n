@@ -5,11 +5,11 @@ jobs:
     strategy:
       matrix:
         device:
-          - "iPhone 16 Plus"
+          - "iPhone 17 Pro"
       fail-fast: true
     runs-on: macos-latest
     steps:
-      - uses: futureware-tech/simulator-action@v2
+      - uses: futureware-tech/simulator-action@v5
         with:
           model: ${{ matrix.device }}
       - uses: actions/checkout@v3
