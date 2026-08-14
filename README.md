@@ -12,15 +12,22 @@ I18n made easy, for Flutter!
 
 ## Table of contents
 
-* [Why should you use flutter_i18n?](#why-should-you-use-flutter_i18n)
-* [Loaders](#loaders)
-  * [FileTranslationLoader](#filetranslationloader-configuration)
-  * [NetworkFileTranslationLoader](#networkfiletranslationloader-configuration)
-  * [NamespaceFileTranslationLoader](#namespacefiletranslationloader-configuration)
-  * [E2EFileTranslationLoader](#e2efiletranslationloader-configuration)
-* [flutter_i18n in action](#flutter_i18n-in-action)
-* [Plugins](#plugins)
-* [Contributors](#contributors-)
+- [flutter\_i18n](#flutter_i18n)
+  - [Table of contents](#table-of-contents)
+  - [Why should you use flutter\_i18n?](#why-should-you-use-flutter_i18n)
+  - [Loaders](#loaders)
+    - [`FileTranslationLoader` configuration](#filetranslationloader-configuration)
+    - [`NetworkFileTranslationLoader` configuration](#networkfiletranslationloader-configuration)
+    - [`NamespaceFileTranslationLoader` configuration](#namespacefiletranslationloader-configuration)
+    - [`E2EFileTranslationLoader` configuration](#e2efiletranslationloader-configuration)
+  - [flutter\_i18n in action](#flutter_i18n-in-action)
+  - [Utilities](#utilities)
+    - [Commands](#commands)
+      - [Validate](#validate)
+      - [Diff](#diff)
+      - [Unused](#unused)
+  - [Plugins](#plugins)
+  - [Contributors ✨](#contributors-)
 
 ## Why should you use flutter_i18n?
 
@@ -284,6 +291,40 @@ This command is used to find the differences between the keys of the desired tra
 [flutter_i18n INFO]: YAML file loaded for en
 [flutter_i18n INFO]: JSON file loaded for it
 [flutter_i18n ERROR]: The compared dictionary doesn't contain the key >title
+```
+
+#### Unused
+
+This command is used to find out the unused translation assets in your project.
+
+Some flag for the command:
+- `--md`: to generate Markdown report file.
+- `--path=<path>`: to determine where the report file is stored (default is `unused_translations.md`).
+- `--scan=<file/dir>`: to determine the files scanned (default is `/lib` and `/test`).
+
+```sh
+> flutter pub run flutter_i18n unused
+=== Unused translation keys ===
+Defined in translation files but never referenced in source code
+Total: 0
+
+  None
+
+=== Missing translation keys ===
+Referenced in source code but not found in translation files
+Total: 5
+
+  - args.content
+  - args.title
+  - button.label.clickMea
+  - home.missing
+  - type
+
+=== Dynamic keys ===
+Keys constructed with variables or expressions — cannot analyze statically
+Total: 0
+
+  None
 ```
 
 ## Plugins

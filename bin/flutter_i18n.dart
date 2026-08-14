@@ -1,5 +1,6 @@
 import 'actions/action_interface.dart';
 import 'actions/diff_action.dart';
+import 'actions/unused_action.dart';
 import 'actions/validate_action.dart';
 
 void main(final List<String> args) async {
@@ -20,6 +21,8 @@ AbstractAction retrieveAction(final String action) {
       return ValidateAction();
     case 'diff':
       return DiffAction();
+    case 'unused':
+      return UnusedAction();
     default:
       throw Exception("Unrecognized arg: $action");
   }
